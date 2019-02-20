@@ -32,14 +32,14 @@ const init = async () => {
     // });
     server.applyMiddleware({ app, path: '/api' })
 
-    app.use(function(err, req, res, next) {
+    app.use(function(err, req, res) {
       if (err.name === 'UnauthorizedError') {
         res.status(401).send('invalid token...');
       }
     });
 
-    app.listen(4000);
-    console.log('Running a GraphQL APP server at localhost:4000');
+    app.listen(4474);
+    console.log('Running a GraphQL APP server at localhost:4474');
   } catch (e) {
     console.log(e)
   }
