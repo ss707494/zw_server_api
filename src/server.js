@@ -38,8 +38,8 @@ const init = async () => {
       }
     });
 
-    app.listen(4474);
-    console.log('Running a GraphQL APP server at localhost:4474');
+    app.listen(4344);
+    console.log('Running a GraphQL APP server at localhost:4344');
   } catch (e) {
     console.log(e)
   }
