@@ -5,10 +5,12 @@ import user from './control/user'
 import { connectDB } from './mongoData'
 import { getServer } from "./schema";
 import { secret } from './jwtConfig'
+import { resolveApp } from './common/pathConfig'
+import errorHandle, { catchErr } from './common/error'
 
 var app = express();
 
-app.use(express.static('build'))
+app.use(express.static(resolveApp('build')))
 app.use(bodyParser.json())
 const init = async () => {
   try {
@@ -17,26 +19,17 @@ const init = async () => {
 
     server.applyMiddleware({ app, path: '/graphQL' })
 
-    app.use(jwt({ secret }).unless({ path: ['/api/login'] }))
-    // 登录接口
-    app.use('/api/login', user.login)
-    // app.use('*', function(req, res, next) {
-    //   const parts = req.headers.authorization.split(' ');
-    //   jsonwebtoken.verify(parts[1], secret, function(err, decoded) {
-    //     req.body = {
-    //       ...req.body,
-    //       ...decoded
-    //     }
-    //     next()
-    //   })
-    // });
+    app.use('/api/login', catchErr(user.login))
+
+    app.use('/api(/*)?', jwt({ secret }))
+
     server.applyMiddleware({ app, path: '/api' })
 
-    app.use(function(err, req, res) {
-      if (err.name === 'UnauthorizedError') {
-        res.status(401).send('invalid token...');
-      }
-    });
+    app.use('*', function(req, res) {
+      res.sendFile(resolveApp('build/index.html'))
+    })
+
+    app.use(errorHandle)
 
     app.listen(4460);
     console.log('Running a GraphQL APP server at localhost:4460');

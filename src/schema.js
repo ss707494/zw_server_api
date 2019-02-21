@@ -1,14 +1,9 @@
 import { merge } from 'lodash'
 import { ApolloServer, makeExecutableSchema } from 'apollo-server-express'
 import fs from 'fs'
-import path from 'path'
 import jsonwebtoken from 'jsonwebtoken'
 import { secret } from './jwtConfig'
-
-const distPath = process.env.NODE_ENV === 'production'? 'dist' : 'src'
-
-const appDirectory = fs.realpathSync(process.cwd());
-const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
+import { resolveApp, distPath } from './common/pathConfig'
 
 const schemaFiles = fs.readdirSync(resolveApp(`${distPath}/schema`))
 
