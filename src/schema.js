@@ -1,7 +1,7 @@
 import { merge } from 'lodash'
 import { ApolloServer, makeExecutableSchema } from 'apollo-server-express'
 import fs from 'fs'
-import jsonwebtoken from 'jsonwebtoken'
+import jwt from 'jsonwebtoken'
 import { importSchema } from 'graphql-import'
 import { secret } from './jwtConfig'
 import { resolveApp, distPath } from './common/pathConfig'
@@ -24,7 +24,12 @@ const getServer = async () => {
     context: ({ req }) => {
       if (req.headers.authorization) {
         const parts = req.headers.authorization.split(' ');
-        const decoded = jsonwebtoken.verify(parts[1], secret)
+        let decoded = null
+        try {
+           decoded = jwt.verify(parts[1], secret)
+        } catch (e) {
+          console.log(e)
+        }
         return {
           decoded,
           db: getDb(),

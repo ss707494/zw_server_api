@@ -1,12 +1,11 @@
 import bodyParser from 'body-parser'
 import express from "express";
-import jwt from "express-jwt";
 import user from './control/user'
 import { connectDB } from './mongoData'
 import { getServer } from "./schema";
-import { secret } from './jwtConfig'
 import { resolveApp } from './common/pathConfig'
 import errorHandle, { catchErr } from './common/error'
+import { tokenHandle } from './common/tokenHandle'
 
 var app = express();
 
@@ -21,7 +20,7 @@ const init = async () => {
 
     app.use('/api/login', catchErr(user.login))
 
-    app.use('/api(/*)?', jwt({ secret }))
+    app.use('/api(/*)?', tokenHandle)
 
     server.applyMiddleware({ app, path: '/api' })
 
