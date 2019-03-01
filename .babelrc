@@ -13,6 +13,7 @@
     ]
   ],
   "plugins": [
+    "import-graphql",
     [
       "@babel/plugin-transform-runtime",
       {

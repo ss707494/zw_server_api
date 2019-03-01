@@ -1,4 +1,4 @@
-import { MongoClient, ObjectId } from 'mongodb'
+import { MongoClient } from 'mongodb'
 
 // import bcrypt from 'bcrypt'
 // console.log(bcrypt.hashSync('123456', 6))
@@ -16,6 +16,9 @@ export const connectDB = async () => {
 }
 
 export const getDb = () => {
+  if (!db) {
+    connectDB()
+  }
   return db
 }
 

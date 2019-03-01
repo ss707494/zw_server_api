@@ -2,17 +2,22 @@ import { merge } from 'lodash'
 import { ApolloServer, makeExecutableSchema } from 'apollo-server-express'
 import fs from 'fs'
 import jsonwebtoken from 'jsonwebtoken'
+import { importSchema } from 'graphql-import'
 import { secret } from './jwtConfig'
 import { resolveApp, distPath } from './common/pathConfig'
+import { getDb } from "./mongoData"
 
-const schemaFiles = fs.readdirSync(resolveApp(`${distPath}/schema`))
+const allFiles = fs.readdirSync(resolveApp(`${distPath}/schema`))
+const schemaFiles = allFiles.filter(e => e.includes('.graphql') || e.includes('gql'))
+const resolverFiles = allFiles.filter(e => e.includes('.js'))
 
 const getServer = async () => {
-  const schemas = await Promise.all(schemaFiles.map(e => import(resolveApp(`${distPath}/schema/${e}`))))
+  const schemas = await Promise.all(schemaFiles.map(e => importSchema(resolveApp(`${distPath}/schema/${e}`))))
+  const resolvers = await Promise.all(resolverFiles.map(e => import(resolveApp(`${distPath}/schema/${e}`))))
 
   const schema = makeExecutableSchema({
-    typeDefs: schemas.map(e => e.typeDefs),
-    resolvers: merge(...schemas.map(e => e.resolvers)),
+    typeDefs: schemas.map(e => e),
+    resolvers: merge(...resolvers.map(e => e.resolvers)),
   })
   return new ApolloServer({
     schema,
@@ -20,7 +25,13 @@ const getServer = async () => {
       if (req.headers.authorization) {
         const parts = req.headers.authorization.split(' ');
         const decoded = jsonwebtoken.verify(parts[1], secret)
-        return req
+        return {
+          decoded,
+          db: getDb(),
+        }
+      }
+      return {
+        db: getDb(),
       }
     }
   });
