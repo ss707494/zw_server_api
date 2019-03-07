@@ -8,8 +8,8 @@ export const login = async (req, res, next) => {
   const user = await userCol.findOne({name: req.body.name}) || {}
   const result = user.password && compareSync(req.body.password, user.password)
   if (result) {
-    const token = `Bearer ${jsonwebtoken.sign(req.body, secret, { expiresIn: 5 })}`
-    const refreshToken = `${jsonwebtoken.sign(req.body, secret, { expiresIn: 60 * 60 })}`
+    const token = `Bearer ${jsonwebtoken.sign(req.body, secret, { expiresIn: 60 * 60 })}`
+    const refreshToken = `${jsonwebtoken.sign(req.body, secret, { expiresIn: 60 * 60 * 24 * 7 })}`
     res.json({
       code: 200,
       data: 1,
