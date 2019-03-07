@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "startdev": "nodemon %NODE_DEBUG_OPTION% --exec babel-node src/server.js",
-    "babel": "babel -d dist/ src/",
+    "copySchema": "babel -d dist/schema src/schema --copy-files",
+    "babel": "npm run copySchema && babel -d dist/ src/",
     "start": "npm run babel && cross-env NODE_ENV=production  node dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
