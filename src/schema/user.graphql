@@ -1,25 +1,24 @@
-
-  type User {
+type User {
     id: String
     name: String
     auth: String
     message: String
-  }
+}
 
-  input UserInput {
+input UserInput {
     id: String
     name: String
     auth: String
     message: String
-  }
+}
 
-  type Query {
+type Query {
     user: [User]
     allUser: [User]
     oneUser(id: String!): User
-  }
+}
 
-  type Mutation {
+type Mutation {
     updateUser(user: UserInput!): User
     updateUserAuth(id: String!, auth: String!): String
-  }
+}

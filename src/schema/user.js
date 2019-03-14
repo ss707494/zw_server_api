@@ -1,6 +1,6 @@
 import { objToId, idToObj } from '../common/objectId'
 
-export const resolvers = {
+export default {
   Query: {
     user: async (...arg) => {
       const [, , { db }] = arg

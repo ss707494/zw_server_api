@@ -14,7 +14,7 @@ app.use(bodyParser.json())
 const init = async () => {
   try {
     await connectDB()
-    const server = await getServer()
+    const server = getServer()
 
     server.applyMiddleware({ app, path: '/graphQL' })
 

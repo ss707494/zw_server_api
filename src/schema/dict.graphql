@@ -1,0 +1,24 @@
+type Dict {
+    id: String
+    name: String
+    code: String
+    type: String
+    message: String
+}
+
+input DictInput {
+    id: String
+    name: String
+    code: String
+    type: String
+    message: String
+}
+
+type Query {
+    allDict: [Dict]
+    oneDict(id: String!): Dict
+}
+
+type Mutation {
+    updateDict(dict: DictInput!): Dict
+}
