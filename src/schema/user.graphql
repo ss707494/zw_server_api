@@ -19,6 +19,7 @@ type Query {
 }
 
 type Mutation {
-    updateUser(user: UserInput!): User
+    updateUser(data: UserInput!): User
     updateUserAuth(id: String!, auth: String!): String
+    deleteOneUser(id: String!): String
 }

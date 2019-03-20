@@ -3,6 +3,7 @@ type Dict {
     name: String
     code: String
     type: String
+    date: Date
     message: String
 }
 
@@ -11,6 +12,7 @@ input DictInput {
     name: String
     code: String
     type: String
+    date: Date
     message: String
 }
 
@@ -20,5 +22,6 @@ type Query {
 }
 
 type Mutation {
-    updateDict(dict: DictInput!): Dict
+    updateDict(data: DictInput!): Dict
+    deleteOneDict(id: String!): String
 }

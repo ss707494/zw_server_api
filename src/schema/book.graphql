@@ -1,0 +1,25 @@
+type Book {
+    id: String
+    name: String
+    createDate: Date
+    modifyDate: Date
+    message: String
+}
+
+input BookInput {
+    id: String
+    name: String
+    createDate: Date
+    modifyDate: Date
+    message: String
+}
+
+type Query {
+    allBook: [Book]
+    oneBook(id: String!): Book
+}
+
+type Mutation {
+    updateBook(data: BookInput!): Book
+    deleteOneBook(id: String!): String
+}

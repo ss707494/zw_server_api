@@ -1,0 +1,31 @@
+type Note {
+    id: String
+    name: String
+    code: String
+    type: String
+    content: String
+    createDate: Date
+    modifyDate: Date
+    message: String
+}
+
+input NoteInput {
+    id: String
+    name: String
+    code: String
+    type: String
+    content: String
+    message: String
+    createDate: Date
+    modifyDate: Date
+}
+
+type Query {
+    allNote: [Note]
+    oneNote(id: String!): Note
+}
+
+type Mutation {
+    updateNote(data: NoteInput!): Note
+    deleteOneNote(id: String!): String
+}

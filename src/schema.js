@@ -9,7 +9,7 @@ import { resolveApp, distPath, join } from './common/pathConfig'
 import { getDb } from "./mongoData"
 
 const typeDefs = mergeTypes(fileLoader(join(__dirname, 'schema/**/*.graphql')), {all: true})
-const resolvers = mergeResolvers(fileLoader(join(__dirname, 'schema/**/*.js'), { extensions: ['.js'] }))
+const resolvers = mergeResolvers(fileLoader(join(__dirname, 'resolver/**/*.js'), { extensions: ['.js'] }))
 
 const context = (data) => {
   const { req } = data
