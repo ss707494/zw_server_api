@@ -15,8 +15,8 @@ export const getBasicSchema = ({dbName}) => {
         return res.map(objToId)
       },
       [`all${DbName}`]: async (...arg) => {
-        const [, , { db }] = arg
-        const res = await db.collection(dbName).find().toArray();
+        const [, params , { db }] = arg
+        const res = await db.collection(dbName).find(params.data || {}).toArray();
         return res.map(objToId)
       },
     },

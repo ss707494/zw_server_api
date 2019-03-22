@@ -1,27 +1,32 @@
 type Note {
     id: String
     name: String
+    title: String
     code: String
     type: String
     content: String
     createDate: Date
     modifyDate: Date
     message: String
+    bookId: String
+    book: Book
 }
 
 input NoteInput {
     id: String
     name: String
+    title: String
     code: String
     type: String
     content: String
     message: String
     createDate: Date
     modifyDate: Date
+    bookId: String
 }
 
 type Query {
-    allNote: [Note]
+    allNote(data: NoteInput): [Note]
     oneNote(id: String!): Note
 }
 

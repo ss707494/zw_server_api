@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb'
 
-export const objToId = data => ({
+export const objToId = data => (!data || !data._id) ? {} : ({
   ...data,
   id: data._id.toString()
 })
