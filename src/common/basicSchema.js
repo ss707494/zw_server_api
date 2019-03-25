@@ -16,7 +16,10 @@ export const getBasicSchema = ({dbName}) => {
       },
       [`all${DbName}`]: async (...arg) => {
         const [, params , { db }] = arg
-        const res = await db.collection(dbName).find(params.data || {}).toArray();
+        const res = await db.collection(dbName).find(Object.keys(params.data).reduce((i, e) => ({
+      [e]: new RegExp(params.data[e]),
+      ...i,
+    }), {})).toArray();
         return res.map(objToId)
       },
     },
