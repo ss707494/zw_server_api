@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "startdev": "nodemon %NODE_DEBUG_OPTION% --exec babel-node src/server.js",
+    "startdev": "nodemon --exec babel-node src/server.js",
     "copySchema": "babel -d dist/schema src/schema --copy-files",
     "babel": "npm run copySchema && babel -d dist/ src/",
     "start": "npm run babel && cross-env NODE_ENV=production  node dist/server.js",

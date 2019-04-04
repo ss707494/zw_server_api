@@ -1,3 +1,8 @@
+type PageParam {
+    page: Int
+    rowsPerPage: Int
+}
+
 type Note {
     id: String
     name: String
@@ -12,6 +17,11 @@ type Note {
     book: Book
 }
 
+type ListResult {
+    total: String
+    dataList: [Note]
+}
+
 input NoteInput {
     id: String
     name: String
@@ -23,11 +33,15 @@ input NoteInput {
     createDate: Date
     modifyDate: Date
     bookId: String
+    page: Int
+    rowsPerPage: Int
 }
 
 type Query {
+    allDataNote: String
     allNote(data: NoteInput): [Note]
     oneNote(id: String!): Note
+    totalNote(data: NoteInput): Int
 }
 
 type Mutation {

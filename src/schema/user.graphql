@@ -10,12 +10,16 @@ input UserInput {
     name: String
     auth: String
     message: String
+    page: Int
+    rowsPerPage: Int
 }
 
 type Query {
+    allDataUser: String
     user: [User]
     allUser: [User]
     oneUser(id: String!): User
+    totalUser: Int
 }
 
 type Mutation {

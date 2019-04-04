@@ -14,11 +14,15 @@ input DictInput {
     type: String
     date: Date
     message: String
+    page: Int
+    rowsPerPage: Int
 }
 
 type Query {
+    allDataDict: String
     allDict: [Dict]
     oneDict(id: String!): Dict
+    totalDict(data: DictInput): Int
 }
 
 type Mutation {

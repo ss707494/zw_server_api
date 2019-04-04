@@ -12,11 +12,15 @@ input BookInput {
     createDate: Date
     modifyDate: Date
     message: String
+    page: Int
+    rowsPerPage: Int
 }
 
 type Query {
+    allDataBook: String
     allBook: [Book]
     oneBook(id: String!): Book
+    totalBook(data: BookInput): Int
 }
 
 type Mutation {
