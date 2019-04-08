@@ -5,6 +5,10 @@ type User {
     message: String
 }
 
+input UserSortInput {
+    code: Int
+}
+
 input UserInput {
     id: String
     name: String
@@ -12,17 +16,19 @@ input UserInput {
     message: String
     page: Int
     rowsPerPage: Int
+    sortData: UserSortInput
 }
 
 type Query {
     allDataUser: String
     user: [User]
-    allUser: [User]
+    allUser(data: UserInput): [User]
     oneUser(id: String!): User
-    totalUser: Int
+    totalUser(data: UserInput): Int
 }
 
 type Mutation {
+    importAllUser(data: String!): String
     updateUser(data: UserInput!): User
     updateUserAuth(id: String!, auth: String!): String
     deleteOneUser(id: String!): String

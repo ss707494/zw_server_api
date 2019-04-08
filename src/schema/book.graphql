@@ -6,6 +6,10 @@ type Book {
     message: String
 }
 
+input BookSortInput {
+    code: Int
+}
+
 input BookInput {
     id: String
     name: String
@@ -14,16 +18,18 @@ input BookInput {
     message: String
     page: Int
     rowsPerPage: Int
+    sortData: BookSortInput
 }
 
 type Query {
     allDataBook: String
-    allBook: [Book]
+    allBook(data: BookInput): [Book]
     oneBook(id: String!): Book
     totalBook(data: BookInput): Int
 }
 
 type Mutation {
+    importAllBook(data: String!): String
     updateBook(data: BookInput!): Book
     deleteOneBook(id: String!): String
 }

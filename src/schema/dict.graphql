@@ -7,6 +7,10 @@ type Dict {
     message: String
 }
 
+input DictSortInput {
+    code: Int
+}
+
 input DictInput {
     id: String
     name: String
@@ -16,16 +20,18 @@ input DictInput {
     message: String
     page: Int
     rowsPerPage: Int
+    sortData: DictSortInput
 }
 
 type Query {
     allDataDict: String
-    allDict: [Dict]
+    allDict(data: DictInput): [Dict]
     oneDict(id: String!): Dict
     totalDict(data: DictInput): Int
 }
 
 type Mutation {
+    importAllDict(data: String!): String
     updateDict(data: DictInput!): Dict
     deleteOneDict(id: String!): String
 }

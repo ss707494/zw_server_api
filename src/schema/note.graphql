@@ -22,6 +22,10 @@ type ListResult {
     dataList: [Note]
 }
 
+input NoteSortInput {
+    code: Int
+}
+
 input NoteInput {
     id: String
     name: String
@@ -35,6 +39,7 @@ input NoteInput {
     bookId: String
     page: Int
     rowsPerPage: Int
+    sortData: NoteSortInput
 }
 
 type Query {
@@ -45,6 +50,7 @@ type Query {
 }
 
 type Mutation {
+    importAllNote(data: String!): String
     updateNote(data: NoteInput!): Note
     deleteOneNote(id: String!): String
 }

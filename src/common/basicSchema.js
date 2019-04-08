@@ -5,9 +5,9 @@ const getCollection = (db, name) => {
 }
 
 const dealPage = (params = {}) => {
-  const { page, rowsPerPage, ...restParams } = params
+  const { page = 0, rowsPerPage = 0, sortData = {}, ...restParams } = params
   return {
-    page, rowsPerPage, restParams,
+    page, rowsPerPage, restParams, sortData,
   }
 }
 
@@ -34,8 +34,8 @@ export const getBasicSchema = ({ dbName }) => {
       },
       [`all${DbName}`]: async (...arg) => {
         const [, params, { db }] = arg
-        const { page = 0, rowsPerPage = 0, restParams } = dealPage(params.data)
-        const res = await db.collection(dbName).find(dealParams(restParams)).skip(rowsPerPage * page).limit(rowsPerPage).toArray();
+        const { page, rowsPerPage, sortData, restParams } = dealPage(params.data)
+        const res = await db.collection(dbName).find(dealParams(restParams)).collation({locale: 'zh', numericOrdering: true}).sort(sortData).skip(rowsPerPage * page).limit(rowsPerPage).toArray();
         return res.map(objToId)
       },
       [`total${DbName}`]: async (...arg) => {
@@ -82,6 +82,18 @@ export const getBasicSchema = ({ dbName }) => {
         })
         console.log('deleteOne:' + res)
         return `${res.result.n}`
+      },
+      [`importAll${DbName}`]: async (...arg) => {
+        const [, { data }, { db }] = arg
+        const arr = JSON.parse(data)
+
+        console.log(arr)
+        // const res = await db.collection(dbName).insertMany(arr)
+        // const res = await db.collection(dbName).deleteOne({
+        //   _id: idToObj(id)
+        // })
+        console.log('importAll:' + data)
+        return `todo`
       }
     }
   }
