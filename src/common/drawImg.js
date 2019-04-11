@@ -2,14 +2,16 @@ import { registerFont, createCanvas, loadImage } from 'canvas'
 import { resolveApp } from './pathConfig'
 
 registerFont(resolveApp('src/assets/fonts/tianyingzhang.ttf'), { family: 'tianyingzhang' })
-const width = 375
-const height = 60
+const n = 4
+const width = 375 * n
+const height = 60 * n
+const fontSize = 25 * n
 
 export const getImg = (text = '小胖子 哈哈哈', option = {}) => {
   return new Promise((resolve) => {
     const lHeight = ~~option.height || height
     const lWidth = ~~option.width || width
-    const lFontSize = ~~option.fontSize || 25
+    const lFontSize = ~~option.fontSize || fontSize
     const num = lWidth / lFontSize
     const line = Math.ceil(text.length / num)
     const canvas = createCanvas(lWidth, lHeight * line)
