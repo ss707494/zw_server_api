@@ -1,3 +1,13 @@
+type Img {
+    src: String
+}
+input ImgOptionInput {
+    height: String
+    width: String
+    fontSize: String
+}
+
 type Query {
     countDocuments(name: String!): String
+    getContentImg(data: String, option: ImgOptionInput): Img
 }

@@ -35,7 +35,7 @@ export const getBasicSchema = ({ dbName }) => {
       [`all${DbName}`]: async (...arg) => {
         const [, params, { db }] = arg
         const { page, rowsPerPage, sortData, restParams } = dealPage(params.data)
-        const res = await db.collection(dbName).find(dealParams(restParams)).collation({locale: 'zh', numericOrdering: true}).sort(sortData).skip(rowsPerPage * page).limit(rowsPerPage).toArray();
+        const res = await db.collection(dbName).find(dealParams(restParams)).collation({locale: 'zh', numericOrdering: true}).sort(sortData).skip(rowsPerPage * page).limit(rowsPerPage).toArray()
         return res.map(objToId)
       },
       [`total${DbName}`]: async (...arg) => {

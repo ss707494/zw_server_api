@@ -6,7 +6,9 @@
   "scripts": {
     "startdev": "nodemon --exec babel-node src/server.js",
     "copySchema": "babel -d dist/schema src/schema --copy-files",
-    "babel": "npm run copySchema && babel -d dist/ src/",
+    "copyAssets": "babel -d dist/assets src/assets --copy-files",
+    "copyFile": "npm run copyAssets & npm run copySchema",
+    "babel": "npm run copyFile && babel -d dist/ src/",
     "start": "npm run babel && cross-env NODE_ENV=production  node dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -31,6 +33,7 @@
     "apollo-server-express": "^2.4.0",
     "bcrypt": "^3.0.4",
     "body-parser": "^1.18.3",
+    "canvas": "^2.4.1",
     "express": "^4.16.4",
     "express-graphql": "^0.7.1",
     "express-jwt": "^5.3.1",

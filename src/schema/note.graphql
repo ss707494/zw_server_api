@@ -15,6 +15,7 @@ type Note {
     message: String
     bookId: String
     book: Book
+    contentImg: Img
 }
 
 type ListResult {
@@ -47,6 +48,7 @@ type Query {
     allNote(data: NoteInput): [Note]
     oneNote(id: String!): Note
     totalNote(data: NoteInput): Int
+    detailImg(id: String!): Note
 }
 
 type Mutation {
