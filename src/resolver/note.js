@@ -13,7 +13,12 @@ export default {
       const [res] = await db.collection('note').find({
         _id: idToObj(id)
       }).toArray()
-      const contentImg = getImg(res.content)
+      const fontSizeConfig = await db.collection('dict').findOne({
+        type: 'config',
+        name: 'fontSize',
+      })
+      const contentImg = await getImg(res.content, { fontSize: fontSizeConfig.message })
+      console.log('detailImg: ' + fontSizeConfig)
       return {
         ...res,
         contentImg,
