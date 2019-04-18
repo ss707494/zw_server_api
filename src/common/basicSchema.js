@@ -28,9 +28,12 @@ export const getBasicSchema = ({ dbName }) => {
         return JSON.stringify(res.map(objToId))
       },
       [`one${DbName}`]: async (...arg) => {
-        const [, , { db }] = arg
-        const res = await db.collection(dbName).find().toArray();
-        return res.map(objToId)
+        const [, { id } , { db }] = arg
+        const res = await db.collection(dbName).findOne({
+          _id: idToObj(id)
+        })
+        console.log(`one${DbName}` + res)
+        return res
       },
       [`all${DbName}`]: async (...arg) => {
         const [, params, { db }] = arg

@@ -19,6 +19,12 @@ input UserInput {
     sortData: UserSortInput
 }
 
+input ChangePassword {
+    id: String
+    verification: String
+    newPass: String
+}
+
 type Query {
     allDataUser: String
     user: [User]
@@ -32,4 +38,5 @@ type Mutation {
     updateUser(data: UserInput!): User
     updateUserAuth(id: String!, auth: String!): String
     deleteOneUser(id: String!): String
+    changePassword(data: ChangePassword!): String
 }

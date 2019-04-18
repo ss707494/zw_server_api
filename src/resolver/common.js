@@ -1,4 +1,5 @@
 import { getImg } from '../common/drawImg'
+import { genSaltSync, hashSync } from 'bcrypt'
 
 export default {
   Query: {
@@ -13,6 +14,12 @@ export default {
       const res = await getImg(data, option)
       console.log('getContentImg: ' + res)
       return res
+    },
+    getPassCode: async (...arg) => {
+      const [, { pass }] = arg
+      const hash = hashSync(pass, genSaltSync(10))
+      console.log('getPassCode: ' + hash)
+      return hash
     },
   }
 }
