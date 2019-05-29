@@ -5,6 +5,6 @@ export const signToken = (body) => {
   const { iat, exp, ...data } = body
   return ({
     token: `Bearer ${jwt.sign(data, secret, { expiresIn: '12h' })}`,
-    refreshToken: `${jwt.sign(data, secret, { expiresIn: '30d' })}`
+    refreshToken: `${jwt.sign(data, secret, { expiresIn: '30 days' })}`
   });
 }
