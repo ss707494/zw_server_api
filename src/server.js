@@ -9,6 +9,7 @@ import { tokenHandle } from './common/tokenHandle'
 
 var app = express();
 
+app.set('view engine', 'html')
 app.use(express.static(resolveApp('build')))
 app.use(bodyParser.json())
 const init = async () => {
