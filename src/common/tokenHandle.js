@@ -29,10 +29,13 @@ export const tokenHandle = (req, res, next) => {
       console.log('权限验证失败,查看REFRESH_TOKEN')
       if (req.headers.refresh_token) {
         jwt.verify(req.headers.refresh_token, secret, function(err, decoded1) {
+          console.log(`err:: ${err}`)
           if (err) {
+            console.log(`进入err:: ${err}`)
             return next(new UnauthorizedError('invalid_token', err));
           }
           const tokenObj = signToken(decoded1)
+          console.log(`refreshToken:: ${JSON.stringify(tokenObj)}`)
           res.set('refreshToken', JSON.stringify(tokenObj))
           // req.ssAuthorization = tokenObj.token
           req.headers.authorization = tokenObj.token
