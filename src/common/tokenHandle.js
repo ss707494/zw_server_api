@@ -26,7 +26,7 @@ export const tokenHandle = (req, res, next) => {
   const credentials = parts[1];
   jwt.verify(credentials, secret, function(err, decoded) {
     if (err) {
-      console.log('权限验证失败,查看REFRESH_TOKEN' + req.headers.refresh_token)
+      console.log('权限验证失败,查看REFRESH_TOKEN' + JSON.stringify(req.headers))
       if (req.headers.refresh_token) {
         console.log(`req.headers.refresh_token:: ${secret}`)
         try {
