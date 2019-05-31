@@ -16,7 +16,6 @@ UnauthorizedError.prototype = Object.create(Error.prototype);
 UnauthorizedError.prototype.constructor = UnauthorizedError;
 
 export const tokenHandle = (req, res, next) => {
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Connection, User-Agent, Cookie, token, authorization, refresh_token')
   if (!req.headers || !req.headers.authorization) {
     return next(new UnauthorizedError('credentials_required', { message: 'No authorization token was found' }));
   }
@@ -27,11 +26,11 @@ export const tokenHandle = (req, res, next) => {
   const credentials = parts[1];
   jwt.verify(credentials, secret, function(err, decoded) {
     if (err) {
-      console.log('权限验证失败,查看REFRESH_TOKEN' + JSON.stringify(req.headers))
-      if (req.headers.refresh_token) {
-        console.log(`req.headers.refresh_token:: ${secret}`)
+      console.log('权限验证失败,查看refreshToken' + JSON.stringify(req.headers))
+      if (req.headers.refreshToken) {
+        console.log(`req.headers.refreshToken:: ${secret}`)
         try {
-          jwt.verify(req.headers.refresh_token, secret, function(err, decoded1) {
+          jwt.verify(req.headers.refreshToken, secret, function(err, decoded1) {
             console.log(`err:: ${err}`)
             if (err) {
               console.log(`进入err:: ${err}`)
@@ -42,7 +41,7 @@ export const tokenHandle = (req, res, next) => {
             res.set('refreshToken', JSON.stringify(tokenObj))
             // req.ssAuthorization = tokenObj.token
             req.headers.authorization = tokenObj.token
-            console.log('REFRESH_TOKEN 成功, 更新token')
+            console.log('refreshToken 成功, 更新token')
             return next(null, decoded1)
           })
         } catch (e) {
