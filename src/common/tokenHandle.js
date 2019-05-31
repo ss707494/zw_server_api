@@ -30,20 +30,20 @@ export const tokenHandle = (req, res, next) => {
       if (req.headers.refresh_token) {
         jwt.verify(req.headers.refresh_token, secret, function(err, decoded1) {
           if (err) {
-            next(new UnauthorizedError('invalid_token', err));
+            return next(new UnauthorizedError('invalid_token', err));
           }
           const tokenObj = signToken(decoded1)
           res.set('refreshToken', JSON.stringify(tokenObj))
-          req.ssAuthorization = tokenObj.token
-          // req.headers.authorization = tokenObj.token
+          // req.ssAuthorization = tokenObj.token
+          req.headers.authorization = tokenObj.token
           console.log('REFRESH_TOKEN 成功, 更新token')
-          next(null, decoded1)
+          return next(null, decoded1)
         })
       } else {
-        next(new UnauthorizedError('invalid_token', err));
+        return next(new UnauthorizedError('invalid_token', err));
       }
     } else {
-      next(null, decoded)
+      return next(null, decoded)
     }
   });
 }
