@@ -7,13 +7,13 @@ export const login = async (req, res, next) => {
   const user = await userCol.findOne({name: req.body.name}) || {}
   const result = user.password && compareSync(req.body.password, user.password)
   if (result) {
-    const {token, refreshToken} = signToken(user)
+    const {token, refreshtoken} = signToken(user)
     res.json({
       code: 200,
       data: 1,
       message: 'ok',
       token,
-      refreshToken,
+      refreshtoken,
     })
   } else {
     res.json({

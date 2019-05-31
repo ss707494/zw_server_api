@@ -26,22 +26,22 @@ export const tokenHandle = (req, res, next) => {
   const credentials = parts[1];
   jwt.verify(credentials, secret, function(err, decoded) {
     if (err) {
-      console.log('权限验证失败,查看refreshToken' + JSON.stringify(req.headers))
-      if (req.headers.refreshToken) {
-        console.log(`req.headers.refreshToken:: ${secret}`)
+      console.log('权限验证失败,查看refreshtoken' + JSON.stringify(req.headers))
+      if (req.headers.refreshtoken) {
+        console.log(`req.headers.refreshtoken:: ${secret}`)
         try {
-          jwt.verify(req.headers.refreshToken, secret, function(err, decoded1) {
+          jwt.verify(req.headers.refreshtoken, secret, function(err, decoded1) {
             console.log(`err:: ${err}`)
             if (err) {
               console.log(`进入err:: ${err}`)
               return next(new UnauthorizedError('invalid_token', err));
             }
             const tokenObj = signToken(decoded1)
-            console.log(`refreshToken:: ${JSON.stringify(tokenObj)}`)
-            res.set('refreshToken', JSON.stringify(tokenObj))
+            console.log(`refreshtoken:: ${JSON.stringify(tokenObj)}`)
+            res.set('refreshtoken', JSON.stringify(tokenObj))
             // req.ssAuthorization = tokenObj.token
             req.headers.authorization = tokenObj.token
-            console.log('refreshToken 成功, 更新token')
+            console.log('refreshtoken 成功, 更新token')
             return next(null, decoded1)
           })
         } catch (e) {
