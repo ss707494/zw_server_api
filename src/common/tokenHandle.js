@@ -34,7 +34,8 @@ export const tokenHandle = (req, res, next) => {
           }
           const tokenObj = signToken(decoded1)
           res.set('refreshToken', JSON.stringify(tokenObj))
-          req.headers.authorization = tokenObj.token
+          req.ssAuthorization = tokenObj.token
+          // req.headers.authorization = tokenObj.token
           console.log('REFRESH_TOKEN 成功, 更新token')
           next(null, decoded1)
         })

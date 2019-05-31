@@ -13,8 +13,8 @@ const resolvers = mergeResolvers(fileLoader(join(__dirname, 'resolver/**/*.js'),
 
 const context = (data) => {
   const { req } = data
-  if (req.headers.authorization) {
-    const parts = req.headers.authorization.split(' ');
+  if (req.ssAuthorization || req.headers.authorization) {
+    const parts = (req.ssAuthorization || req.headers.authorization).split(' ');
     let decoded = null
     try {
       decoded = jwt.verify(parts[1], secret)
