@@ -16,6 +16,7 @@ UnauthorizedError.prototype = Object.create(Error.prototype);
 UnauthorizedError.prototype.constructor = UnauthorizedError;
 
 export const tokenHandle = (req, res, next) => {
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Connection, User-Agent, Cookie, token, authorization, refresh_token')
   if (!req.headers || !req.headers.authorization) {
     return next(new UnauthorizedError('credentials_required', { message: 'No authorization token was found' }));
   }
