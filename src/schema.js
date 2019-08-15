@@ -6,7 +6,8 @@ import { importSchema } from 'graphql-import'
 import { fileLoader, mergeTypes, mergeResolvers } from 'merge-graphql-schemas'
 import { secret } from './jwtConfig'
 import { resolveApp, distPath, join } from './common/pathConfig'
-import { getDb } from "./mongoData"
+import { getMysqlDb } from './mysql'
+
 
 const typeDefs = mergeTypes(fileLoader(join(__dirname, 'schema/**/*.graphql')), {all: true})
 const resolvers = mergeResolvers(fileLoader(join(__dirname, 'resolver/**/*.js'), { extensions: ['.js'] }))
@@ -23,11 +24,11 @@ const context = (data) => {
     }
     return {
       decoded,
-      db: getDb(),
+      db: getMysqlDb(),
     }
   }
   return {
-    db: getDb(),
+    db: getMysqlDb(),
   }
 }
 

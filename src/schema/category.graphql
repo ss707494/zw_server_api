@@ -1,0 +1,27 @@
+type Category {
+    id: String
+    name: String
+    createTime: Date
+    updateTime: Date
+    isDelete: Boolean
+    remark: String
+    sort: Int
+    parentId: String
+    fullParentId: String
+}
+
+input CategoryInput {
+    id: String
+    name: String
+    createTime: Date
+    updateTime: Date
+    isDelete: Boolean
+    remark: String
+    sort: Int
+    parentId: String
+    fullParentId: String
+}
+
+type Mutation {
+    addCategory(Category: CategoryInput): String
+}

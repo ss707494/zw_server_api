@@ -1,6 +1,7 @@
-import { getDb } from '../mongoData'
+import { getMysqlDb } from '../mysql'
 
-export const getUserCollection = () => getDb().collection('user')
+
+export const getUserCollection = () => getMysqlDb().collection('user')
 
 export const getUser = async (option) => {
   const user = getUserCollection()

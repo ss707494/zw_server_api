@@ -1,23 +1,19 @@
 import bodyParser from 'body-parser'
 import express from "express";
-import multer from 'multer'
 import user from './control/user'
-import { connectDB } from './mongoData'
 import { getServer } from "./schema";
 import { resolveApp } from './common/pathConfig'
 import errorHandle, { catchErr } from './common/error'
 import { tokenHandle } from './common/tokenHandle'
-import { getMysqlDb } from './mysql/mysqlUser'
+import { connectMysql } from "./mysql";
 
-var upload = multer({dest: 'uploads/'});
-
-var app = express();
+const app = express();
 
 app.use(express.static(resolveApp('build')))
 app.use(bodyParser.json())
 const init = async () => {
   try {
-    await connectDB()
+    await connectMysql()
     const server = getServer()
 
     server.applyMiddleware({ app, path: '/graphQL' })
@@ -56,8 +52,8 @@ const init = async () => {
 
     app.use(errorHandle)
 
-    app.listen(4460);
-    console.log('Running a GraphQL APP server at localhost:4460');
+    app.listen(4464);
+    console.log('Running a GraphQL APP server at localhost:4464');
   } catch (e) {
     console.log(e)
   }
