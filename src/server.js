@@ -1,11 +1,15 @@
 import bodyParser from 'body-parser'
 import express from "express";
+import multer from 'multer'
 import user from './control/user'
 import { connectDB } from './mongoData'
 import { getServer } from "./schema";
 import { resolveApp } from './common/pathConfig'
 import errorHandle, { catchErr } from './common/error'
 import { tokenHandle } from './common/tokenHandle'
+import { getMysqlDb } from './mysql/mysqlUser'
+
+var upload = multer({dest: 'uploads/'});
 
 var app = express();
 
@@ -17,6 +21,28 @@ const init = async () => {
     const server = getServer()
 
     server.applyMiddleware({ app, path: '/graphQL' })
+
+    // app.use('/mysql', function(req, res, next) {
+    //   const mysql = getMysqlDb()
+    //   mysql.query('select id, name from zw_project.user', (err, sqlRes) => {
+    //     if (err) {
+    //       console.log(err)
+    //     }
+    //     console.log(sqlRes)
+    //     res.send(sqlRes)
+    //   });
+    // })
+    //
+    // app.use('/fileUpload', upload.single('logo'), function(req, res, next) {
+    //   var file = req.file;
+    //
+    //   console.log('文件类型：%s', file.mimetype);
+    //   console.log('原始文件名：%s', file.originalname);
+    //   console.log('文件大小：%s', file.size);
+    //   console.log('文件保存路径：%s', file.path);
+    //
+    //   res.send({ret_code: '0'});
+    // })
 
     app.use('/api/login', catchErr(user.login))
 
