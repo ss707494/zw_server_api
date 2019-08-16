@@ -9,7 +9,8 @@
 create schema dw_server;
 
 use dw_server;
-create table user
+
+create table dw_server.user
 (
     id          varchar(40)  not null,
     name        varchar(200) null,
@@ -23,7 +24,7 @@ create table user
 )
     comment = '用户';
 
-create table category
+create table dw_server.category
 (
     id             varchar(40)  not null,
     name           varchar(200) null,
@@ -35,8 +36,13 @@ create table category
     is_enable      char              default '0',
     remark         varchar(200) null,
     sort           integer,
-    parent_id      varchar(40) default '0' ,
-    full_parent_id varchar(200) default '0',
-    unique (id, name)
+    parent_id      varchar(40) default '' ,
+    full_parent_id varchar(200) default '',
+    unique (id),
+    unique (name)
+
 )
     comment = '商品分类';
+
+drop table dw_server.user;
+drop table dw_server.category;

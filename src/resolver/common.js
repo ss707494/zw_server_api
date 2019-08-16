@@ -1,5 +1,13 @@
 import { genSaltSync, hashSync } from 'bcrypt'
 
+export const dealResult = (flag, msg, data) => {
+  return {
+    flag,
+    msg,
+    ...data
+  }
+}
+
 export default {
   Query: {
     getPassCode: async (...arg) => {

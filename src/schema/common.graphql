@@ -1,4 +1,11 @@
 
+type result {
+    flag: Int
+    msg: String
+    category: Category
+}
+
+
 type Query {
     getPassCode(pass: String!): String
 }

@@ -1,27 +1,36 @@
 type Category {
     id: String
     name: String
-    createTime: Date
-    updateTime: Date
-    isDelete: Boolean
     remark: String
     sort: Int
-    parentId: String
-    fullParentId: String
+    create_time: Date
+    update_time: Date
+    is_delete: Boolean
+    is_enable: Boolean
+    parent_id: String
+    full_parent_id: String
 }
 
 input CategoryInput {
     id: String
     name: String
-    createTime: Date
-    updateTime: Date
-    isDelete: Boolean
     remark: String
     sort: Int
-    parentId: String
-    fullParentId: String
+    page: Int
+    rows_per_page: Int
+    create_time: Date
+    update_time: Date
+    is_delete: Boolean
+    is_enable: Boolean
+    parent_id: String
+    full_parent_id: String
+}
+
+type Query {
+    categoryTotal(CategoryInput: CategoryInput): Int
+    category_list(CategoryInput: CategoryInput): [Category]
 }
 
 type Mutation {
-    addCategory(Category: CategoryInput): String
+    addCategory(Category: CategoryInput): result
 }
