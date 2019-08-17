@@ -4,15 +4,20 @@ import { databaseConfig } from "../../config/database";
 let db = null
 
 export const connectMysql = () => {
-  db = mysql.createConnection(databaseConfig)
-  db.connect(function(err) {
-    if (err) {
-      console.error('error connecting: ' + err.stack);
-      return;
-    }
-
+  db = mysql.createPool(databaseConfig)
+  db.on('connection', function (db) {
     console.log('connected as id ' + db.threadId);
-  });
+    // connection.query('SET SESSION auto_increment_increment=1')
+  })
+  // db = mysql.createConnection(databaseConfig)
+  // db.connect(function(err) {
+  //   if (err) {
+  //     console.error('error connecting: ' + err.stack);
+  //     return;
+  //   }
+  //
+  //   console.log('connected as id ' + db.threadId);
+  // })
   return db
 }
 

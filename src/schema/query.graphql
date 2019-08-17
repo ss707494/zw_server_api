@@ -1,0 +1,13 @@
+type Query {
+
+    getPassCode(pass: String!): String
+
+    allDataUser: String
+    user: [User]
+    allUser(data: UserInput): [User]
+    oneUser(id: String!): User
+    totalUser(data: UserInput): Int
+
+    categoryTotal(CategoryInput: CategoryInput): Int
+    category_list(CategoryInput: CategoryInput): [Category]
+}

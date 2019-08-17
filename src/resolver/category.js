@@ -1,21 +1,23 @@
 import { asyncQuery } from "../mysql";
 import uuidV1 from 'uuid/v1'
-import { dealResult } from "./common";
-
-const tableName = 'category'
+import { dealPage, dealResult, dealWhere, dealWhereLike } from "./common";
 
 export default {
   Query: {
     category_list: async (...arg) => {
       const [, { CategoryInput }] = arg
-      // language=MySQL
       const [res] = await asyncQuery(`
-          select *
-          from dw_server.category 
+          select id, name, create_time, update_time, is_delete, is_enable, remark, sort, parent_id, full_parent_id, number
+          from dw_server.category
           where is_delete = 0
-and parent_id = ?
-      `, [CategoryInput?.parent_id ?? ''])
-      console.log((res))
+          ${dealWhere({
+        parent_id: CategoryInput?.parent_id,
+      })}
+          ${dealWhereLike({
+        full_parent_id: CategoryInput?.full_parent_id,
+      })}
+          ${dealPage(CategoryInput)}
+      `, [])
       return res
     }
   },
@@ -33,12 +35,16 @@ and parent_id = ?
       `, [
         id,
         Category?.name,
-        Category?.parentId ?? '',
-        Category?.fullParentId ?? ''
+        Category?.parent_id ?? '',
+        Category?.full_parent_id ?? ''
       ]]
       const res = await asyncQuery(...sql)
+      console.log(res)
       return dealResult(1, '', {
-        category: { id }
+        category: {
+          ...Category,
+          id
+        }
       })
     }
   },

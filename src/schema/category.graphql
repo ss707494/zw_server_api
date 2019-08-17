@@ -9,6 +9,7 @@ type Category {
     is_enable: Boolean
     parent_id: String
     full_parent_id: String
+    number: Int
 }
 
 input CategoryInput {
@@ -24,13 +25,4 @@ input CategoryInput {
     is_enable: Boolean
     parent_id: String
     full_parent_id: String
-}
-
-type Query {
-    categoryTotal(CategoryInput: CategoryInput): Int
-    category_list(CategoryInput: CategoryInput): [Category]
-}
-
-type Mutation {
-    addCategory(Category: CategoryInput): result
 }

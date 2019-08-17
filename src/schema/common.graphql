@@ -5,7 +5,3 @@ type result {
     category: Category
 }
 
-
-type Query {
-    getPassCode(pass: String!): String
-}

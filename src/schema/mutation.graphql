@@ -1,0 +1,11 @@
+type Mutation {
+
+    importAllUser(data: String!): String
+    updateUser(data: UserInput!): User
+    updateUserAuth(id: String!, auth: String!): String
+    deleteOneUser(id: String!): String
+    changePassword(data: ChangePassword!): String
+
+    addCategory(Category: CategoryInput): result
+
+}

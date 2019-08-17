@@ -24,19 +24,3 @@ input ChangePassword {
     verification: String
     newPass: String
 }
-
-type Query {
-    allDataUser: String
-    user: [User]
-    allUser(data: UserInput): [User]
-    oneUser(id: String!): User
-    totalUser(data: UserInput): Int
-}
-
-type Mutation {
-    importAllUser(data: String!): String
-    updateUser(data: UserInput!): User
-    updateUserAuth(id: String!, auth: String!): String
-    deleteOneUser(id: String!): String
-    changePassword(data: ChangePassword!): String
-}
