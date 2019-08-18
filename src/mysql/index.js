@@ -34,6 +34,7 @@ export const getMysqlDb = () => {
 }
 
 export const asyncQuery = async (sql, values = []) => {
+  console.log(sql)
   return new Promise((resolve, reject) => {
     db.query(sql, values, (err, res, fields) => {
       if (err) {

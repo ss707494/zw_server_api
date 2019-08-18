@@ -7,12 +7,17 @@ export const dealPage = (obj) => {
   return ''
 }
 
-export const dealWhere = (obj) => {
-  return Object.keys(obj).map(e => (obj[e] === null || typeof obj[e] === 'undefined') ? '' : ` and ${e} = '${obj[e]}' `).join()
+export const dealWhere = (obj, alias) => {
+  console.log(obj)
+  return Object.keys(obj).map(e => (obj[e] === null || typeof obj[e] === 'undefined') ? '' : ` and ${alias ? `${alias}.` : ''}${e} = '${obj[e]}' `).join()
 }
 
 export const dealWhereLike = (obj) => {
   return Object.keys(obj).map(e => (obj[e] === null || typeof obj[e] === 'undefined') ? '' : ` and ${e} like '%${obj[e]}%' `).join()
+}
+
+export const dealOrder = (str) => {
+  return str ? ` order by ${str}` : ''
 }
 
 export const dealResult = (flag, msg, data) => {

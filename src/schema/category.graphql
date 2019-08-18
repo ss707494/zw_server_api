@@ -10,6 +10,10 @@ type Category {
     parent_id: String
     full_parent_id: String
     number: Int
+    c3_id: String
+    c3_name: String
+    c2_id: String
+    c2_name: String
 }
 
 input CategoryInput {
@@ -19,10 +23,12 @@ input CategoryInput {
     sort: Int
     page: Int
     rows_per_page: Int
+    sort_type: String
     create_time: Date
     update_time: Date
     is_delete: Boolean
     is_enable: Boolean
     parent_id: String
     full_parent_id: String
+    number: Int
 }

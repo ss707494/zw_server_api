@@ -8,6 +8,6 @@ type Query {
     oneUser(id: String!): User
     totalUser(data: UserInput): Int
 
-    categoryTotal(CategoryInput: CategoryInput): Int
+    category_total(CategoryInput: CategoryInput): Int
     category_list(CategoryInput: CategoryInput): [Category]
 }
