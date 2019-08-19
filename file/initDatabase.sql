@@ -31,7 +31,7 @@ create table dw_server.user
 create table dw_server.category
 (
     id             varchar(40)  not null,
-    name           varchar(200) null,
+    name           varchar(200) not null,
     create_time    timestamp    null default current_timestamp,
     update_time    timestamp    null,
     is_delete      bool              default false,
@@ -42,6 +42,7 @@ create table dw_server.category
     parent_id      varchar(40) default '' ,
     full_parent_id varchar(200) default '',
     number integer auto_increment,
+    user_id varchar(40) null,
     key (number),
     unique (name)
 )

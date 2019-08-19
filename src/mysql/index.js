@@ -1,5 +1,5 @@
 import mysql from 'mysql'
-import { databaseConfig } from "../../config/database";
+import { databaseConfig } from "../config/database";
 
 let db = null
 
