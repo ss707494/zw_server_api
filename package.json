@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "initBuild": "babel-node file/initBuild.js",
     "startdev": "nodemon --exec babel-node src/server.js",
     "copySchema": "babel -d dist/schema src/schema --copy-files",
     "copyAssets": "babel -d dist/assets src/assets --copy-files",

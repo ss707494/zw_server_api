@@ -25,4 +25,5 @@ yarn-error.log*
 /config/*.local.js
 package-lock.json
 yarn.lock
-/build/upload/
+/build/upload/*
+/upload_file

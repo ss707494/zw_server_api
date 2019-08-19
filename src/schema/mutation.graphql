@@ -6,7 +6,6 @@ type Mutation {
     deleteOneUser(id: String!): String
     changePassword(data: ChangePassword!): String
 
-    addCategory(Category: CategoryInput): result
     save_category(Category: CategoryInput): result
 
 }

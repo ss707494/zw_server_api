@@ -2,7 +2,7 @@ import bodyParser from 'body-parser'
 import express from "express";
 import user from './control/user'
 import { getServer } from "./schema";
-import { resolveApp } from './common/pathConfig'
+import { resolveApp, uploadFilePath } from './common/pathConfig'
 import errorHandle, { catchErr } from './common/error'
 import { tokenHandle } from './common/tokenHandle'
 import { connectMysql } from "./mysql";
@@ -11,6 +11,7 @@ import { dealUpload } from "./common/upload";
 const app = express();
 
 app.use(express.static(resolveApp('build')))
+app.use(`/${uploadFilePath}`, express.static(resolveApp(uploadFilePath)))
 app.use(bodyParser.json())
 const init = async () => {
   try {

@@ -3,6 +3,8 @@ import path from 'path'
 
 export const distPath = process.env.NODE_ENV === 'production'? 'dist' : 'src'
 
+export const uploadFilePath = 'upload_file'
+
 export const join = path.join
 
 export const appDirectory = fs.realpathSync(process.cwd());

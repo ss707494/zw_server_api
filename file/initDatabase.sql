@@ -43,10 +43,18 @@ create table dw_server.category
     full_parent_id varchar(200) default '',
     number integer auto_increment,
     user_id varchar(40) null,
+    img_url varchar(400) default '',
     key (number),
     unique (name)
 )
     comment = '商品分类';
 
-drop table dw_server.user;
-drop table dw_server.category;
+;
+alter table dw_server.category 
+add img_url varchar(400) default ''
+;
+
+
+
+# drop table dw_server.user;
+# drop table dw_server.category;
