@@ -8,4 +8,6 @@ type Mutation {
 
     save_category(Category: CategoryInput): result
 
+    save_product(ProductInput: ProductInput): result
+    
 }

@@ -9,5 +9,6 @@ type result {
     flag: Int
     msg: String
     category: Category
+    product: Product
 }
 

@@ -52,7 +52,7 @@ where c1.is_delete = 0
           }, 'c1')}
           ${CategoryInput?.full_parent_id ? `and (p2.id = '${CategoryInput?.full_parent_id}' or p3.id = '${CategoryInput?.full_parent_id}') ` : ''}
 group by c1.id
-          ${dealOrder(CategoryInput?.sort_type)}
+          ${dealOrder(CategoryInput)}
           ${dealPage(CategoryInput)}
       `, [])
       return res
@@ -64,7 +64,7 @@ group by c1.id
       if (!Category?.name) {
         throw Error('name not empty')
       }
-      console.log(Category)
+      // console.log(Category)
       if (Category?.id) {
         // language=MySQL
         const sql = [`

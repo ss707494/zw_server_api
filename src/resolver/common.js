@@ -7,17 +7,23 @@ export const dealPage = (obj) => {
   return ''
 }
 
+const dealValueType = v => typeof v === 'string' ? `"${v}"` : v;
+
+export const dealSet = (obj) => {
+  return Object.keys(obj).map(e => ` ${e} = ${dealValueType(obj[e])} `).join(',')
+}
+
 export const dealWhere = (obj, alias) => {
-  console.log(obj)
-  return Object.keys(obj).map(e => (obj[e] === null || typeof obj[e] === 'undefined') ? '' : ` and ${alias ? `${alias}.` : ''}${e} = '${obj[e]}' `).join()
+  // console.log(obj)
+  return Object.keys(obj).map(e => (obj[e] === null || typeof obj[e] === 'undefined') ? '' : ` and ${alias ? `${alias}.` : ''}${e} = ${dealValueType(${obj[e]})} `).join()
 }
 
 export const dealWhereLike = (obj) => {
   return Object.keys(obj).map(e => (obj[e] === null || typeof obj[e] === 'undefined') ? '' : ` and ${e} like '%${obj[e]}%' `).join()
 }
 
-export const dealOrder = (str) => {
-  return str ? ` order by ${str}` : ''
+export const dealOrder = (obj) => {
+  return obj?.sort_type ? ` order by ${obj?.sort_type}` : ''
 }
 
 export const dealResult = (flag, msg, data) => {

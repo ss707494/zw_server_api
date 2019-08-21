@@ -10,4 +10,7 @@ type Query {
 
     category_total(CategoryInput: CategoryInput): Int
     category_list(CategoryInput: CategoryInput): [Category]
+
+    product_total(ListInput: CategoryInput): Int
+    product_list(ListInput: CategoryInput): [Category]
 }
