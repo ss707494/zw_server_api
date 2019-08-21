@@ -3,6 +3,9 @@ type Product {
     name: String
     create_time: Date
     update_time: Date
+    category_id: String
+    is_hot: Int
+    is_new: Int
     is_delete: Boolean
     remark: String
     stock: Float
@@ -30,11 +33,14 @@ input ProductImgInput {
 input ProductInput {
     id: String
     name: String
+    category_id: String
     remark: String
     sort: Int
     create_time: Date
     update_time: Date
     is_delete: Boolean
+    is_hot: Int
+    is_new: Int
     stock: Float
     unit: String
     weight: Float

@@ -56,6 +56,25 @@ group by c1.id
           ${dealPage(CategoryInput)}
       `, [])
       return res
+    },
+    async category_origin (...arg) {
+      const [, { id }] = arg
+      // language=MySQL
+      const sql = `
+          select c1.id,
+                 c2.id   as c2_id,
+                 c2.name as c2_name,
+                 c3.id   as c3_id,
+                 c3.name as c3_name
+          from dw_server.category c1
+                   left join dw_server.category c2 on c1.parent_id = c2.id
+                   left join dw_server.category c3 on c2.parent_id = c3.id
+          where c1.is_delete = 0
+${dealWhere({id}, 'c1')}
+      `
+      const [res] =await asyncQuery(sql)
+
+      return res?.[0]??{}
     }
   },
   Mutation: {
