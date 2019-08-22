@@ -2,7 +2,7 @@
   "name": "graphql",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/server.js",
   "scripts": {
     "initBuild": "babel-node file/initBuild.js",
     "startdev": "nodemon --exec babel-node src/server.js",
