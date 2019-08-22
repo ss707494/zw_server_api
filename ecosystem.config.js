@@ -1,6 +1,6 @@
 module.exports = {
   apps : [{
-    name: 'API',
+    name: 'dw_server',
     script: 'dist/server.js',
 
     args: 'one two',
