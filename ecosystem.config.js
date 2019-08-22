@@ -19,11 +19,11 @@ module.exports = {
   deploy : {
     production : {
       user : 'root',
-      host : '128.14.236.90',
+      host : '128.14.236.90.ipssh.net',
       ref  : 'origin/master',
       repo : 'https://github.com/ss707494/zw_server_api.git',
       path : '/usr/ss707494/zw_project/pm2_deploy',
-      'post-deploy' : 'npm install && npm run babel && pm2 reload ecosystem.config.js --env production'
+      'post-deploy' : 'yarn install && npm run babel && pm2 reload ecosystem.config.js --env production'
     }
   }
 };
