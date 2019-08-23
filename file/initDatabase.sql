@@ -108,7 +108,3 @@ change is_enable is_enable int default 0
 ;
 alter table dw_server.product
 add is_enable int default 0;
-select *
-from dw_server.product p
-
-where p.is_enable = 1;
