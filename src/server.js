@@ -1,12 +1,21 @@
+import { resolveApp, uploadFilePath } from './common/pathConfig'
+
+const setEnv = require('dotenv')
+;['.env.local', '.env'].forEach(e => {
+  setEnv.config({
+    path: resolveApp(e)
+  })
+})
+
 import bodyParser from 'body-parser'
 import express from "express";
 import user from './control/user'
 import { getServer } from "./schema";
-import { resolveApp, uploadFilePath } from './common/pathConfig'
 import errorHandle, { catchErr } from './common/error'
 import { tokenHandle } from './common/tokenHandle'
 import { connectMysql } from "./mysql";
 import { dealUpload } from "./common/upload";
+
 
 const app = express();
 

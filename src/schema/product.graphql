@@ -4,6 +4,7 @@ type Product {
     create_time: Date
     update_time: Date
     category_id: String
+    is_enable: Int
     is_hot: Int
     is_new: Int
     is_delete: Boolean
@@ -16,18 +17,30 @@ type Product {
     price_market: Float
     brand      : String
     number    : Int
+    c3_id: String
+    c3_name: String
+    c3_number: String
+    c2_id: String
+    c2_name: String
+    c2_number: String
+    c1_id: String
+    c1_name: String
+    c1_number: String
     imgs: [ProductImg]
 }
 
 type ProductImg {
     id: String
+    product_id: String
     number: Int
     url: String
+    name: String
 }
 input ProductImgInput {
     id: String
     number: Int
     url: String
+    name: String
 }
 
 input ProductInput {
@@ -38,6 +51,7 @@ input ProductInput {
     sort: Int
     create_time: Date
     update_time: Date
+    is_enable: Int
     is_delete: Boolean
     is_hot: Int
     is_new: Int

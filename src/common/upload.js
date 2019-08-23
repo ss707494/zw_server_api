@@ -24,6 +24,7 @@ const upload = multer({ storage })
 
 export const dealUpload = (app) => {
   app.use('/api/fileUpload', upload.array('FileData[]', 10), (req, res) => {
+    // console.log(req.body)
     const files = req.files
     files.forEach(file => {
       console.log('文件类型：%s', file.mimetype)

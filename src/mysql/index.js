@@ -4,7 +4,7 @@ import { databaseConfig } from "../config/database";
 let db = null
 
 export const connectMysql = () => {
-  db = mysql.createPool(databaseConfig)
+  db = mysql.createPool(databaseConfig())
   db.on('connection', function (db) {
     console.log('connected as id ' + db.threadId);
     // connection.query('SET SESSION auto_increment_increment=1')

@@ -1,6 +1,6 @@
 import { asyncQuery } from "../mysql";
 import uuidV1 from 'uuid/v1'
-import { dealOrder, dealPage, dealResult, dealWhere, dealWhereLike } from "./common";
+import { dealOrder, dealPage, dealResult, dealSet, dealWhere, dealWhereLike } from "./common";
 
 export default {
   Query: {
@@ -10,7 +10,7 @@ export default {
       const [res] = await asyncQuery(`
           select count(id) as num
           from dw_server.category
-          where is_delete = 0
+          where is_delete = 0 
           ${dealWhere({
         parent_id: CategoryInput?.parent_id,
       })}
@@ -61,11 +61,14 @@ group by c1.id
       const [, { id }] = arg
       // language=MySQL
       const sql = `
-          select c1.id,
+          select 
+                 c1.id, c1.number as number,
                  c2.id   as c2_id,
                  c2.name as c2_name,
+                 c2.number as c2_number,
                  c3.id   as c3_id,
-                 c3.name as c3_name
+                 c3.name as c3_name,
+                 c3.number as c3_number
           from dw_server.category c1
                    left join dw_server.category c2 on c1.parent_id = c2.id
                    left join dw_server.category c3 on c2.parent_id = c3.id
@@ -80,20 +83,23 @@ ${dealWhere({id}, 'c1')}
   Mutation: {
     save_category: async (...arg) => {
       const [, { Category }] = arg
-      if (!Category?.name) {
-        throw Error('name not empty')
-      }
       // console.log(Category)
       if (Category?.id) {
         // language=MySQL
         const sql = [`
             update dw_server.category
-            set name           = ?,
-                parent_id      = ?,
-                full_parent_id = ?,
-                img_url = ?,
-                update_time    = current_timestamp
-            where id = ?
+            set update_time = current_timestamp,
+${dealSet({
+          name: Category?.name,
+          full_parent_id: Category?.full_parent_id,
+          parent_id: Category?.parent_id,
+          img_url: Category?.img_url,
+          is_enable: Category?.is_enable,
+})}
+where 1 = 1
+      ${dealWhere({
+          id: Category?.id
+        })}
         `, [
           Category?.name,
           Category?.parent_id ?? '',

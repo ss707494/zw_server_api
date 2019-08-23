@@ -1,7 +1,7 @@
-export const databaseConfig = {
+export const databaseConfig = () => ({
   connectionLimit : 10,
-  host: 'localhost',
-  port: '3307',
-  user: 'root',
-  password: 'dw88913830',
-}
+  host: process.env.DATABASE_HOST ?? 'localhost',
+  port: process.env.DATABASE_PORT ?? '3307',
+  user: process.env.DATABASE_USERNAME ?? 'root',
+  password: process.env.DATABASE_PASSWORD ?? 'dw88913830',
+})
