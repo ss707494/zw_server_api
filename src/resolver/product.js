@@ -4,11 +4,34 @@ import { dealOrder, dealPage, dealResult, dealSet, dealWhere, dealWhereLike } fr
 
 export default {
   Query: {
+    product_total: async (...arg) => {
+      const [, { ListInput }] = arg
+      // language=MySQL
+      const sql = `
+select count(p.id) as num
+from dw_server.product p
+                   left join dw_server.category c1 on p.category_id = c1.id
+                   left join dw_server.category c2 on c1.parent_id = c2.id
+                   left join dw_server.category c3 on c2.parent_id = c3.id
+where p.is_delete = 0 
+${ListInput?.origin_category_id ? `and (c1.id = "${ListInput?.origin_category_id}" or c2.id = "${ListInput?.origin_category_id}" or c3.id = "${ListInput?.origin_category_id}")` : ''}
+${dealWhere({
+        category_id: ListInput?.category_id,
+      }, 'p')}
+${dealWhereLike({
+        name: ListInput?.name,
+        number: ListInput?.number,
+      }, 'p')}
+      `
+      const [res] = await asyncQuery(sql)
+      return res?.[0]?.num ?? 0
+    },
     product_list: async (...arg) => {
       const [, { ListInput }] = arg
       // language=MySQL
       const sql = `
 select p.id, p.name, p.create_time, p.update_time, p.is_delete, p.remark, p.is_hot, p.is_new, p.stock, p.unit, p.weight, p.price_in, p.price_out, p.price_market, p.brand, p.number, p.category_id,p.is_enable,
+       p.sort,
                  c1.name as c1_name,
                  c1.id as c1_id, 
                  c1.number as c1_number,
@@ -23,6 +46,7 @@ from dw_server.product p
                    left join dw_server.category c2 on c1.parent_id = c2.id
                    left join dw_server.category c3 on c2.parent_id = c3.id
 where p.is_delete = 0 
+${ListInput?.origin_category_id ? `and (c1.id = "${ListInput?.origin_category_id}" or c2.id = "${ListInput?.origin_category_id}" or c3.id = "${ListInput?.origin_category_id}")` : ''}
 ${dealWhere({
         category_id: ListInput?.category_id,
       }, 'p')}
@@ -30,7 +54,7 @@ ${dealWhereLike({
   name: ListInput?.name,
   number: ListInput?.number,
 }, 'p')}
-${dealOrder(ListInput)}
+${dealOrder(ListInput, 'order by p.sort, p.id ')} 
 ${dealPage(ListInput)}
       `
       const [res] = await asyncQuery(sql)
@@ -52,7 +76,6 @@ ${dealPage(ListInput)}
           ]
         })
       }
-
       return res
     }
   },

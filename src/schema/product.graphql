@@ -27,6 +27,7 @@ type Product {
     c1_name: String
     c1_number: String
     imgs: [ProductImg]
+    sort: Int
 }
 
 type ProductImg {
@@ -48,7 +49,6 @@ input ProductInput {
     name: String
     category_id: String
     remark: String
-    sort: Int
     create_time: Date
     update_time: Date
     is_enable: Int
@@ -67,4 +67,7 @@ input ProductInput {
     rows_per_page: Int
     sort_type: String
     imgs: [ProductImgInput]
+    origin_category_id: String
+    sort: Int
+    user_id: String
 }

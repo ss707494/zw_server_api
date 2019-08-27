@@ -22,8 +22,8 @@ export const dealWhereLike = (obj, alias) => {
   return Object.keys(obj).map(e => (obj[e] === null || typeof obj[e] === 'undefined') ? '' : ` and ${alias ? `${alias}.` : ''}${e} like '%${obj[e]}%' `).join('')
 }
 
-export const dealOrder = (obj) => {
-  return obj?.sort_type ? ` order by ${obj?.sort_type}` : ''
+export const dealOrder = (obj, init) => {
+  return obj?.sort_type ? ` order by ${obj?.sort_type}` : init || ''
 }
 
 export const dealResult = (flag, msg, data) => {

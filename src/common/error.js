@@ -6,12 +6,12 @@ export const catchErr = fn => async (req, res, next) => {
   }
 }
 
-export default function(err, req, res, next) {
+export default function(err, req, res) {
   if (err.name === 'UnauthorizedError') {
-    res.status(401).send('invalid token...');
+    res.status(401).send(err.message || 'invalid token...');
   }
   if (err) {
     res.status(500)
-    return res.json({ error: err })
+    // return res.json({ error: err })
   }
 }

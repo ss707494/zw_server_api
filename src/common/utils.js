@@ -1,9 +1,9 @@
 import jwt from 'jsonwebtoken'
 import { secret } from '../jwtConfig'
-import { camelCase, map, mapKeys } from "lodash";
+import { camelCase, map, mapKeys, omit } from "lodash";
 
 export const signToken = (body) => {
-  const { iat, exp, ...data } = body
+  const data = omit(body, ['iat', 'exp'])
   return ({
     token: `Bearer ${jwt.sign(data, secret, { expiresIn: '12h' })}`,
     refreshtoken: `${jwt.sign(data, secret, { expiresIn: '30 days' })}`

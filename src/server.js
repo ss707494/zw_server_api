@@ -9,9 +9,9 @@ const setEnv = require('dotenv')
 
 import bodyParser from 'body-parser'
 import express from "express";
-import user from './control/user'
+import { dealLogin } from './control/user'
 import { getServer } from "./schema";
-import errorHandle, { catchErr } from './common/error'
+import errorHandle from './common/error'
 import { tokenHandle } from './common/tokenHandle'
 import { connectMysql } from "./mysql";
 import { dealUpload } from "./common/upload";
@@ -29,7 +29,7 @@ const init = async () => {
 
     server.applyMiddleware({ app, path: '/graphQL' })
 
-    app.use('/api/login', catchErr(user.login))
+    dealLogin(app)
 
     app.use('/api(/*)?', tokenHandle)
 

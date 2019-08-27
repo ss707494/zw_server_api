@@ -39,4 +39,6 @@ input CategoryInput {
     full_parent_id: String
     number: Int
     img_url: String
+    origin_category_id: String
+    user_id: String
 }
