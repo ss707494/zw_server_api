@@ -6,12 +6,16 @@ export const catchErr = fn => async (req, res, next) => {
   }
 }
 
-export default function(err, req, res) {
+// noinspection JSUnusedLocalSymbols
+export default function(err, req, res, next) {
   if (err.name === 'UnauthorizedError') {
-    res.status(401).send(err.message || 'invalid token...');
-  }
-  if (err) {
-    res.status(500)
+    res.status(401).json({
+      error: err.message || 'invalid token...'
+    });
+  } else if (err) {
+    res.status(500).json({
+      error: err
+    })
     // return res.json({ error: err })
   }
 }

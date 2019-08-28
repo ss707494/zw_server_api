@@ -1,13 +1,9 @@
-import { merge } from 'lodash'
 import { ApolloServer, makeExecutableSchema } from 'apollo-server-express'
-import fs from 'fs'
 import jwt from 'jsonwebtoken'
-import { importSchema } from 'graphql-import'
 import { fileLoader, mergeTypes, mergeResolvers } from 'merge-graphql-schemas'
 import { secret } from './jwtConfig'
-import { resolveApp, distPath, join } from './common/pathConfig'
+import { join } from './common/pathConfig'
 import { getMysqlDb } from './mysql'
-
 
 const typeDefs = mergeTypes(fileLoader(join(__dirname, 'schema/**/*.graphql')), {all: true})
 const resolvers = mergeResolvers(fileLoader(join(__dirname, 'resolver/**/*.js'), { extensions: ['.js'] }))

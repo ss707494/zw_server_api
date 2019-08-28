@@ -51,6 +51,7 @@ select * from dw_server.user where name = "${name}"
   }
 }
 
+// noinspection JSUnusedLocalSymbols
 export const getTokenRefresh = async (req, res, next) => {
   if (!req.body?.refreshtoken) {
     res.json({
@@ -61,7 +62,7 @@ export const getTokenRefresh = async (req, res, next) => {
   }
   jwt.verify(req.body?.refreshtoken, secret, function(err, decoded1) {
     if (err) {
-      return next(new UnauthorizedError('invalid_token', err));
+      throw (new UnauthorizedError('invalid_token', err));
     }
     const { token, refreshtoken } = signToken(decoded1)
     res.json({

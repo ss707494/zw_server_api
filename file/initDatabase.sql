@@ -112,3 +112,5 @@ add is_enable int default 0;
 # 2019年8月27日
 alter table dw_server.product
 add sort int default 0;
+alter table dw_server.user
+add type int default 0;

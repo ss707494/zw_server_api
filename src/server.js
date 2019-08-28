@@ -22,6 +22,7 @@ const app = express();
 app.use(express.static(resolveApp('build')))
 app.use(`/${uploadFilePath}`, express.static(resolveApp(uploadFilePath)))
 app.use(bodyParser.json())
+
 const init = async () => {
   try {
     await connectMysql()
