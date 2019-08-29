@@ -10,5 +10,6 @@ type result {
     msg: String
     category: Category
     product: Product
+    shopCart: ShopCart
 }
 

@@ -1,5 +1,7 @@
 type Mutation {
 
+    addToShopCart(ShopCartInput: ShopCartInput): result
+
     importAllUser(data: String!): String
     updateUser(data: UserInput!): User
     updateUserAuth(id: String!, auth: String!): String
@@ -9,5 +11,5 @@ type Mutation {
     save_category(Category: CategoryInput): result
 
     save_product(ProductInput: ProductInput): result
-    
+
 }

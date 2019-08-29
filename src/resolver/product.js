@@ -2,6 +2,25 @@ import { asyncQuery } from '../mysql'
 import uuidV1 from 'uuid/v1'
 import { dealOrder, dealPage, dealResult, dealSet, dealWhere, dealWhereLike } from './common'
 
+export const queryProductImg = async (productList) => {
+  // 查询商品图片
+  // language=MySQL
+  const getImgSql = `
+          select p.id as product_id, i.name, i.url, i.number, i.id as id
+          from dw_server.product_img i
+                   left join dw_server.product p on i.product_id = p.id
+          where i.product_id in (${productList.map(e => `"${e.id}"`).join(',')})
+      `
+  const [imgRes] = await asyncQuery(getImgSql)
+  imgRes.forEach(e => {
+    const item = productList.find(e1 => e.product_id === e1.id)
+    item.imgs = [
+      ...(item.imgs ?? []),
+      e
+    ]
+  })
+}
+
 export default {
   Query: {
     product_total: async (...arg) => {
@@ -59,22 +78,7 @@ ${dealPage(ListInput)}
       `
       const [res] = await asyncQuery(sql)
       if (res.length) {
-        // 查询商品图片
-        // language=MySQL
-        const getImgSql = `
-          select p.id as product_id, i.name, i.url, i.number, i.id as id
-          from dw_server.product_img i
-                   left join dw_server.product p on i.product_id = p.id
-          where i.product_id in (${res.map(e => `"${e.id}"`).join(',')})
-      `
-        const [imgRes] = await asyncQuery(getImgSql)
-        imgRes.forEach(e => {
-          const item = res.find(e1 => e.product_id === e1.id)
-          item.imgs = [
-            ...(item.imgs ?? []),
-            e
-          ]
-        })
+        await queryProductImg(res)
       }
       return res
     }

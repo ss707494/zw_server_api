@@ -1,0 +1,15 @@
+
+type ShopCart {
+    id: String
+    name: String
+    create_time: Date
+    update_time: Date
+    product_id: String
+    product: Product
+}
+
+input ShopCartInput {
+    id: String
+    product_id: String
+    number: Int
+}

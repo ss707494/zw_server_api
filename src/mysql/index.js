@@ -38,10 +38,10 @@ export const asyncQuery = async (sql, values = []) => {
   return new Promise((resolve, reject) => {
     db.query(sql, values, (err, res, fields) => {
       if (err) {
-        console.log(`mysql:error:::::::ss:: ${err}`)
+        console.log(`mysql:error:::::::sslog:: ${err}`)
         reject(err)
       }
-      console.log(`mysql:log:::::::ss:: ${JSON.stringify(res)}`)
+      console.log(`mysql:log:::::::sslog:: ${JSON.stringify(res)}`)
       resolve([res, fields])
     })
   })

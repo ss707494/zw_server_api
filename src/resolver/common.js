@@ -26,7 +26,7 @@ export const dealOrder = (obj, init) => {
   return obj?.sort_type ? ` order by ${obj?.sort_type}` : init || ''
 }
 
-export const dealResult = (flag, msg, data) => {
+export const dealResult = (flag = 1, msg = '', data) => {
   return {
     flag,
     msg,

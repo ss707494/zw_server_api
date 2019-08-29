@@ -68,8 +68,8 @@ create table dw_server.product
     update_time  timestamp         default current_timestamp,
     is_delete    bool              default false,
     primary key (id),
-    category_id           varchar(40)  not null,
-    foreign key (category_id) references dw_server.category(id),
+    category_id  varchar(40)  not null,
+    foreign key (category_id) references dw_server.category (id),
     remark       varchar(200)      default '',
     is_hot       int               default 0,
     is_new       int               default 0,
@@ -95,8 +95,8 @@ create table dw_server.product_img
     is_delete   bool              default false,
     primary key (id),
     product_id  varchar(40)  not null,
-    foreign key (product_id) references dw_server.product(id),
-    number      int default 1 comment '图片顺序',
+    foreign key (product_id) references dw_server.product (id),
+    number      int               default 1 comment '图片顺序',
     unique (number, product_id),
     url         varchar(400)
 );
@@ -104,13 +104,31 @@ create table dw_server.product_img
 #  2019年8月23日
 
 alter table dw_server.category
-change is_enable is_enable int default 0
+    change is_enable is_enable int default 0
 ;
 alter table dw_server.product
-add is_enable int default 0;
+    add is_enable int default 0;
 
 # 2019年8月27日
 alter table dw_server.product
-add sort int default 0;
+    add sort int default 0;
 alter table dw_server.user
-add type int default 0;
+    add type int default 0;
+
+# 2019年8月29日
+# drop table dw_server.shop_cart;
+create table dw_server.shop_cart
+(
+    id   varchar(40)  not null,
+    name varchar(200) null,
+    create_time timestamp null default current_timestamp,
+    update_time timestamp null,
+    is_delete bool default false,
+    primary key (id),
+    user_id varchar(40)  not null,
+    foreign key (user_id) references dw_server.user (id),
+    product_id varchar(40)  not null,
+    foreign key (product_id) references dw_server.product (id),
+    number int default 1,
+    unique (user_id, product_id)
+)

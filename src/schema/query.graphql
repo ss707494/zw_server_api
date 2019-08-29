@@ -1,5 +1,7 @@
 type Query {
 
+    userInfo: User
+
     getPassCode(pass: String!): String
 
     allDataUser: String
@@ -14,4 +16,7 @@ type Query {
 
     product_total(ListInput: ProductInput): Int
     product_list(ListInput: ProductInput): [Product]
+
+    shop_cart_list(ShopCartInput: ShopCartInput): [ShopCart]
+
 }

@@ -1,8 +1,9 @@
 type User {
     id: String
     name: String
-    auth: String
-    message: String
+    type: String
+    create_time: Date
+    update_time: Date
 }
 
 input UserSortInput {
