@@ -4,6 +4,9 @@ type User {
     type: String
     create_time: Date
     update_time: Date
+    user_name: String
+    phone: String
+    email: String
 }
 
 input UserSortInput {
@@ -24,4 +27,10 @@ input ChangePassword {
     id: String
     verification: String
     newPass: String
+}
+
+type UserCoin {
+    current_mouth_icons: Float
+    next_mouth_icons: Float
+    card_number: Int
 }

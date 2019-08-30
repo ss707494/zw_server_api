@@ -6,10 +6,20 @@ type ShopCart {
     update_time: Date
     product_id: String
     product: Product
+    is_next: Int
+    number: Int
 }
 
 input ShopCartInput {
     id: String
     product_id: String
     number: Int
+    is_next: Int
+}
+
+input SaveShopCartInput {
+    id: String!
+    product_id: String
+    number: Int!
+    is_next: Int!
 }

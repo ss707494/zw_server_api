@@ -1,6 +1,7 @@
 type Query {
 
-    userInfo: User
+    user_info: User
+    user_coin: UserCoin
 
     getPassCode(pass: String!): String
 
@@ -18,5 +19,7 @@ type Query {
     product_list(ListInput: ProductInput): [Product]
 
     shop_cart_list(ShopCartInput: ShopCartInput): [ShopCart]
+
+    order_list(id: String): [Order]
 
 }

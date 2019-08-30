@@ -1,0 +1,10 @@
+type Order {
+    id: String
+    name: String
+    create_time: Date
+    update_time: Date
+}
+
+input OrderListInput {
+    id: String
+}
