@@ -18,8 +18,9 @@ ${dealWhere({
       })}
 `
       const [shopList] = await asyncQuery(sql)
-      // language=MySQL
-      const productListSql = `
+      if (shopList.length) {
+        // language=MySQL
+        const productListSql = `
           select p.id,
                  p.name,
                  p.create_time,
@@ -43,14 +44,14 @@ ${dealWhere({
           where p.is_delete = 0
             and p.id in (?)
       `
-      const [productList] = await asyncQuery(productListSql, [shopList.map(e => e.product_id)])
-      if (productList.length) {
-        await queryProductImg(productList)
+        const [productList] = await asyncQuery(productListSql, [shopList.map(e => e.product_id)])
+        if (productList.length) {
+          await queryProductImg(productList)
+        }
+        shopList.forEach(e => {
+          e.product = productList.find(e1 => e.product_id === e1.id)
+        })
       }
-      shopList.forEach(e => {
-        e.product = productList.find(e1 => e.product_id === e1.id)
-      })
-
       return shopList
     },
   },

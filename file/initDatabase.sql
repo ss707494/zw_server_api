@@ -145,7 +145,7 @@ create table dw_server.shop_cart
 # add unique (name, is_delete);
 # alter table dw_server.product
 #     drop foreign key product_ibfk_1
-# ;
+;
 # alter table dw_server.product_img
 # drop foreign key product_img_ibfk_1;
 
@@ -192,4 +192,16 @@ create table dw_server.order
 
     primary key (id)
 )
+;
+
+insert dw_server.user
+    (id, name, password)
+values (uuid(), 'admin', '$2b$10$PscZTK6/mAdLCXhqp5hpBuoV4VdpAniob7/815d6SuPQpQdP50Nim'),
+       (uuid(), 'usero', '$2b$10$PscZTK6/mAdLCXhqp5hpBuoV4VdpAniob7/815d6SuPQpQdP50Nim')
+;
+
+insert dw_server.user_info
+(id, name, phone, email, user_id)
+values
+(uuid(), 'ss707494', '88913433', 'ss707494@163.com', ?)
 ;
