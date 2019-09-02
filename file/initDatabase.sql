@@ -162,6 +162,7 @@ create table dw_server.user_info
     primary key (id)
 );
 
+# drop table dw_server.user_address;
 create table dw_server.user_address
 (
     id          varchar(40)  not null,
@@ -170,38 +171,76 @@ create table dw_server.user_address
     update_time timestamp    null,
     is_delete   int               default 0,
     zip         varchar(20)       default '' comment '邮编',
-    province    varchar(40)       default '',
-    city        varchar(40)       default '',
-    district    varchar(40)       default '',
+    province    varchar(40)       default '' comment '省',
+    city        varchar(40)       default '' comment '城市',
+    district    varchar(40)       default '' comment '区',
     address     varchar(200)      default '' comment '详细地址',
     is_default  int               default 0,
     user_id     varchar(40)  not null,
+    contact_information varchar(40) default '',
 
     primary key (id)
 );
 
 # create schema
-create table dw_server.order
+create table dw_server.r_order_user
 (
     id          varchar(40)  not null,
     name        varchar(200) null,
     create_time timestamp    null default current_timestamp,
     update_time timestamp    null,
+    is_delete   int               default 0,
     user_id     varchar(40)  not null comment '用户id',
-    number      varchar(40)       default '' comment '订单编号',
+    order_id    varchar(40)  not null comment '订单id',
 
     primary key (id)
 )
 ;
 
-insert dw_server.user
-    (id, name, password)
-values (uuid(), 'admin', '$2b$10$PscZTK6/mAdLCXhqp5hpBuoV4VdpAniob7/815d6SuPQpQdP50Nim'),
-       (uuid(), 'usero', '$2b$10$PscZTK6/mAdLCXhqp5hpBuoV4VdpAniob7/815d6SuPQpQdP50Nim')
+create table dw_server.r_order_product
+(
+    id          varchar(40)  not null,
+    name        varchar(200) null,
+    create_time timestamp    null default current_timestamp,
+    update_time timestamp    null,
+    is_delete   int               default 0,
+
+    order_id    varchar(40)  not null comment '订单id',
+    product_id  varchar(40)  not null,
+
+    primary key (id)
+);
+
+create table dw_server.order_info
+(
+    id                     varchar(40)  not null,
+    name                   varchar(200) null,
+    create_time            timestamp    null default current_timestamp,
+    update_time            timestamp    null,
+    is_delete              int               default 0,
+
+    number                 varchar(40)  not null comment '订单编号',
+    state                  int               default 1 comment '订单状态',
+    actually_paid          float             default 0 comment '实付',
+    address_id             varchar(40)  not null comment '送货地址id',
+    payment_method_card_id varchar(40)  not null comment '支付方式信用卡id',
+    subtotal               float             default 0 comment '小计',
+    coupon_discount        float             default 0 comment '优惠券折扣',
+    vip_discount           float             default 0 comment '达人卡折扣',
+    transportation_costs   float             default 0 comment '运费',
+    sale_tax               float             default 0 comment '消费税',
+
+    primary key (id)
+)
 ;
 
-insert dw_server.user_info
-(id, name, phone, email, user_id)
-values
-(uuid(), 'ss707494', '88913433', 'ss707494@163.com', ?)
-;
+# insert dw_server.user
+#     (id, name, password)
+# values (uuid(), 'admin', '$2b$10$PscZTK6/mAdLCXhqp5hpBuoV4VdpAniob7/815d6SuPQpQdP50Nim'),
+#        (uuid(), 'usero', '$2b$10$PscZTK6/mAdLCXhqp5hpBuoV4VdpAniob7/815d6SuPQpQdP50Nim')
+# ;
+#
+# insert dw_server.user_info
+#     (id, name, phone, email, user_id)
+# values (uuid(), 'ss707494', '88913433', 'ss707494@163.com', ?)
+# ;
