@@ -88,7 +88,7 @@ ${dealWhere({id}, 'c1')}
         // language=MySQL
         const sql = [`
             update dw_server.category
-            set update_time = current_timestamp,
+            set update_time = current_timestamp
 ${dealSet({
           name: Category?.name,
           full_parent_id: Category?.full_parent_id,

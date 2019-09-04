@@ -155,6 +155,7 @@ create table dw_server.user_info
     name        varchar(200) null,
     create_time timestamp    null default current_timestamp,
     update_time timestamp    null,
+    is_delete              int               default 0,
     user_id     varchar(40)  not null,
     phone       varchar(40)       default '',
     email       varchar(100)      default '',
@@ -206,7 +207,7 @@ create table dw_server.r_order_product
     is_delete   int               default 0,
 
     order_id    varchar(40)  not null comment '订单id',
-    product_id  varchar(40)  not null,
+    product_id  varchar(40)  not null comment '产品id',
 
     primary key (id)
 );
@@ -244,3 +245,23 @@ create table dw_server.order_info
 #     (id, name, phone, email, user_id)
 # values (uuid(), 'ss707494', '88913433', 'ss707494@163.com', ?)
 # ;
+
+# 2019年9月4日
+create table dw_server.user_pay_card
+(
+    id                     varchar(40)  not null,
+    name                   varchar(200) null,
+    create_time            timestamp    null default current_timestamp,
+    update_time            timestamp    null,
+    is_delete              int               default 0,
+
+    number varchar(40) not null,
+    code varchar(10) not null,
+    user_name varchar(50) not null ,
+    address_detail varchar(200) default '',
+    zip_code varchar(20) default '',
+    city varchar(20) default '',
+    contact varchar(20) default '',
+
+    primary key (id)
+);

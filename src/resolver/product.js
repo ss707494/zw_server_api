@@ -91,7 +91,7 @@ ${dealPage(ListInput)}
         // language=MySQL
         const sql = `
 update dw_server.product
-set update_time = current_timestamp,
+set update_time = current_timestamp
     ${dealSet(otherProduct)}
 where 1 = 1
       ${dealWhere({
@@ -130,7 +130,7 @@ update_time = current_timestamp,
         const sql = `
 insert into dw_server.product
 set update_time = current_timestamp,
-    id = "${id}", 
+    id = "${id}" 
     ${dealSet(otherProduct)}
         `
         const res = await asyncQuery(sql)

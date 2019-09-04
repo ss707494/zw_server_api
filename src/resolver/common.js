@@ -10,7 +10,7 @@ export const dealPage = (obj) => {
 const dealValueType = v => typeof v === 'string' ? `"${v}"` : v;
 
 export const dealSet = (obj) => {
-  return Object.keys(obj).filter(e => obj[e]).map(e => ` ${e} = ${dealValueType(obj[e])} `).join(',')
+  return Object.keys(obj).filter(e => obj[e]).map(e => ` , ${e} = ${dealValueType(obj[e])} `).join('')
 }
 
 export const dealWhere = (obj, alias) => {

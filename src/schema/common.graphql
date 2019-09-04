@@ -11,5 +11,6 @@ type result {
     category: Category
     product: Product
     shopCart: ShopCart
+    address: Address
 }
 

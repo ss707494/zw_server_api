@@ -22,4 +22,6 @@ type Query {
 
     order_list(id: String): [Order]
 
+    address_list(addressInput: AddressInput): [Address]
+
 }

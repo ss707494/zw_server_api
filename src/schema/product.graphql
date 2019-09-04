@@ -7,7 +7,7 @@ type Product {
     is_enable: Int
     is_hot: Int
     is_new: Int
-    is_delete: Boolean
+    is_delete: Int
     remark: String
     stock: Float
     unit: String
