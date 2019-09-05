@@ -70,9 +70,9 @@ ${dealWhere({
         category_id: ListInput?.category_id,
       }, 'p')}
 ${dealWhereLike({
-  name: ListInput?.name,
-  number: ListInput?.number,
-}, 'p')}
+        name: ListInput?.name,
+        number: ListInput?.number,
+      }, 'p')}
 ${dealOrder(ListInput, 'order by p.sort, p.id ')} 
 ${dealPage(ListInput)}
       `
