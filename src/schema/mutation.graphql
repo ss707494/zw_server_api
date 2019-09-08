@@ -15,5 +15,6 @@ type Mutation {
     save_product(ProductInput: ProductInput): result
 
     save_address(editAddressInput: EditAddressInput): result
+    set_default_address(defaultId: String!): result
 
 }

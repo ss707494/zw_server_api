@@ -10,13 +10,13 @@ create table dw_server.user
 (
     id          varchar(40)  not null,
     name        varchar(200) null,
-    primary key (id),
-    unique index id_unique (id asc) visible,
-    unique (id, name),
     create_time timestamp    null default current_timestamp,
     update_time timestamp    null,
     is_delete   int               default 0,
-    password    varchar(200) null comment '密码'
+    password    varchar(200) null comment '密码',
+    type int default 0,
+
+    primary key (id)
 )
     comment = '用户';
 
@@ -196,4 +196,14 @@ create table dw_server.user_pay_card
 
     primary key (id)
 ) comment '支付信用卡信息';
+
+insert dw_server.user
+    (id, name, password)
+values (uuid(), 'admin', '$2b$10$PscZTK6/mAdLCXhqp5hpBuoV4VdpAniob7/815d6SuPQpQdP50Nim'),
+       (uuid(), 'usero', '$2b$10$PscZTK6/mAdLCXhqp5hpBuoV4VdpAniob7/815d6SuPQpQdP50Nim')
+;
+insert dw_server.user_info
+    (id, name, phone, email, user_id)
+values (uuid(), 'ss707494', '88913433', 'ss707494@163.com', ?)
+;
 
