@@ -4,28 +4,27 @@ import uuidV1 from "uuid/v1";
 
 export default {
   Query: {
-    address_list: async (...arg) => {
+    pay_card_list: async (...arg) => {
       const [, {}, { decoded: user }] = arg
       // language=MySQL
       const getList = `
-          select a.id,
-                 a.name,
-                 a.id,
+          select id,
                  name,
                  create_time,
                  update_time,
                  is_delete,
-                 zip,
-                 province,
-                 city,
-                 district,
-                 address,
-                 is_default,
                  user_id,
-                 contact_information
-          from dw_server.user_address a
+                 number,
+                 code,
+                 user_name,
+                 address_detail,
+                 zip_code,
+                 city,
+                 contact,
+                 is_default
+          from dw_server.user_pay_card a
           where is_delete = 0
-            and user_id = ?
+            and  user_id= ?
           order by create_time
       `
       const [res] = await asyncQuery(getList, [user.id])
@@ -34,11 +33,11 @@ export default {
     },
   },
   Mutation: {
-    set_default_address: async (...arg) => {
+    set_default_pay_card: async (...arg) => {
       const [, { defaultId }, { decoded: user }] = arg
       // language=MySQL
       const setAll = `
-          update dw_server.user_address
+          update dw_server.user_pay_card
           set is_default = 0
           where is_default = 1
             and user_id = ?
@@ -46,7 +45,7 @@ export default {
       await asyncQuery(setAll, [user.id])
       // language=MySQL
       const setOne = `
-          update dw_server.user_address
+          update dw_server.user_pay_card
           set is_default = 1
           where id = ?
             and user_id = ?
@@ -54,40 +53,39 @@ export default {
       const [res] = await asyncQuery(setOne, [defaultId, user.id])
       return dealResult(res?.affectedRows ?? 0)
     },
-    save_address: async (...arg) => {
-      const [, { editAddressInput }, { decoded: user }] = arg
+    save_pay_card: async (...arg) => {
+      const [, { editPayCardInput }, { decoded: user }] = arg
 
-      let id
-      if (editAddressInput.id) {
-        id = editAddressInput.id
+      let id, res
+      if (editPayCardInput.id) {
+        id = editPayCardInput.id
         // language=MySQL
-        // noinspection SqlWithoutWhere
         const updateAddress = `
-update dw_server.user_address
+update dw_server.user_pay_card
 set update_time = current_timestamp
 ${dealSet({
-          ...editAddressInput,
+          ...editPayCardInput,
         })}
 where 1 = 1 
 and id = ?
 `
-        await asyncQuery(updateAddress, [id])
+        res = await asyncQuery(updateAddress, [id])
       } else {
         id = uuidV1()
         // language=MySQL
         const insertAddress = `
-insert into dw_server.user_address
+insert into dw_server.user_pay_card
     set update_time = current_timestamp  
 ${dealSet({
-          ...editAddressInput,
+          ...editPayCardInput,
           id,
           user_id: user.id
         })}
 `
-        await asyncQuery(insertAddress)
+        res = await asyncQuery(insertAddress)
       }
-      return dealResult(1, '', {
-        address: {
+      return dealResult(res[0]?.affectedRows ?? 0, '', {
+        payCard: {
           id
         }
       })

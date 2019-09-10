@@ -17,4 +17,7 @@ type Mutation {
     save_address(editAddressInput: EditAddressInput): result
     set_default_address(defaultId: String!): result
 
+    save_pay_card(editPayCardInput: EditPayCardInput): result
+    set_default_pay_card(defaultId: String!): result
+
 }

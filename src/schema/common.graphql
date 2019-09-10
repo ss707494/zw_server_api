@@ -12,5 +12,6 @@ type result {
     product: Product
     shopCart: ShopCart
     address: Address
+    payCard: PayCard
 }
 

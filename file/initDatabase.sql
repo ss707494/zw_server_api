@@ -5,6 +5,7 @@
 #     is_delete int default 0,
 #     primary key (id),
 
+create schema dw_server;
 use dw_server;
 create table dw_server.user
 (
@@ -173,6 +174,7 @@ create table dw_server.order_info
     vip_discount           float             default 0 comment '达人卡折扣',
     transportation_costs   float             default 0 comment '运费',
     sale_tax               float             default 0 comment '消费税',
+    order_id    varchar(40)  not null comment '订单id',
 
     primary key (id)
 )
@@ -186,13 +188,15 @@ create table dw_server.user_pay_card
     update_time            timestamp    null,
     is_delete              int               default 0,
 
-    number varchar(40) not null,
-    code varchar(10) not null,
-    user_name varchar(50) not null ,
-    address_detail varchar(200) default '',
-    zip_code varchar(20) default '',
-    city varchar(20) default '',
-    contact varchar(20) default '',
+    user_id     varchar(40)  not null,
+    number varchar(40) not null comment '卡号',
+    code varchar(10) not null comment '四位号码',
+    user_name varchar(50) not null comment '姓名',
+    address_detail varchar(200) default '' comment '具体地址',
+    zip_code varchar(20) default '' comment '邮编',
+    city varchar(20) default '' comment '城市',
+    contact varchar(20) default '' comment '联系方式',
+    is_default  int               default 0,
 
     primary key (id)
 ) comment '支付信用卡信息';
@@ -202,6 +206,7 @@ insert dw_server.user
 values (uuid(), 'admin', '$2b$10$PscZTK6/mAdLCXhqp5hpBuoV4VdpAniob7/815d6SuPQpQdP50Nim'),
        (uuid(), 'usero', '$2b$10$PscZTK6/mAdLCXhqp5hpBuoV4VdpAniob7/815d6SuPQpQdP50Nim')
 ;
+select id, name from dw_server.user ;
 insert dw_server.user_info
     (id, name, phone, email, user_id)
 values (uuid(), 'ss707494', '88913433', 'ss707494@163.com', ?)

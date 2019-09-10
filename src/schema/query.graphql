@@ -24,4 +24,6 @@ type Query {
 
     address_list(addressInput: AddressInput): [Address]
 
+    pay_card_list(payCardInput: PayCardInput): [PayCard]
+
 }

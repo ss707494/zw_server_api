@@ -32,7 +32,7 @@ input AddressInput {
 
 input EditAddressInput {
     id: String,
-    name: String!,
+    name: String,
     create_time: String,
     update_time: Date,
     is_delete: Int,
