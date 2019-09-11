@@ -3,8 +3,59 @@ type Order {
     name: String
     create_time: Date
     update_time: Date
+    is_delete: Int
+    number: String
+    state: Int
+    actually_paid: Float
+    address_id: String
+    payment_method_card_id: String
+    subtotal: Float
+    coupon_discount: Float
+    vip_discount: Float
+    transportation_costs: Float
+    sale_tax: Float
 }
 
-input OrderListInput {
+input SaveOrderInput {
     id: String
+    name: String
+    create_time: Date
+    update_time: Date
+    is_delete: Int
+    number: String
+    state: Int
+    actually_paid: Float
+    address_id: String
+    payment_method_card_id: String
+    subtotal: Float
+    coupon_discount: Float
+    vip_discount: Float
+    transportation_costs: Float
+    sale_tax: Float
+    order_id: String
+    product: [OrderProduct]
+    user: [OrderUser]
 }
+
+input OrderProduct {
+    id: String
+    name: String
+    create_time: Date
+    update_time: Date
+    is_delete: Int
+    order_id: String
+    product_id: String
+    count: Float
+}
+
+input OrderUser {
+    id: String
+    name: String
+    create_time: Date
+    update_time: Date
+    is_delete: Int
+    user_id: String
+    order_id: String
+}
+
+

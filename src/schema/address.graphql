@@ -12,6 +12,7 @@ type Address {
     is_default: Int,
     user_id: String,
     contact_information: String
+    contact_user_name: String
 }
 
 input AddressInput {
@@ -28,6 +29,7 @@ input AddressInput {
     is_default: Int,
     user_id: String,
     contact_information: String
+    contact_user_name: String
 }
 
 input EditAddressInput {
@@ -44,5 +46,6 @@ input EditAddressInput {
     is_default: Int,
     user_id: String,
     contact_information: String
+    contact_user_name: String
 }
 

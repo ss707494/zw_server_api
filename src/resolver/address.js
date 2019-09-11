@@ -22,7 +22,8 @@ export default {
                  address,
                  is_default,
                  user_id,
-                 contact_information
+                 contact_information,
+                 contact_user_name
           from dw_server.user_address a
           where is_delete = 0
             and user_id = ?

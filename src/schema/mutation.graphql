@@ -20,4 +20,6 @@ type Mutation {
     save_pay_card(editPayCardInput: EditPayCardInput): result
     set_default_pay_card(defaultId: String!): result
 
+    save_order(saveOrderInput: SaveOrderInput): result
+
 }
