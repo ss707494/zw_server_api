@@ -14,6 +14,10 @@ type Order {
     vip_discount: Float
     transportation_costs: Float
     sale_tax: Float
+    product: [Product]
+}
+type OrderProduct {
+    id: String
 }
 
 input SaveOrderInput {

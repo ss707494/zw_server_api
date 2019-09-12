@@ -1,4 +1,6 @@
 import { genSaltSync, hashSync } from 'bcrypt'
+import { asyncQuery } from "../mysql";
+import * as mysql from "mysql";
 
 export const dealPage = (obj) => {
   if (obj?.rows_per_page && obj?.page > -1) {
@@ -41,6 +43,24 @@ export default {
       const hash = hashSync(pass, genSaltSync(10))
       console.log('getPassCode: ' + hash)
       return hash
+    },
+    test: async (...arg) => {
+
+      // // language=MySQL
+      // const sql = mysql.format(`
+      //     select *
+      //     from dw_server.category
+      //     where ?
+      // `, [{ is_delete: 0 }])
+      // console.log(sql)
+      // language=MySQL
+      const [res] = await asyncQuery(`
+          select *
+          from dw_server.category
+          where ?
+          ;
+      `, [{ is_delete: 0 }])
+      return ''
     },
   }
 }

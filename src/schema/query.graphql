@@ -21,9 +21,11 @@ type Query {
     shop_cart_list(ShopCartInput: ShopCartInput): [ShopCart]
 
     order_list(id: String): [Order]
+    order_detail(id: String!): Order
 
     address_list(addressInput: AddressInput): [Address]
 
     pay_card_list(payCardInput: PayCardInput): [PayCard]
 
+    test: String
 }

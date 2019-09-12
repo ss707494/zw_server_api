@@ -220,3 +220,6 @@ alter table dw_server.r_order_product
 alter table dw_server.order_info
 change order_id order_id varchar(40) null ;
 
+alter table dw_server.order_info
+    change state state int default 1 comment '1:代付款 2:已付款 3:已发货 4:已收货 5:已取消 6:已完成 7:已退回';
+
