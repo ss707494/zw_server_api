@@ -28,6 +28,7 @@ type Product {
     c1_number: String
     imgs: [ProductImg]
     sort: Int
+    oneImgUrl: String
 }
 
 type ProductImg {

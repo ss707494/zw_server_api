@@ -2,6 +2,9 @@ import { dealResult, dealSet } from "./common";
 import uuidV1 from "uuid/v1";
 import { asyncQuery } from "../mysql";
 import dateFormat from 'date-format'
+import { getPayCardDetailDb } from "../db/payCard";
+import { getAddressDetailDb } from "../db/address";
+import { getOrderListDb, getProductByOrderIdDb } from "../db/order";
 
 
 const getOrderNumber = id => {
@@ -11,8 +14,7 @@ const getOrderNumber = id => {
 export default {
   Query: {
     async order_detail(...arg) {
-      const [, { id }, { decoded: user }] = arg
-
+      const [, { id }] = arg
       // language=MySQL
       const orderInfoSql = `
           select id,
@@ -35,21 +37,35 @@ export default {
           where id = ?
       `
       const [orderInfo] = await asyncQuery(orderInfoSql, [id])
-      // language=MySQL
-      const productSql = `
-
-      `
+      const product = await getProductByOrderIdDb([id])
+      const [payment_method] = await getPayCardDetailDb([orderInfo[0]?.payment_method_card_id])
+      const [address] = await getAddressDetailDb([orderInfo[0]?.address_id])
       if (orderInfo.length) {
-        return orderInfo[0]
+        return {
+          ...orderInfo[0],
+          product,
+          payment_method,
+          address,
+        }
       }
       return {}
     },
     async order_list(...arg) {
-      const [, { id }, { decoded: user }] = arg
-      console.log(id)
-
-      console.log(user)
-      return []
+      const [, , { decoded: user }] = arg
+      const orderList = await getOrderListDb(user.id)
+      if (!orderList.length) {
+        return []
+      }
+      const productList = await getProductByOrderIdDb(orderList.map(e => e.order_id))
+      console.log(`sslogss:: ${productList}`);
+      const paymentMethodList = await getPayCardDetailDb(orderList.map(e => e.payment_method_card_id))
+      const addressList = await getAddressDetailDb(orderList.map(e => e.address_id))
+      return orderList.map(e => ({
+        ...e,
+        payment_method: paymentMethodList.find(e1 => e1.id === e.payment_method_card_id),
+        address: addressList.find(e1 => e1.id === e.address_id),
+        product: productList.filter(e1 => e1.order_id === e.order_id),
+      }))
     },
   },
   Mutation: {

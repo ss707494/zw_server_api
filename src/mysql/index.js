@@ -37,6 +37,7 @@ export const asyncQuery = async (sql, values = []) => {
   const sqlStr = mysql.format(sql, values)
   console.log(`mysql:sql:::::::sslog:: ${sqlStr}`)
   console.log(`mysql:values::::::::sslog:: ${JSON.stringify(values)}`)
+  console.log(`sslog::: loading database`)
   return new Promise((resolve, reject) => {
     db.query(sqlStr, (err, res, fields) => {
       if (err) {

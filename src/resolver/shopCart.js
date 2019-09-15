@@ -111,5 +111,17 @@ where user_id = ? and product_id = ? and is_delete = 0
       // console.log(res)
       return dealResult(res.affectedRows ?? 0)
     },
+    remove_all_shop_cart: async (...arg) => {
+      const [, { ids }] = arg
+      // language=MySQL
+      const sql = `
+          update dw_server.shop_cart
+          set is_delete = 1
+          where id in ?
+      `
+      const [res] = await asyncQuery(sql, [[ids]])
+      // console.log(res)
+      return dealResult(res.affectedRows ?? 0)
+    },
   }
 }

@@ -3,6 +3,7 @@ type Mutation {
     addToShopCart(ShopCartInput: ShopCartInput): result
     save_shop_cart (SaveShopCartInput: SaveShopCartInput): result
     remove_shop_cart(id: String!): result
+    remove_all_shop_cart(ids: [String!]!): result
 
     importAllUser(data: String!): String
     updateUser(data: UserInput!): User
