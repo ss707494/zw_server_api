@@ -56,14 +56,14 @@ export default {
       if (!orderList.length) {
         return []
       }
-      const productList = await getProductByOrderIdDb(orderList.map(e => e.order_id))
+      const productList = await getProductByOrderIdDb(orderList.map(e => e.id))
       const paymentMethodList = await getPayCardDetailDb(orderList.map(e => e.payment_method_card_id))
       const addressList = await getAddressDetailDb(orderList.map(e => e.address_id))
       return orderList.map(e => ({
         ...e,
         payment_method: paymentMethodList.find(e1 => e1.id === e.payment_method_card_id),
         address: addressList.find(e1 => e1.id === e.address_id),
-        product: productList.filter(e1 => e1.order_id === e.order_id),
+        product: productList.filter(e1 => e1.order_id === e.id),
       }))
     },
   },
