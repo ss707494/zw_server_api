@@ -57,7 +57,6 @@ export default {
         return []
       }
       const productList = await getProductByOrderIdDb(orderList.map(e => e.order_id))
-      console.log(`sslogss:: ${productList}`);
       const paymentMethodList = await getPayCardDetailDb(orderList.map(e => e.payment_method_card_id))
       const addressList = await getAddressDetailDb(orderList.map(e => e.address_id))
       return orderList.map(e => ({
