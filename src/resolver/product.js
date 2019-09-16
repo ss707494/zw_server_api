@@ -1,6 +1,7 @@
 import { asyncQuery } from '../mysql'
 import uuidV1 from 'uuid/v1'
 import { dealOrder, dealPage, dealResult, dealSet, dealWhere, dealWhereLike } from './common'
+import { raw } from "mysql";
 
 export const queryProductImg = async (productList) => {
   // 查询商品图片
@@ -10,6 +11,7 @@ export const queryProductImg = async (productList) => {
           from dw_server.product_img i
                    left join dw_server.product p on i.product_id = p.id
           where i.product_id in (${productList.map(e => `"${e.id}"`).join(',')})
+order by i.number
       `
   const [imgRes] = await asyncQuery(getImgSql)
   imgRes.forEach(e => {
@@ -98,25 +100,50 @@ where 1 = 1
           id: otherProduct?.id
         })}
         `
-        const res = await asyncQuery(sql)
-        console.log(res)
+        await asyncQuery(sql)
+        // console.log(res)
         if (imgs?.length) {
-          // language=MySQL
-          const insertImg = `
-insert into dw_server.product_img
-(update_time, id, product_id, number, name, url)
-values 
-${imgs.map(e => `(current_timestamp, uuid(), "${ProductInput?.id}", ${e?.number}, "${e?.name ?? ''}", "${e?.url}")`).join(' , ')}
-on duplicate key update 
-update_time = current_timestamp, 
-                        id = values(id),
-                      product_id = values(product_id),
-                        number = values(number),
-                        name = values(name),
-                        url = values(url)
-          `
-          const imgRes = await asyncQuery(insertImg)
-          console.log(imgRes)
+          for (const e of imgs) {
+            // language=MySQL
+            const [imgRes] = await asyncQuery(`
+                select id
+                from dw_server.product_img
+                where product_id = ?
+                  and number = ?
+            `, [ProductInput?.id, e?.number])
+            if (imgRes.length) {
+              // language=MySQL
+              await asyncQuery(`update dw_server.product_img i
+                                set update_time = current_timestamp,
+                                    i.url       = ?,
+                                    name        = ?
+                                where i.product_id = ?
+                                  and i.number = ?;`,
+                  [e?.url, e?.name, ProductInput?.id, e?.number])
+            } else {
+              // language=MySQL
+              const sql = `insert into dw_server.product_img
+                               (update_time, id, product_id, number, name, url)
+                           values ?`
+              await asyncQuery(sql, [[[raw('current_timestamp'), raw('uuid()'), ProductInput?.id, e?.number, e?.name, e?.url]]])
+            }
+          }
+//           // language=MySQL
+//           const insertImg = `
+// insert into dw_server.product_img
+// (update_time, id, product_id, number, name, url)
+// values
+// ${imgs.map(e => `(current_timestamp, uuid(), "${ProductInput?.id}", ${e?.number}, "${e?.name ?? ''}", "${e?.url}")`).join(' , ')}
+// on duplicate key update
+// update_time = current_timestamp,
+//                         id = values(id),
+//                       product_id = values(product_id),
+//                         number = values(number),
+//                         name = values(name),
+//                         url = values(url)
+//           `
+//           const imgRes = await asyncQuery(insertImg)
+//           console.log(imgRes)
         }
         return dealResult(1, '', {
           product: {
@@ -133,8 +160,7 @@ set update_time = current_timestamp,
     id = "${id}" 
     ${dealSet(otherProduct)}
         `
-        const res = await asyncQuery(sql)
-        console.log(res)
+        await asyncQuery(sql)
         if (imgs?.length) {
           // language=MySQL
           const insertImg = `
@@ -143,8 +169,8 @@ insert into dw_server.product_img
 values 
 ${imgs.map(e => `(current_timestamp, uuid(), "${id}", ${e?.number}, "${e?.name ?? ''}", "${e?.url}")`).join(' , ')}
           `
-          const imgRes = await asyncQuery(insertImg)
-          console.log(imgRes)
+          await asyncQuery(insertImg)
+          // console.log(imgRes)
         }
         return dealResult(1, '', {
           product: {
