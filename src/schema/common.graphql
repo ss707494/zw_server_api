@@ -14,5 +14,12 @@ type result {
     address: Address
     payCard: PayCard
     order: Order
+    user: User
+    token: token
+}
+
+type token {
+    token: String
+    refreshtoken: String
 }
 

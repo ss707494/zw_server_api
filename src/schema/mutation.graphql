@@ -23,4 +23,8 @@ type Mutation {
 
     save_order(saveOrderInput: SaveOrderInput): result
 
+    update_user_info(updateUserInfo: UpdateUserInfoInput): result
+
+    update_password(changePasswordInput: ChangePasswordInput!): result
+
 }

@@ -1,6 +1,5 @@
 import { genSaltSync, hashSync } from 'bcrypt'
 import { asyncQuery } from "../mysql";
-import * as mysql from "mysql";
 
 export const dealPage = (obj) => {
   if (obj?.rows_per_page && obj?.page > -1) {
@@ -45,6 +44,7 @@ export default {
       return hash
     },
     test: async (...arg) => {
+      console.log(arg)
 
       // // language=MySQL
       // const sql = mysql.format(`
@@ -60,6 +60,7 @@ export default {
           where ?
           ;
       `, [{ is_delete: 0 }])
+      console.log(res)
       return ''
     },
   }

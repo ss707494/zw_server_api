@@ -34,3 +34,17 @@ type UserCoin {
     next_mouth_icons: Float
     card_number: Int
 }
+
+input UpdateUserInfoInput {
+    id: String
+    name: String
+    user_name: String
+    phone: String
+    email: String
+}
+
+input ChangePasswordInput {
+    old_password: String!
+    new_password: String!
+    confirmation_password: String
+}
