@@ -218,8 +218,18 @@ alter table dw_server.user_address
 alter table dw_server.r_order_product
     add count float default 0;
 alter table dw_server.order_info
-change order_id order_id varchar(40) null ;
+    change order_id order_id varchar(40) null;
 
 alter table dw_server.order_info
     change state state int default 1 comment '1:代付款 2:已付款 3:已发货 4:已收货 5:已取消 6:已完成 7:已退回';
 
+create table dw_server.help_info_type
+(
+    id             varchar(40)  not null,
+    name           varchar(200) null,
+    create_time    timestamp    null default current_timestamp,
+    update_time    timestamp    null,
+    is_delete      int               default 0,
+
+    primary key (id)
+)
