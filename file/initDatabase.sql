@@ -225,11 +225,52 @@ alter table dw_server.order_info
 
 create table dw_server.help_info_type
 (
-    id             varchar(40)  not null,
-    name           varchar(200) null,
-    create_time    timestamp    null default current_timestamp,
-    update_time    timestamp    null,
-    is_delete      int               default 0,
+    id          varchar(40)  not null,
+    name        varchar(200) null,
+    create_time timestamp    null default current_timestamp,
+    update_time timestamp    null,
+    is_delete   int               default 0,
 
     primary key (id)
 )
+    comment '用户中心-帮助信息';
+
+alter table dw_server.product
+    add is_group int default 0 comment '是否是拼团商品';
+
+alter table dw_server.product
+    add group_precision int default 1 comment '拼团商品精度';
+
+alter table dw_server.product
+    add group_amount int default 1 comment '拼团数量';
+
+create table dw_server.group_queue
+(
+    id          varchar(40)  not null,
+    name        varchar(200) null,
+    create_time timestamp    null default current_timestamp,
+    update_time timestamp    null,
+    is_delete   int               default 0,
+
+    product_id  varchar(40)  not null,
+    fill_amount int default 0 comment '已经成团数量',
+
+    primary key (id)
+)
+comment '团购队列';
+
+create table dw_server.group_order
+(
+    id          varchar(40)  not null,
+    name        varchar(200) null,
+    create_time timestamp    null default current_timestamp,
+    update_time timestamp    null,
+    is_delete   int               default 0,
+
+    group_queue_id varchar(40)  not null,
+    user_id varchar(40)  not null,
+    order_group_amount int default 0 comment '拼团数量',
+    primary key (id)
+)
+    comment '拼团订单';
+

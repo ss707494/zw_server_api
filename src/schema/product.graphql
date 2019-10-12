@@ -29,6 +29,9 @@ type Product {
     imgs: [ProductImg]
     sort: Int
     oneImgUrl: String
+    is_group: Int
+    group_precision: Int
+    group_amount: Int
 }
 
 type ProductImg {
@@ -71,4 +74,7 @@ input ProductInput {
     origin_category_id: String
     sort: Int
     user_id: String
+    is_group: Int
+    group_precision: Int
+    group_amount: Int
 }

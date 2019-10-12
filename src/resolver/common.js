@@ -15,7 +15,6 @@ export const dealSet = (obj) => {
 }
 
 export const dealWhere = (obj, alias) => {
-  // console.log(obj)
   return Object.keys(obj).map(e => (obj[e] === null || typeof obj[e] === 'undefined') ? '' : ` and ${alias ? `${alias}.` : ''}${e} = ${dealValueType(obj[e])} `).join('')
 }
 
