@@ -4,6 +4,9 @@ import { dealOrder, dealPage, dealResult, dealSet, dealWhere, dealWhereLike } fr
 import { raw } from "mysql";
 
 export const queryProductImg = async (productList) => {
+  productList.forEach(e => {
+    e.imgs = []
+  })
   // 查询商品图片
   // language=MySQL
   const getImgSql = `
@@ -70,7 +73,7 @@ where p.is_delete = 0
 ${ListInput?.origin_category_id ? `and (c1.id = "${ListInput?.origin_category_id}" or c2.id = "${ListInput?.origin_category_id}" or c3.id = "${ListInput?.origin_category_id}")` : ''}
 ${dealWhere({
         category_id: ListInput?.category_id,
-        is_group: ListInput?.is_group ? ListInput?.is_group : 0,
+        is_group: ListInput?.is_group === -1 ? null : ListInput?.is_group ? ListInput?.is_group : 0,
       }, 'p')}
 ${dealWhereLike({
         name: ListInput?.name,
