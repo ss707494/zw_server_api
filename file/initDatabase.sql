@@ -274,3 +274,5 @@ create table dw_server.group_order
 )
     comment '拼团订单';
 
+alter table dw_server.product
+add group_remark varchar(100) default '' comment '拼团描述(整箱)';

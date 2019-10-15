@@ -32,6 +32,7 @@ type Product {
     is_group: Int
     group_precision: Int
     group_amount: Int
+    group_remark: String
 }
 
 type ProductImg {
@@ -77,4 +78,5 @@ input ProductInput {
     is_group: Int
     group_precision: Int
     group_amount: Int
+    group_remark: String
 }

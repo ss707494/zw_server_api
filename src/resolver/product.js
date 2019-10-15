@@ -55,7 +55,7 @@ ${dealWhereLike({
       // language=MySQL
       const sql = `
 select p.id, p.name, p.create_time, p.update_time, p.is_delete, p.remark, p.is_hot, p.is_new, p.stock, p.unit, p.weight, p.price_in, p.price_out, p.price_market, p.brand, p.number, p.category_id,p.is_enable,
-       p.sort, p.is_group, p.group_amount, p.group_precision,
+       p.sort, p.is_group, p.group_amount, p.group_precision, p.group_remark,
                  c1.name as c1_name,
                  c1.id as c1_id, 
                  c1.number as c1_number,
