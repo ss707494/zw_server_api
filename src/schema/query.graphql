@@ -21,11 +21,14 @@ type Query {
     shop_cart_list(ShopCartInput: ShopCartInput): [ShopCart]
 
     order_list(id: String): [Order]
-    order_detail(id: String!): Order
+    group_order_list(id: String): [Order]
+    order_detail(id: String!, isGroup: Int): Order
 
     address_list(addressInput: AddressInput): [Address]
 
     pay_card_list(payCardInput: PayCardInput): [PayCard]
+
+    group_queue_list(groupQueueListInput: GroupQueueListInput): [GroupQueue]
 
     test: String
 }

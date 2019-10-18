@@ -276,3 +276,9 @@ create table dw_server.group_order
 
 alter table dw_server.product
 add group_remark varchar(100) default '' comment '拼团描述(整箱)';
+
+alter table dw_server.group_order
+add order_id varchar(40) default '' comment '订单id';
+
+alter table dw_server.order_info
+add discount_product_total float default 0 comment '拼团折扣价格';

@@ -1,0 +1,31 @@
+type GroupQueue {
+    id: String,
+    name: String,
+    create_time: String,
+    update_time: Date,
+    is_delete: Int,
+
+    product_id: String,
+    fill_amount: Int
+
+    product: Product
+}
+
+input GroupQueueListInput {
+    id: String,
+    name: String,
+    create_time: String,
+    update_time: Date,
+    is_delete: Int,
+    product_id: String,
+    fill_amount: Int
+}
+
+input SaveGroupOrderInput {
+    id: String
+    product_id: String
+    group_queue_id: String
+    order_group_amount: Int
+    origin_group_amount: Int
+
+}

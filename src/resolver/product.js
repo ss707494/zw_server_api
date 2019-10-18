@@ -26,6 +26,53 @@ order by i.number
   })
 }
 
+export const queryProductDetail = async (product) => {
+  // language=MySQL
+  const [res] = await asyncQuery(`select p.id,
+                                         p.name,
+                                         p.create_time,
+                                         p.update_time,
+                                         p.is_delete,
+                                         p.remark,
+                                         p.is_hot,
+                                         p.is_new,
+                                         p.stock,
+                                         p.unit,
+                                         p.weight,
+                                         p.price_in,
+                                         p.price_out,
+                                         p.price_market,
+                                         p.brand,
+                                         p.number,
+                                         p.category_id,
+                                         p.is_enable,
+                                         p.sort,
+                                         p.is_group,
+                                         p.group_amount,
+                                         p.group_precision,
+                                         p.group_remark,
+                                         c1.name   as c1_name,
+                                         c1.id     as c1_id,
+                                         c1.number as c1_number,
+                                         c2.id     as c2_id,
+                                         c2.name   as c2_name,
+                                         c2.number as c2_number,
+                                         c3.id     as c3_id,
+                                         c3.name   as c3_name,
+                                         c3.number as c3_number
+                                  from dw_server.product p
+                                           left join dw_server.category c1 on p.category_id = c1.id
+                                           left join dw_server.category c2 on c1.parent_id = c2.id
+                                           left join dw_server.category c3 on c2.parent_id = c3.id
+                                  where p.is_delete = 0
+                                    and p.id = ?`, [product.id])
+  if (res.length) {
+    await queryProductImg(res)
+  }
+
+  return res[0]
+}
+
 export default {
   Query: {
     product_total: async (...arg) => {

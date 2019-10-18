@@ -5,6 +5,10 @@ interface listSearch {
     sort_type: String
 }
 
+fragment ProductFragment on Product {
+    id
+}
+
 type result {
     flag: Int
     msg: String

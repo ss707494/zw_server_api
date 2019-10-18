@@ -1,6 +1,6 @@
 import { asyncQuery } from "../mysql";
 
-export const getProductByOrderIdDb = async (ids) => {
+export const getProductByGroupOrderIdDb = async (ids) => {
   // language=MySQL
   const productSql = `
       select r.id,
@@ -9,8 +9,8 @@ export const getProductByOrderIdDb = async (ids) => {
              r.update_time,
              r.is_delete,
              r.order_id,
-             r.product_id,
-             r.count,
+             r.order_group_amount,
+             r.group_queue_id,
              p.id,
              p.name,
              p.create_time,
@@ -37,9 +37,11 @@ export const getProductByOrderIdDb = async (ids) => {
              p1.price_out,
              p1.price_market,
              p1.brand,
-             p1.number
-      from dw_server.r_order_product r
-               left join dw_server.product p1 on r.product_id = p1.id
+             p1.number,
+             q.fill_amount
+      from dw_server.group_order r
+          left join dw_server.group_queue q on r.group_queue_id = q.id
+               left join dw_server.product p1 on q.product_id = p1.id
                left join dw_server.product_img p on p1.id = p.product_id
       where r.is_delete = 0
         and r.order_id in ?
@@ -52,7 +54,7 @@ export const getProductByOrderIdDb = async (ids) => {
   return res
 }
 
-export const getOrderListDb = async (userId) => {
+export const getGroupOrderListDb = async (userId) => {
   // language=MySQL
   const [res] = await asyncQuery(`
       select r.id as u_id,
@@ -62,6 +64,8 @@ export const getOrderListDb = async (userId) => {
              r.is_delete,
              r.user_id,
              r.order_id as id,
+             r.order_group_amount,
+             r.group_queue_id,
              i.id as info_id,
              i.name,
              i.create_time,
@@ -79,7 +83,7 @@ export const getOrderListDb = async (userId) => {
              i.sale_tax,
              i.discount_product_total,
              i.order_id as info_order_id
-      from dw_server.r_order_user r
+      from dw_server.group_order r
                left join dw_server.order_info i on r.order_id = i.id
       where r.is_delete = 0
         and i.is_delete = 0

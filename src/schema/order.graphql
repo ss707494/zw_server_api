@@ -12,6 +12,7 @@ type Order {
     payment_method_card_id: String
     payment_method: PayCard
     subtotal: Float
+    discount_product_total: Float
     coupon_discount: Float
     vip_discount: Float
     transportation_costs: Float
@@ -31,6 +32,7 @@ input SaveOrderInput {
     address_id: String
     payment_method_card_id: String
     subtotal: Float
+    discount_product_total: Float
     coupon_discount: Float
     vip_discount: Float
     transportation_costs: Float

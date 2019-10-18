@@ -5,16 +5,27 @@ import dateFormat from 'date-format'
 import { getPayCardDetailDb } from "../db/payCard";
 import { getAddressDetailDb } from "../db/address";
 import { getOrderListDb, getProductByOrderIdDb } from "../db/order";
+import { getGroupOrderListDb, getProductByGroupOrderIdDb } from "../db/groupOrder";
 
 
-const getOrderNumber = id => {
+export const getOrderNumber = id => {
   return dateFormat('yyyyMMddhhmmss', new Date()) + id.slice(0, 6)
+}
+
+const dealPaymentAddress = async (orderList) => {
+  const paymentMethodList = await getPayCardDetailDb(orderList.map(e => e.payment_method_card_id))
+  const addressList = await getAddressDetailDb(orderList.map(e => e.address_id))
+  return orderList.map(e => ({
+    ...e,
+    payment_method: paymentMethodList.find(e1 => e1.id === e.payment_method_card_id),
+    address: addressList.find(e1 => e1.id === e.address_id),
+  }))
 }
 
 export default {
   Query: {
     async order_detail(...arg) {
-      const [, { id }] = arg
+      const [, { id, isGroup }] = arg
       // language=MySQL
       const orderInfoSql = `
           select id,
@@ -32,12 +43,13 @@ export default {
                  vip_discount,
                  transportation_costs,
                  sale_tax,
+                 discount_product_total,
                  order_id
           from dw_server.order_info
           where id = ?
       `
       const [orderInfo] = await asyncQuery(orderInfoSql, [id])
-      const product = await getProductByOrderIdDb([id])
+      const product = isGroup ? await getProductByGroupOrderIdDb([id]) : await getProductByOrderIdDb([id])
       const [payment_method] = await getPayCardDetailDb([orderInfo[0]?.payment_method_card_id])
       const [address] = await getAddressDetailDb([orderInfo[0]?.address_id])
       if (orderInfo.length) {
@@ -57,12 +69,20 @@ export default {
         return []
       }
       const productList = await getProductByOrderIdDb(orderList.map(e => e.id))
-      const paymentMethodList = await getPayCardDetailDb(orderList.map(e => e.payment_method_card_id))
-      const addressList = await getAddressDetailDb(orderList.map(e => e.address_id))
-      return orderList.map(e => ({
+      return (await dealPaymentAddress(orderList)).map(e => ({
         ...e,
-        payment_method: paymentMethodList.find(e1 => e1.id === e.payment_method_card_id),
-        address: addressList.find(e1 => e1.id === e.address_id),
+        product: productList.filter(e1 => e1.order_id === e.id),
+      }))
+    },
+    async group_order_list(...arg) {
+      const [, , { decoded: user }] = arg
+      const orderList = await getGroupOrderListDb(user.id)
+      if (!orderList.length) {
+        return []
+      }
+      const productList = await getProductByGroupOrderIdDb(orderList.map(e => e.id))
+      return (await dealPaymentAddress(orderList)).map(e => ({
+        ...e,
         product: productList.filter(e1 => e1.order_id === e.id),
       }))
     },
