@@ -2,6 +2,7 @@ import { asyncQuery } from '../mysql'
 import uuidV1 from 'uuid/v1'
 import { dealOrder, dealPage, dealResult, dealSet, dealWhere, dealWhereLike } from './common'
 import { raw } from "mysql";
+import { getGroupInfo } from "../db/groupOrder";
 
 export const queryProductImg = async (productList) => {
   productList.forEach(e => {
@@ -74,6 +75,16 @@ export const queryProductDetail = async (product) => {
 }
 
 export default {
+  Product: {
+    group_info: async (product) => {
+      const groupList = await getGroupInfo(product)
+      const finish = groupList.filter(e => e.fill_amount === product.group_precision).length
+      return {
+        finish,
+        doing: groupList.length - finish
+      }
+    }
+  },
   Query: {
     product_total: async (...arg) => {
       const [, { ListInput }] = arg

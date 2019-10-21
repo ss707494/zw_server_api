@@ -92,3 +92,13 @@ order by r.create_time desc
   `, [userId])
   return res
 }
+
+export const getGroupInfo = async (product) => {
+  // language=MySQL
+  const sql = `select q.id, name, create_time, update_time, is_delete, product_id, fill_amount
+                   from dw_server.group_queue as q
+                   where is_delete = 0
+                     and product_id like ?`
+  const [res] = await asyncQuery(sql, [product?.id ?? '%%'])
+  return res
+}

@@ -29,3 +29,8 @@ input SaveGroupOrderInput {
     origin_group_amount: Int
 
 }
+
+type GroupInfo {
+    finish: Int
+    doing: Int
+}

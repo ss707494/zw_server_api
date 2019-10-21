@@ -33,6 +33,7 @@ type Product {
     group_precision: Int
     group_amount: Int
     group_remark: String
+    group_info: GroupInfo
 }
 
 type ProductImg {
