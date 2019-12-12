@@ -253,13 +253,39 @@ create table dw_server.group_queue
     is_delete   int               default 0,
 
     product_id  varchar(40)  not null,
-    fill_amount int default 0 comment '已经成团数量',
+    fill_amount int               default 0 comment '已经成团数量',
 
     primary key (id)
 )
-comment '团购队列';
+    comment '团购队列';
 
 create table dw_server.group_order
+(
+    id                 varchar(40)  not null,
+    name               varchar(200) null,
+    create_time        timestamp    null default current_timestamp,
+    update_time        timestamp    null,
+    is_delete          int               default 0,
+
+    group_queue_id     varchar(40)  not null,
+    user_id            varchar(40)  not null,
+    order_group_amount int               default 0 comment '拼团数量',
+    primary key (id)
+)
+    comment '拼团订单';
+
+alter table dw_server.product
+    add group_remark varchar(100) default '' comment '拼团描述(整箱)';
+
+alter table dw_server.group_order
+    add order_id varchar(40) default '' comment '订单id';
+
+alter table dw_server.order_info
+    add discount_product_total float default 0 comment '拼团折扣价格';
+
+
+--  2019年11月28日
+create table dw_server.product_supplement
 (
     id          varchar(40)  not null,
     name        varchar(200) null,
@@ -267,18 +293,33 @@ create table dw_server.group_order
     update_time timestamp    null,
     is_delete   int               default 0,
 
-    group_queue_id varchar(40)  not null,
-    user_id varchar(40)  not null,
-    order_group_amount int default 0 comment '拼团数量',
+    state       int               default 1 comment '补货订单状态 1: 配货中',
+    amount      float             default 0 comment '金额',
+    number      varchar(40)  not null default '' comment '订单编号',
+    code      varchar(40)  not null default '' comment '代号',
+    supplier      varchar(40)  not null default '' comment '供应商',
+
+    user_id     varchar(40)  not null,
     primary key (id)
 )
-    comment '拼团订单';
+    comment '补货订单';
 
-alter table dw_server.product
-add group_remark varchar(100) default '' comment '拼团描述(整箱)';
+create table dw_server.r_product_supplement
+(
+    id            varchar(40)  not null,
+    name          varchar(200) null,
+    create_time   timestamp    null default current_timestamp,
+    update_time   timestamp    null,
+    is_delete     int               default 0,
 
-alter table dw_server.group_order
-add order_id varchar(40) default '' comment '订单id';
+    supplement_id varchar(40)  not null,
+    product_id    varchar(40)  not null,
+    count        float             default 0 comment '补货数量',
+    amount      float             default 0 comment '补货金额',
+    supplier      varchar(40)  not null comment '供应商',
+    remark      varchar(40)  not null comment '备注',
 
-alter table dw_server.order_info
-add discount_product_total float default 0 comment '拼团折扣价格';
+    primary key (id)
+)
+    comment '补货商品关联表';
+

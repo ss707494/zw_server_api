@@ -10,7 +10,8 @@
           ]
         }
       }
-    ]
+    ],
+    "@babel/preset-typescript"
   ],
   "plugins": [
     "import-graphql",

@@ -30,5 +30,8 @@ type Query {
 
     group_queue_list(groupQueueListInput: GroupQueueListInput): [GroupQueue]
 
+    product_supplement_list(productSupplementListInput: ProductSupplementListInput): [ProductSupplement]
+    product_supplement_list_total(productSupplementListInput: ProductSupplementListInput): Int
+
     test: String
 }
