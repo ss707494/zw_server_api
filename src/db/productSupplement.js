@@ -1,6 +1,6 @@
 import { asyncQuery } from "../mysql";
 import uuidV1 from "uuid/v1";
-import { dealPage } from "../resolver/common";
+import { dealOrder, dealPage } from "../resolver/common";
 
 export const addProductSupplementDb = async (item) => {
   // language=MySQL
@@ -55,6 +55,7 @@ export const getProductSupplementList = async (productSupplementListInput) => {
              user_id
       from dw_server.product_supplement
       where is_delete = 0
+      ${dealOrder(productSupplementListInput)}
       ${dealPage(productSupplementListInput)}
   `
   const [res] = await asyncQuery(sql)

@@ -4,7 +4,7 @@ import { asyncQuery } from "../mysql";
 import dateFormat from 'date-format'
 import { getPayCardDetailDb } from "../db/payCard";
 import { getAddressDetailDb } from "../db/address";
-import { getOrderListDb, getProductByOrderIdDb } from "../db/order";
+import { getAllOrderListDb, getOrderListDb, getProductByOrderIdDb } from "../db/order";
 import { getGroupOrderListDb, getProductByGroupOrderIdDb } from "../db/groupOrder";
 
 
@@ -24,6 +24,26 @@ const dealPaymentAddress = async (orderList) => {
 
 export default {
   Query: {
+    async all_order_list(...arg) {
+      const [, { allOrderListInput }, {}] = arg
+      const orderList = await getAllOrderListDb(allOrderListInput)
+      if (!orderList.length) {
+        return []
+      }
+      const productList = await getProductByOrderIdDb(orderList.map(e => e.id))
+      return (await dealPaymentAddress(orderList)).map(e => ({
+        ...e,
+        product: productList.filter(e1 => e1.order_id === e.id),
+      }))
+    },
+    async all_order_list_total(...arg) {
+      const [, { allOrderListInput }, {}] = arg
+      const orderList = await getAllOrderListDb({
+        ...allOrderListInput,
+        rows_per_page: 0
+      })
+      return orderList.length
+    },
     async order_detail(...arg) {
       const [, { id, isGroup }] = arg
       // language=MySQL

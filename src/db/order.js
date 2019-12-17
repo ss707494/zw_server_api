@@ -1,4 +1,5 @@
 import { asyncQuery } from "../mysql";
+import { dealPage } from "../resolver/common";
 
 export const getProductByOrderIdDb = async (ids) => {
   // language=MySQL
@@ -86,5 +87,41 @@ export const getOrderListDb = async (userId) => {
         and r.user_id = ?
 order by r.create_time desc
   `, [userId])
+  return res
+}
+export const getAllOrderListDb = async (allOrderListInput) => {
+  // language=MySQL
+  const [res] = await asyncQuery(`
+      select r.id as u_id,
+             r.name,
+             r.create_time,
+             r.update_time,
+             r.is_delete,
+             r.user_id,
+             r.order_id as id,
+             i.id as info_id,
+             i.name,
+             i.create_time,
+             i.update_time,
+             i.is_delete,
+             i.number,
+             i.state,
+             i.actually_paid,
+             i.address_id,
+             i.payment_method_card_id,
+             i.subtotal,
+             i.coupon_discount,
+             i.vip_discount,
+             i.transportation_costs,
+             i.sale_tax,
+             i.discount_product_total,
+             i.order_id as info_order_id
+      from dw_server.r_order_user r
+               left join dw_server.order_info i on r.order_id = i.id
+      where r.is_delete = 0
+        and i.is_delete = 0
+      order by r.create_time desc
+      ${dealPage(allOrderListInput)}
+  `, [])
   return res
 }

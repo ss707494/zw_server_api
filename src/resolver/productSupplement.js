@@ -7,8 +7,14 @@ import {
 import { getOrderNumber } from "./order";
 import uuidV1 from "uuid/v1";
 import { dealResult } from "./common";
+import { queryProductDetail } from "./product";
 
 export default {
+  AddItem: {
+    product: async (addItem) => {
+      return await queryProductDetail({ id: addItem.product_id })
+    }
+  },
   ProductSupplement: {
     addItemList: async (productSupplement) => {
       return await getAddItemList(productSupplement)
@@ -16,11 +22,11 @@ export default {
   },
   Query: {
     product_supplement_list: async (...arg) => {
-      const [, { productSupplementListInput }, ] = arg
+      const [, { productSupplementListInput },] = arg
       return await getProductSupplementList(productSupplementListInput)
     },
     product_supplement_list_total: async (...arg) => {
-      const [, { productSupplementListInput }, ] = arg
+      const [, { productSupplementListInput },] = arg
       return (await getProductSupplementList({
         ...productSupplementListInput,
         rows_per_page: false

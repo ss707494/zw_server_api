@@ -63,4 +63,9 @@ input OrderUser {
     order_id: String
 }
 
+input AllOrderListInput {
+    page: Int
+    rows_per_page: Int
+    sort_type: String
+}
 

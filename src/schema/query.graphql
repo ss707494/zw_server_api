@@ -23,6 +23,8 @@ type Query {
     order_list(id: String): [Order]
     group_order_list(id: String): [Order]
     order_detail(id: String!, isGroup: Int): Order
+    all_order_list(allOrderListInput: AllOrderListInput): [Order],
+    all_order_list_total(allOrderListInput: AllOrderListInput): Int,
 
     address_list(addressInput: AddressInput): [Address]
 
