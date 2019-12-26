@@ -125,3 +125,10 @@ export const getAllOrderListDb = async (allOrderListInput) => {
   `, [])
   return res
 }
+
+export const updateOrder = async  order => {
+  // language=MySQL
+  const [res] = await asyncQuery(`update dw_server.order_info 
+set update_time = current_timestamp, state = ? where id = ?`, [order.state, order.id])
+  return res
+}

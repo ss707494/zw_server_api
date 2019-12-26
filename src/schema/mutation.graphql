@@ -22,6 +22,7 @@ type Mutation {
     set_default_pay_card(defaultId: String!): result
 
     save_order(saveOrderInput: SaveOrderInput): result
+    finish_order(saveOrderInput: SaveOrderInput): result
 
     save_group_order(saveGroupOrderInput: SaveGroupOrderInput, saveOrderInput: SaveOrderInput): result
 

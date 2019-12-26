@@ -1,11 +1,12 @@
-import { dealResult, dealSet } from "./common";
+import { dealResult, dealSet, dealWhere } from "./common";
 import uuidV1 from "uuid/v1";
 import { asyncQuery } from "../mysql";
 import dateFormat from 'date-format'
 import { getPayCardDetailDb } from "../db/payCard";
 import { getAddressDetailDb } from "../db/address";
-import { getAllOrderListDb, getOrderListDb, getProductByOrderIdDb } from "../db/order";
+import { getAllOrderListDb, getOrderListDb, getProductByOrderIdDb, updateOrder } from "../db/order";
 import { getGroupOrderListDb, getProductByGroupOrderIdDb } from "../db/groupOrder";
+import { getUserById } from "../db/user";
 
 
 export const getOrderNumber = id => {
@@ -23,6 +24,11 @@ const dealPaymentAddress = async (orderList) => {
 }
 
 export default {
+  Order: {
+    async user(order) {
+      return await getUserById(order.user_id)
+    }
+  },
   Query: {
     async all_order_list(...arg) {
       const [, { allOrderListInput }, {}] = arg
@@ -166,6 +172,32 @@ ${dealSet({
         }
       })
     },
-
+    async finish_order(...arg) {
+      const [, { saveOrderInput }, {}] = arg
+      const updateOrderRes = await updateOrder({
+        ...saveOrderInput,
+        state: 6
+      })
+      const productList = await getProductByOrderIdDb([saveOrderInput?.id])
+      for (const product of productList) {
+        // language=MySQL
+        const updateProduct = `update dw_server.product
+  set update_time = current_timestamp
+      ${dealSet({
+            stock: product?.sort - product?.count
+          })}
+  where 1 = 1
+        ${dealWhere({
+            id: product?.id
+          })}
+        `
+        await asyncQuery(updateProduct)
+      }
+      return dealResult(updateOrderRes?.affectedRows ?? 0, '', {
+        order: {
+          id: saveOrderInput?.id,
+        }
+      })
+    },
   },
 }

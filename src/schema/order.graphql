@@ -18,6 +18,8 @@ type Order {
     transportation_costs: Float
     sale_tax: Float
     product: [Product]
+    user_id: String
+    user: User
 }
 
 input SaveOrderInput {

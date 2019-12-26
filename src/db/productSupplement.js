@@ -55,7 +55,7 @@ export const getProductSupplementList = async (productSupplementListInput) => {
              user_id
       from dw_server.product_supplement
       where is_delete = 0
-      ${dealOrder(productSupplementListInput)}
+      ${dealOrder(productSupplementListInput, ' order by create_time desc')}
       ${dealPage(productSupplementListInput)}
   `
   const [res] = await asyncQuery(sql)
