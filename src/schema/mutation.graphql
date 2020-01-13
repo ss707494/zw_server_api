@@ -32,4 +32,6 @@ type Mutation {
 
     save_product_supplement(productSupplementInput: ProductSupplementInput): result
 
+    save_dict_item(dictionaryInput: DictionaryInput): result
+
 }

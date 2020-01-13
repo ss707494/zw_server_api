@@ -1,0 +1,43 @@
+type DictionaryType {
+    id: String,
+    name: String,
+    create_time: Date,
+    update_time: Date,
+    is_delete: Int,
+
+    code: String,
+    sort: Int,
+    parent_code: String,
+    remark: String
+}
+
+type Dictionary {
+    id: String,
+    name: String,
+    create_time: Date,
+    update_time: Date,
+    is_delete: Int,
+
+    is_disable: Int,
+    dict_type_code: String,
+    code: String,
+    sort: Int,
+    parent_code: String,
+    remark: String
+}
+
+input DictionaryInput {
+    id: String,
+    name: String,
+    create_time: Date,
+    update_time: Date,
+    is_delete: Int,
+    code: String,
+    sort: Int,
+    dict_type_code: String,
+    parent_code: String,
+    remark: String
+    is_disable: Int,
+
+}
+

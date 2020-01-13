@@ -35,5 +35,11 @@ type Query {
     product_supplement_list(productSupplementListInput: ProductSupplementListInput): [ProductSupplement]
     product_supplement_list_total(productSupplementListInput: ProductSupplementListInput): Int
 
+    dict_type_list(dictionaryInput: DictionaryInput): [DictionaryType]
+
+    dict_item_list(dictionaryInput: DictionaryInput): [Dictionary]
+
+    data_config(dataConfigInput: DataConfigInput): DataConfig
+
     test: String
 }

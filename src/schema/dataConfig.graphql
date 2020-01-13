@@ -1,0 +1,25 @@
+type DataConfig {
+    id: String,
+    name: String,
+    create_time: Date,
+    update_time: Date,
+    is_delete: Int,
+
+    type: String,
+    value: String,
+    remark: String,
+}
+
+input DataConfigInput {
+    id: String,
+    name: String,
+    create_time: Date,
+    update_time: Date,
+    is_delete: Int,
+
+    type: String,
+    value: String,
+    remark: String
+
+}
+

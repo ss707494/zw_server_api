@@ -62,7 +62,6 @@ export default {
       if (editAddressInput.id) {
         id = editAddressInput.id
         // language=MySQL
-        // noinspection SqlWithoutWhere
         const updateAddress = `
 update dw_server.user_address
 set update_time = current_timestamp

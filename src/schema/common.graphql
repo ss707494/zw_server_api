@@ -19,6 +19,7 @@ type result {
     payCard: PayCard
     order: Order
     user: User
+    dictionary: Dictionary
     token: token
 }
 

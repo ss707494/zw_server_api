@@ -289,15 +289,15 @@ create table dw_server.product_supplement
 (
     id          varchar(40)  not null,
     name        varchar(200) null,
-    create_time timestamp    null default current_timestamp,
+    create_time timestamp    null     default current_timestamp,
     update_time timestamp    null,
-    is_delete   int               default 0,
+    is_delete   int                   default 0,
 
-    state       int               default 1 comment '补货订单状态 1: 配货中',
-    amount      float             default 0 comment '金额',
+    state       int                   default 1 comment '补货订单状态 1: 配货中',
+    amount      float                 default 0 comment '金额',
     number      varchar(40)  not null default '' comment '订单编号',
-    code      varchar(40)  not null default '' comment '代号',
-    supplier      varchar(40)  not null default '' comment '供应商',
+    code        varchar(40)  not null default '' comment '代号',
+    supplier    varchar(40)  not null default '' comment '供应商',
 
     user_id     varchar(40)  not null,
     primary key (id)
@@ -314,12 +314,65 @@ create table dw_server.r_product_supplement
 
     supplement_id varchar(40)  not null,
     product_id    varchar(40)  not null,
-    count        float             default 0 comment '补货数量',
-    amount      float             default 0 comment '补货金额',
+    count         float             default 0 comment '补货数量',
+    amount        float             default 0 comment '补货金额',
     supplier      varchar(40)  not null comment '供应商',
-    remark      varchar(40)  not null comment '备注',
+    remark        varchar(40)  not null comment '备注',
 
     primary key (id)
 )
     comment '补货商品关联表';
 
+create table dw_server.dict_type_first
+(
+    id          varchar(40)  not null,
+    name        varchar(200) null,
+    create_time timestamp    null default current_timestamp,
+    update_time timestamp    null,
+    is_delete   int               default 0,
+
+    parent_code varchar(40)       default '' comment 'code',
+    code        varchar(40)  not null comment 'code',
+    sort        integer           default 0,
+    remark      varchar(40)       default '' not null comment '备注',
+
+    primary key (id)
+)
+    comment '字典数据分类';
+
+drop table dw_server.dict_type_first;
+
+create table dw_server.dict
+(
+    id             varchar(40)  not null,
+    name           varchar(200) null,
+    create_time    timestamp    null default current_timestamp,
+    update_time    timestamp    null,
+    is_delete      int               default 0,
+
+    is_disable     int               default 0,
+    dict_type_code varchar(40)  not null comment 'dictTypeCode',
+    code           varchar(40)  not null comment 'code',
+    sort           integer           default 0,
+    remark         varchar(40)       default '' not null comment '备注',
+
+    primary key (id)
+)
+    comment '字典数据';
+
+
+create table dw_server.data_config
+(
+    id          varchar(40)  not null,
+    name        varchar(200) null,
+    create_time timestamp    null default current_timestamp,
+    update_time timestamp    null,
+    is_delete   int               default 0,
+
+    type        varchar(40)  not null,
+    value       json         not null,
+    remark      varchar(40)       default '' not null comment '备注',
+
+    primary key (id)
+)
+    comment '配置数据';

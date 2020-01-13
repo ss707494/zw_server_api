@@ -1,3 +1,4 @@
+require('module-alias/register')
 import { resolveApp, uploadFilePath } from './common/pathConfig'
 
 const setEnv = require('dotenv')

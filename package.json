@@ -4,22 +4,22 @@
   "description": "",
   "main": "dist/server.js",
   "scripts": {
-    "initBuild": "babel-node file/initBuild.js",
     "startdev": "npm-run-all --parallel watch:**",
+    "startTsPro": "cross-env NODE_ENV=production node distTs/server.js",
     "eTs": "tsc",
     "startTsDev": "cross-env node dist/server.js",
     "copyByShell": "ts-node file/copyStaticAssets.ts",
     "watch:copy": "nodemon -e graphql --watch src/schema --exec npm run copyByShell",
-    "watch:src": "nodemon -e js --watch src --exec npm run eTs",
-    "watch:dist": "nodemon -e js,graphql --watch dist --delay 50ms --exec npm run startTsDev",
-    "startTsPro": "cross-env NODE_ENV=production node distTs/server.js",
+    "watch:src": "nodemon -e js,ts --watch src --exec npm run eTs",
+    "watch:dist": "nodemon -e js,ts,graphql --watch dist --delay 150ms --exec npm run startTsDev",
     "tsBuild": "npm run eTs && npm run copyByShell",
+    "start": "npm run startTsPro",
     "copySchema": "babel -d dist/schema src/schema --copy-files",
     "copyAssets": "babel -d dist/assets src/assets --copy-files",
     "copyFile": "npm run copyAssets & npm run copySchema",
     "babel": "npm run copyFile && babel -d dist/ src/",
-    "start": "npm run babel && cross-env NODE_ENV=production node dist/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "initBuild": "babel-node file/initBuild.js"
   },
   "author": "",
   "license": "ISC",
@@ -39,6 +39,7 @@
     "babel-plugin-syntax-async-functions": "^6.13.0",
     "babel-plugin-transform-regenerator": "^6.20.0",
     "cross-env": "^5.2.0",
+    "module-alias": "^2.2.2",
     "npm-run-all": "^4.1.5",
     "shelljs": "^0.8.3",
     "ts-node": "^8.5.4",
@@ -65,5 +66,8 @@
     "mysql": "mysqljs/mysql",
     "nodemon": "^1.18.10",
     "uuid": "^3.3.2"
+  },
+  "_moduleAliases": {
+    "@": "./dist"
   }
 }
