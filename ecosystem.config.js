@@ -3,7 +3,7 @@ module.exports = {
     name: 'dw_server',
     script: 'npm',
 
-    args: 'start',
+    args: 'run start',
     instances: 1,
     autorestart: true,
     watch: false,
