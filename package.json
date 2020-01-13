@@ -5,7 +5,7 @@
   "main": "dist/server.js",
   "scripts": {
     "startdev": "npm-run-all --parallel watch:**",
-    "startTsPro": "cross-env NODE_ENV=production node distTs/server.js",
+    "startTsPro": "cross-env NODE_ENV=production node dist/server.js",
     "eTs": "tsc",
     "startTsDev": "cross-env node dist/server.js",
     "copyByShell": "ts-node file/copyStaticAssets.ts",
