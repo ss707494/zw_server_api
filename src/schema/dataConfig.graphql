@@ -6,7 +6,7 @@ type DataConfig {
     is_delete: Int,
 
     type: String,
-    value: String,
+    value: JSON,
     remark: String,
 }
 
@@ -18,7 +18,7 @@ input DataConfigInput {
     is_delete: Int,
 
     type: String,
-    value: String,
+    value: JSON,
     remark: String
 
 }

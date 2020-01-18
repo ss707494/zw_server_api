@@ -34,4 +34,6 @@ type Mutation {
 
     save_dict_item(dictionaryInput: DictionaryInput): result
 
+    set_data_config(dataConfigInput: DataConfigInput): result
+
 }

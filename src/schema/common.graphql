@@ -1,4 +1,6 @@
 
+scalar JSON
+
 interface listSearch {
     page: Int
     rows_per_page: Int
@@ -20,6 +22,7 @@ type result {
     order: Order
     user: User
     dictionary: Dictionary
+    dataConfig: DataConfig
     token: token
 }
 
