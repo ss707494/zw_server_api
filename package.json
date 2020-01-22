@@ -9,6 +9,7 @@
     "eTs": "tsc",
     "startTsDev": "cross-env node dist/server.js",
     "copyByShell": "ts-node file/copyStaticAssets.ts",
+    "copyByShell:pro": "ts-node file/copyStaticAssetsPro.ts",
     "watch:copy": "nodemon -e graphql --watch src/schema --exec npm run copyByShell",
     "watch:src": "nodemon -e js,ts --watch src --exec npm run eTs",
     "watch:dist": "nodemon -e js,ts,graphql --watch dist --delay 150ms --exec npm run startTsDev",
