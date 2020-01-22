@@ -62,5 +62,10 @@ export default {
       console.log(res)
       return ''
     },
-  }
+  },
+  Mutation: {
+    test_pro () {
+      return 'test_pro'
+    }
+  },
 }
