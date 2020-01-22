@@ -9,7 +9,6 @@ export default {
       if (!res?.[0].value) return {}
       return {
         ...res?.[0],
-        value: JSON.parse(res?.[0]?.value)
       }
     }
   },
@@ -18,7 +17,6 @@ export default {
       const [, {dataConfigInput}, {}] = arg
       const res = await setDataConfig({
         ...dataConfigInput,
-        value: JSON.stringify(dataConfigInput?.value),
       })
       return dealResult(res?.affectedRows, '', {
         dataConfig: {
