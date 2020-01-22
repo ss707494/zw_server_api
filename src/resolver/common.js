@@ -64,7 +64,7 @@ export default {
     },
   },
   Mutation: {
-    test_pro_4 () {
+    test_pro_5 () {
       return 'test_pro'
     }
   },
