@@ -13,7 +13,7 @@
     "watch:copy": "nodemon -e graphql --watch src/schema --exec npm run copyByShell",
     "watch:src": "nodemon -e js,ts --watch src --exec npm run eTs",
     "watch:dist": "nodemon -e js,ts,graphql --watch dist --delay 150ms --exec npm run startTsDev",
-    "tsBuild": "npm run eTs && npm run copyByShell",
+    "tsBuild": "npm run eTs && npm run copyByShell:pro",
     "start": "npm run tsBuild && npm run startTsPro",
     "copySchema": "babel -d dist/schema src/schema --copy-files",
     "copyAssets": "babel -d dist/assets src/assets --copy-files",
