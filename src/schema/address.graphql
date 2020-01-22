@@ -1,5 +1,4 @@
 type Address {
-    od: String,
     id: String,
     name: String,
     create_time: String,
