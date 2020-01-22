@@ -1,8 +1,7 @@
 module.exports = {
   apps : [{
     name: 'dw_server',
-    script: 'npm',
-    args: 'run start',
+    script: './file/start.js',
     instances: 1,
     autorestart: true,
     watch: false,
