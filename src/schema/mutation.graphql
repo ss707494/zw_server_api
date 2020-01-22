@@ -36,6 +36,6 @@ type Mutation {
 
     set_data_config(dataConfigInput: DataConfigInput): result
 
-    test_pro_2: String
+    test_pro_3: String
 
 }
