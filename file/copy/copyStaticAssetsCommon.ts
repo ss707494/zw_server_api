@@ -1,5 +1,5 @@
 import * as shell from "shelljs";
 
-shell.cp("src/node_modules_self/common/package.json", "dist/node_modules_self/common");
+shell.cp("src/my_modules/common/package.json", "dist/my_modules/common");
 
-shell.cd('node_modules_self')
+shell.cd('my_modules')

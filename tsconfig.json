@@ -15,6 +15,7 @@
     }
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "my_modules/ts_self/index.d.ts"
   ]
 }
