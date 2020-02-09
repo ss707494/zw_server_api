@@ -21,6 +21,8 @@ type Category {
     p2_id: String
     p3_name: String
     p3_id: String
+
+    parent_data: Category
 }
 
 input CategoryInput {

@@ -1,8 +1,19 @@
 import { asyncQuery } from "../mysql";
 import uuidV1 from 'uuid/v1'
 import { dealOrder, dealPage, dealResult, dealSet, dealWhere, dealWhereLike } from "./common";
+import { getDetail } from '@/db/category'
 
 export default {
+  Category: {
+    parent_data: async (item) => {
+      if (item?.parent_id) {
+        return getDetail({
+          id: item?.parent_id,
+        })
+      }
+      return {}
+    },
+  },
   Query: {
     category_total: async (...arg) => {
       const [, { CategoryInput }] = arg
@@ -22,6 +33,7 @@ export default {
     },
     category_list: async (...arg) => {
       const [, { CategoryInput }] = arg
+      // language=MySQL
       const [res] = await asyncQuery(`
 select 
        c1.img_url,

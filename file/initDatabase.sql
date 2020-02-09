@@ -376,3 +376,33 @@ create table dw_server.data_config
     primary key (id)
 )
     comment '配置数据';
+
+create table dw_server.promo_code
+(
+    id                        varchar(40)  not null,
+    name                      varchar(200) null,
+    create_time               timestamp    null     default current_timestamp,
+    update_time               timestamp    null,
+    is_delete                 int                   default 0,
+    remark                    varchar(40)           default '' not null comment '备注',
+
+    title                     varchar(200)          default '' comment '名称',
+    discount_type             varchar(20)  not null comment '折扣类型',
+    discount_amount           float        not null default 0 comment '折扣数量',
+    discount_condition        varchar(20)           default 'No' comment '使用条件',
+    discount_condition_amount float                 default 0 comment '使用条件订单金额',
+    product_category          varchar(40) comment '使用产品',
+    img_url                   varchar(400)          default '' comment '图片',
+    effective_date_start      timestamp null comment '有效日期-开始',
+    effective_date_end        timestamp null comment '有效日期-开始',
+
+    promo_code_type varchar(40) not null comment '优惠码类型 优惠码(PromoCode) 达人卡(DarenCard)',
+
+    reuse_times int default 1,
+
+    code varchar(100) default '' comment '优惠码',
+
+    primary key (id)
+)
+    comment '优惠码';
+

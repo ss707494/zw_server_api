@@ -1,5 +1,7 @@
 import { genSaltSync, hashSync } from 'bcrypt'
+import format from 'date-fns/format'
 import { asyncQuery } from "../mysql";
+import { isDate } from 'lodash/lang'
 
 export const dealPage = (obj) => {
   if (obj?.rows_per_page && obj?.page > -1) {
@@ -8,7 +10,9 @@ export const dealPage = (obj) => {
   return ''
 }
 
-const dealValueType = v => typeof v === 'string' ? `"${v}"` : v;
+const dealValueType = v => typeof v === 'string' ? `"${v}"`
+    : isDate(v) ? `"${format(v, 'yyyy-MM-dd HH:mm:ss')}"`
+    : v;
 
 export const dealSet = (obj) => {
   return Object.keys(obj).filter(e => obj[e]).map(e => ` , ${e} = ${dealValueType(obj[e])} `).join('')

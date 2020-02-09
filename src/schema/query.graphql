@@ -41,5 +41,7 @@ type Query {
 
     data_config(dataConfigInput: DataConfigInput): DataConfig
 
+    promo_code_list(PromoCodeInput: PromoCodeInput): [PromoCode]
+
     test: String
 }

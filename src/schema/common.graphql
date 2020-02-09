@@ -24,6 +24,7 @@ type result {
     dictionary: Dictionary
     dataConfig: DataConfig
     token: token
+    promoCode: PromoCode
 }
 
 type token {
