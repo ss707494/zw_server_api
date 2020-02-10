@@ -15,7 +15,7 @@
     "watch:copy": "nodemon -e graphql --watch src/schema --exec npm run copyByShell",
     "watch:src": "nodemon -e js,ts --watch src --exec npm run eTs",
     "watch:dist": "nodemon -e js,ts,graphql --watch dist --watch package.json --delay 150ms --exec npm run startTsDev",
-    "tsBuild": "npm run eTs && npm run dealCommonModule && npm run copyByShell",
+    "tsBuild": "npm run eTs && npm run copyByShell",
     "start": "pm2 start ./file/start.js --name dw",
     "test": "echo \"Error: no test specified\" && exit 1",
     "initBuild": "babel-node file/initBuild.js"
