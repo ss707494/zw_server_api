@@ -13,6 +13,7 @@ var DiscountTypeEnum;
 var SS;
 (function (SS) {
     SS[SS["SS"] = 0] = "SS";
+    SS[SS["SS2"] = 1] = "SS2";
 })(SS = exports.SS || (exports.SS = {}));
 var DiscountConditionEnum;
 (function (DiscountConditionEnum) {

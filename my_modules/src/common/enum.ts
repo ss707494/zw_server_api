@@ -10,6 +10,7 @@ export enum DiscountTypeEnum {
 
 export enum SS {
   SS,
+  SS2,
 }
 
 export enum DiscountConditionEnum {
