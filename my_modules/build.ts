@@ -15,6 +15,8 @@ try {
     shell.exec('yarn add ../zw_server_api/my_modules/lib/common')
     shell.exec('yarn add ../zw_server_api/my_modules/ts_self')
   }
+  shell.cd('../zw_server_api')
+  shell.exit()
 } catch (e) {
   console.log(`errrrrrrrorrrrrr:: ${e}`)
 }
