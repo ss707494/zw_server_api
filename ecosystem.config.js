@@ -6,6 +6,7 @@ module.exports = {
     args: '',
     instances: 1,
     autorestart: true,
+    restart_delay: 2000,
     watch: false,
     max_memory_restart: '1G',
     env: {
