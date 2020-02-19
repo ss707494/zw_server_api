@@ -1,6 +1,5 @@
 import { genSaltSync, hashSync } from 'bcrypt'
 import format from 'date-fns/format'
-import { asyncQuery } from "../mysql";
 import { isDate } from 'lodash/lang'
 
 export const dealPage = (obj) => {
@@ -48,23 +47,8 @@ export default {
     },
     test: async (...arg) => {
       console.log(arg)
-
-      // // language=MySQL
-      // const sql = mysql.format(`
-      //     select *
-      //     from dw_server.category
-      //     where ?
-      // `, [{ is_delete: 0 }])
-      // console.log(sql)
-      // language=MySQL
-      const [res] = await asyncQuery(`
-          select *
-          from dw_server.category
-          where ?
-          ;
-      `, [{ is_delete: 0 }])
-      console.log(res)
-      return ''
+      await new Promise(r => setTimeout(r, 9000))
+      return 'test:::'
     },
   },
   Mutation: {
