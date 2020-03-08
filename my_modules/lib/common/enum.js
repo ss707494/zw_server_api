@@ -20,3 +20,13 @@ var DiscountConditionEnum;
     DiscountConditionEnum["No"] = "No";
     DiscountConditionEnum["Amount"] = "Amount";
 })(DiscountConditionEnum = exports.DiscountConditionEnum || (exports.DiscountConditionEnum = {}));
+var ProductSupplement;
+(function (ProductSupplement) {
+    ProductSupplement[ProductSupplement["_"] = 0] = "_";
+    ProductSupplement[ProductSupplement["Pending"] = 1] = "Pending";
+    ProductSupplement[ProductSupplement["Finish"] = 2] = "Finish";
+})(ProductSupplement = exports.ProductSupplement || (exports.ProductSupplement = {}));
+exports.ProductSupplementString = {
+    1: '配货中',
+    2: '已完成',
+};

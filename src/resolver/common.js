@@ -4,7 +4,7 @@ import { isDate } from 'lodash/lang'
 
 export const dealPage = (obj) => {
   if (obj?.rows_per_page && obj?.page > -1) {
-    return `limit ${obj?.page * obj?.rows_per_page},${(obj?.page + 1) * obj?.rows_per_page}`
+    return `limit ${obj?.page * obj?.rows_per_page},${obj?.rows_per_page}`
   }
   return ''
 }
@@ -47,7 +47,7 @@ export default {
     },
     test: async (...arg) => {
       console.log(arg)
-      await new Promise(r => setTimeout(r, 9000))
+      await new Promise(r => setTimeout(r, 3000))
       return 'test:::'
     },
   },

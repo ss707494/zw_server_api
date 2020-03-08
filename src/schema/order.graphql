@@ -20,6 +20,7 @@ type Order {
     product: [Product]
     user_id: String
     user: User
+    finish_time: Date
 }
 
 input SaveOrderInput {
@@ -42,6 +43,7 @@ input SaveOrderInput {
     order_id: String
     product: [OrderProductInput]
     user: [OrderUser]
+    finish_time: Date
 }
 
 input OrderProductInput {

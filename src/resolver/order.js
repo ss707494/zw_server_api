@@ -70,7 +70,8 @@ export default {
                  transportation_costs,
                  sale_tax,
                  discount_product_total,
-                 order_id
+                 order_id,
+                 finish_time
           from dw_server.order_info
           where id = ?
       `
@@ -127,6 +128,7 @@ export default {
         transportation_costs,
         sale_tax,
         product,
+        finish_time,
         // user: orderUser,
       } = saveOrderInput
       const id = uuidV1()
@@ -147,6 +149,7 @@ ${dealSet({
         vip_discount,
         transportation_costs,
         sale_tax,
+        finish_time,
       })}
 `
       const [insertOrderRes] = await asyncQuery(insertOrder)

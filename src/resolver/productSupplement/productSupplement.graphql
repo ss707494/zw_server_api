@@ -44,6 +44,7 @@ input AddItemInput {
 
 input ProductSupplementInput {
     id: String
+    state: Int
     addList: [AddItemInput]
 }
 
@@ -66,3 +67,9 @@ input ProductSupplementListInput {
 
 }
 
+
+extend type Mutation {
+
+    save_product_supplement(productSupplementInput: ProductSupplementInput): result
+
+}

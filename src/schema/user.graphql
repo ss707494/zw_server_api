@@ -7,6 +7,7 @@ type User {
     user_name: String
     phone: String
     email: String
+    address: Address
 }
 
 input UserSortInput {

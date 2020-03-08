@@ -1,6 +1,6 @@
 import {asyncQuery} from "@/mysql"
-import uuidV1 from "uuid/v1";
-import {dealResult, dealSet} from "@/resolver/common";
+import uuidV1 from "uuid/v1"
+import {dealResult, dealSet} from "@/resolver/common"
 
 export const getList = async (PromoCodeInput: PromoCode) => {
 
@@ -24,8 +24,9 @@ export const getList = async (PromoCodeInput: PromoCode) => {
                       reuse_times,
                       code
                from dw_server.promo_code
-               where is_delete = 0 and promo_code_type = ?
-               `
+               where is_delete = 0
+                 and promo_code_type = ?
+  `
 
   const [res] = await asyncQuery(sql, [PromoCodeInput?.promo_code_type])
   return res

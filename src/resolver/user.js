@@ -6,6 +6,11 @@ import { compareSync, genSaltSync, hashSync } from "bcrypt";
 import { signToken } from "../common/utils";
 
 export default {
+  User: {
+    address: async () => {
+      return {}
+    },
+  },
   Query: {
     user_info: async (...arg) => {
       const [, , { decoded }] = arg

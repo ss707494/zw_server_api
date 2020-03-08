@@ -1,0 +1,35 @@
+
+type AddHistory {
+    id: String
+    name: String
+    create_time: Date
+    update_time: Date
+    is_delete: Int
+
+    supplement_id: String
+    number: String
+    supplier: String
+    product_id: String
+    count: Float
+    amount: Float
+
+}
+
+input AddHistoryInput {
+    id: String
+    name: String
+    create_time: Date
+    update_time: Date
+    is_delete: Int
+
+    page: Int
+    rows_per_page: Int
+
+    product_id: String
+}
+
+extend type Query {
+    add_history_list_by_product(addHistoryInput: AddHistoryInput): [AddHistory]
+    add_history_list_total(addHistoryInput: AddHistoryInput): Int
+}
+

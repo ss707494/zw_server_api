@@ -51,7 +51,9 @@ select
        c3.name as c3_name,
        p2.name as p2_name,
        p2.id   as p2_id,
+       p2.number as p2_num,
        p3.id   as p3_id,
+       p3.number as p3_num,
        p3.name as p3_name
 from dw_server.category c1
          left join dw_server.category c2 on c1.id = c2.parent_id

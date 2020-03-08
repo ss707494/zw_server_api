@@ -14,3 +14,9 @@ export declare enum DiscountConditionEnum {
     No = "No",
     Amount = "Amount"
 }
+export declare enum ProductSupplement {
+    _ = 0,
+    Pending = 1,
+    Finish = 2
+}
+export declare const ProductSupplementString: any;

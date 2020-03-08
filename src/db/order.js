@@ -79,7 +79,8 @@ export const getOrderListDb = async (userId) => {
              i.transportation_costs,
              i.sale_tax,
              i.discount_product_total,
-             i.order_id as info_order_id
+             i.order_id as info_order_id,
+             i.finish_time
       from dw_server.r_order_user r
                left join dw_server.order_info i on r.order_id = i.id
       where r.is_delete = 0
@@ -115,7 +116,8 @@ export const getAllOrderListDb = async (allOrderListInput) => {
              i.transportation_costs,
              i.sale_tax,
              i.discount_product_total,
-             i.order_id as info_order_id
+             i.order_id as info_order_id,
+             i.finish_time
       from dw_server.r_order_user r
                left join dw_server.order_info i on r.order_id = i.id
       where r.is_delete = 0

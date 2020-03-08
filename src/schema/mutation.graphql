@@ -30,8 +30,6 @@ type Mutation {
 
     update_password(changePasswordInput: ChangePasswordInput!): result
 
-    save_product_supplement(productSupplementInput: ProductSupplementInput): result
-
     save_dict_item(dictionaryInput: DictionaryInput): result
 
     set_data_config(dataConfigInput: DataConfigInput): result

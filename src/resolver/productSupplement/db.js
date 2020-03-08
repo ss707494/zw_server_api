@@ -1,14 +1,27 @@
-import { asyncQuery } from "../mysql";
-import uuidV1 from "uuid/v1";
-import { dealOrder, dealPage } from "../resolver/common";
+import { asyncQuery } from "../../mysql"
+import uuidV1 from "uuid/v1"
+import { dealOrder, dealPage } from "../common"
 
 export const addProductSupplementDb = async (item) => {
   // language=MySQL
   const [res] = await asyncQuery(`
       insert into dw_server.product_supplement
-          (id, user_id, number)
+          (id, user_id, number, state)
       values ?
-  `, [[[item.id, item.userId, item.number]]])
+  `, [[[item.id, item.userId, item.number, 1]]])
+
+  return res
+}
+export const updateProductSupplementDb = async (item) => {
+  // language=MySQL
+  const [res] = await asyncQuery(`
+      update dw_server.product_supplement
+      set update_time = current_timestamp,
+          number      = COALESCE(?, number),
+          supplier    = COALESCE(?, supplier),
+          state       = COALESCE(?, state)
+      where id = ?
+  `, [item.number, item.supplier, item.state, item.id])
 
   return res
 }
@@ -24,6 +37,26 @@ export const addRelationProductSupplementDb = async (addItemList, supplement_id)
   ])
 
   return res
+}
+export const updateRelationProductSupplementOneDb = async (item) => {
+  // language=MySQL
+  const sql = `update dw_server.r_product_supplement
+               set update_time = current_timestamp,
+                   count       = COALESCE(?, count),
+                   amount      = COALESCE(?, amount),
+                   supplier    = COALESCE(?, supplier),
+                   remark      = COALESCE(?, remark)
+               where id = ?
+  `
+  await asyncQuery(sql, [item.addNumber, item.addPrice, item.addSupplier, item.addRemark, item.id])
+
+}
+
+export const updateRelationProductSupplementDb = async (addItemList) => {
+  addItemList.map(async item => {
+    await updateRelationProductSupplementOneDb(item)
+  })
+  return {}
 }
 
 export const updateProdectDb = async (addItem) => {

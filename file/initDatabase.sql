@@ -393,16 +393,20 @@ create table dw_server.promo_code
     discount_condition_amount float                 default 0 comment '使用条件订单金额',
     product_category          varchar(40) comment '使用产品',
     img_url                   varchar(400)          default '' comment '图片',
-    effective_date_start      timestamp null comment '有效日期-开始',
-    effective_date_end        timestamp null comment '有效日期-开始',
+    effective_date_start      timestamp    null comment '有效日期-开始',
+    effective_date_end        timestamp    null comment '有效日期-开始',
 
-    promo_code_type varchar(40) not null comment '优惠码类型 优惠码(PromoCode) 达人卡(DarenCard)',
+    promo_code_type           varchar(40)  not null comment '优惠码类型 优惠码(PromoCode) 达人卡(DarenCard)',
 
-    reuse_times int default 1,
+    reuse_times               int                   default 1,
 
-    code varchar(100) default '' comment '优惠码',
+    code                      varchar(100)          default '' comment '优惠码',
 
     primary key (id)
 )
     comment '优惠码';
+
+alter table dw_server.order_info add finish_time timestamp null comment '订单完成时间';
+
+alter table dw_server.product_supplement modify state int default 1 null comment '补货订单状态 1: 配货中 2: 已完成';
 

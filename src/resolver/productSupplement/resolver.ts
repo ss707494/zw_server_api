@@ -2,12 +2,13 @@ import {
   addProductSupplementDb,
   addRelationProductSupplementDb, getAddItemList,
   getProductSupplementList,
-  updateProdectDb
-} from "../db/productSupplement";
-import { getOrderNumber } from "./order";
+  updateProdectDb, updateProductSupplementDb, updateRelationProductSupplementDb
+} from "./db"
+import { getOrderNumber } from "../order";
 import uuidV1 from "uuid/v1";
-import { dealResult } from "./common";
-import { queryProductDetail } from "./product";
+import { dealResult } from "../common";
+import { queryProductDetail } from "../product";
+import {ProductSupplement} from "ss_common/enum"
 
 export default {
   AddItem: {
@@ -31,7 +32,7 @@ export default {
         ...productSupplementListInput,
         rows_per_page: false
       })).length
-    }
+    },
   },
   Mutation: {
     save_product_supplement: async (...arg) => {
@@ -46,15 +47,29 @@ export default {
           number,
         })
         const addRelationProductSupplementRes = await addRelationProductSupplementDb(productSupplementInput.addList, id)
-        for (const v of productSupplementInput.addList) {
-          const updateProdectDbRes = await updateProdectDb(v)
-          console.log(updateProdectDbRes)
-        }
-        console.log(addProductSupplementRes)
         console.log(addRelationProductSupplementRes)
         return dealResult(addProductSupplementRes?.affectedRows ?? 0, '', {})
       } else {
-        return dealResult(0)
+        const updateRes = await updateProductSupplementDb(productSupplementInput)
+        await updateRelationProductSupplementDb(productSupplementInput.addList)
+        if (productSupplementInput.state === ProductSupplement.Finish) {
+          for (const v of productSupplementInput.addList) {
+            const updateProdectDbRes = await updateProdectDb(v)
+            console.log(updateProdectDbRes)
+          }
+        }
+        if (productSupplementInput.state === ProductSupplement.Pending) {
+          for (const v of productSupplementInput.addList) {
+            const updateProdectDbRes = await updateProdectDb({
+              ...v,
+              addNumber: -v.addNumber,
+              addPrice: 0,
+            })
+            console.log(updateProdectDbRes)
+          }
+        }
+
+        return dealResult(updateRes?.affectedRows, 'test sss', {})
       }
     },
   },
