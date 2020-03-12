@@ -8,17 +8,19 @@ const setEnv = require('dotenv')
   })
 })
 
+import "reflect-metadata"
+import { dealAppByType__Graphql } from './type_graphql/apploServer'
 import bodyParser from 'body-parser'
-import express from "express";
+import express from "express"
 import { dealLogin } from './control/user'
-import { getServer } from "./schema";
+import { getServer } from "./schema"
 import errorHandle from './common/error'
 import { tokenHandle } from './common/tokenHandle'
-import { connectMysql } from "./mysql";
-import { dealUpload } from "./common/upload";
+import { connectMysql } from "./mysql"
+import { dealUpload } from "./common/upload"
 
 
-const app = express();
+const app = express()
 
 app.use(express.static(resolveApp('build')))
 app.use(`/${uploadFilePath}`, express.static(resolveApp(uploadFilePath)))
@@ -27,7 +29,10 @@ app.use(bodyParser.json())
 const init = async () => {
   try {
     await connectMysql()
-    const server = getServer()
+
+    const server = await getServer()
+
+    await dealAppByType__Graphql(app)
 
     server.applyMiddleware({ app, path: '/graphQL' })
 
@@ -45,8 +50,8 @@ const init = async () => {
 
     app.use(errorHandle)
 
-    app.listen(4464);
-    console.log('Running a GraphQL APP server at localhost:4464');
+    app.listen(4464)
+    console.log('Running a GraphQL APP server at localhost:4464')
   } catch (e) {
     console.log(e)
   }

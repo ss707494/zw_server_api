@@ -10,7 +10,7 @@
     "startTsDev": "cross-env node dist/server.js",
     "copyByShell": "ts-node file/copyStaticAssets.ts",
     "dealCommonModule": "ts-node my_modules/build.ts",
-    "watch:copyCommon": "nodemon -e json,ts --watch my_modules/src --watch my_modules/ts_self --exec npm run dealCommonModule",
+    "ddwatch:copyCommon": "nodemon -e json,ts --watch my_modules/src --watch my_modules/ts_self --exec npm run dealCommonModule",
     "watch:copy": "nodemon -e graphql --watch src --exec npm run copyByShell",
     "watch:src": "nodemon -e js,ts --watch src --exec npm run eTs",
     "watch:dist": "nodemon -e js,ts,graphql --watch dist --watch package.json --delay 150ms --exec npm run startTsDev",
@@ -31,6 +31,10 @@
     "@babel/preset-typescript": "^7.7.4",
     "@babel/register": "^7.0.0",
     "@babel/runtime": "^7.3.1",
+    "@graphql-codegen/cli": "^1.13.0",
+    "@graphql-codegen/typescript": "^1.13.0",
+    "@graphql-codegen/typescript-operations": "^1.13.0",
+    "@graphql-codegen/typescript-resolvers": "^1.13.0",
     "@types/shelljs": "^0.8.6",
     "babel-plugin-dynamic-import-node": "^2.2.0",
     "babel-plugin-import-graphql": "^2.6.2",
@@ -50,6 +54,7 @@
     "apollo-server-express": "^2.4.0",
     "bcrypt": "^3.0.6",
     "body-parser": "^1.18.3",
+    "class-transformer": "^0.2.3",
     "date-fns": "^2.9.0",
     "date-format": "^2.1.0",
     "dotenv": "^8.1.0",
@@ -65,10 +70,10 @@
     "multer": "^1.4.2",
     "mysql": "mysqljs/mysql",
     "nodemon": "^1.18.10",
+    "reflect-metadata": "^0.1.13",
     "ss_common": "./my_modules/lib/common",
+    "type-graphql": "^0.17.6",
+    "typeorm": "^0.2.24",
     "uuid": "^3.3.2"
-  },
-  "_moduleAliases": {
-    "@": "./dist"
   }
 }

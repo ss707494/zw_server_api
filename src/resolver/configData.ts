@@ -1,5 +1,5 @@
-import {dealResult} from "@/resolver/common";
-import {getDataConfig, setDataConfig} from "@/db/configData";
+import {getDataConfig, setDataConfig} from "../db/configData"
+import {dealResult} from "./common"
 
 export default {
   Query: {

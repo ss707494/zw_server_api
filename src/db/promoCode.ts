@@ -1,6 +1,6 @@
-import {asyncQuery} from "@/mysql"
 import uuidV1 from "uuid/v1"
-import {dealResult, dealSet} from "@/resolver/common"
+import {asyncQuery} from "../mysql"
+import {dealResult, dealSet} from "../resolver/common"
 
 export const getList = async (PromoCodeInput: PromoCode) => {
 

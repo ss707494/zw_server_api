@@ -1,0 +1,25 @@
+{
+  "name": "default",
+  "type": "mysql",
+  "host": "47.52.230.148",
+  "port": 3307,
+  "username": "root",
+  "password": "dw88913830",
+  "database": "dw_server",
+  "synchronize": false,
+  "logging": true,
+  "entities": [
+    "dist/entity/*.js"
+  ],
+  "subscribers": [
+    "dist/subscriber/*.js"
+  ],
+  "migrations": [
+    "dist/migration/*.js"
+  ],
+  "cli": {
+    "entitiesDir": "src/entity",
+    "migrationsDir": "src/migration",
+    "subscribersDir": "src/subscriber"
+  }
+}

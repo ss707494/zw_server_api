@@ -1,4 +1,4 @@
-import {getSupplementListByProductId, getSupplementListTotal} from "@/resolver/add_history/db"
+import {getSupplementListByProductId, getSupplementListTotal} from "./db"
 
 export default {
   Query: {

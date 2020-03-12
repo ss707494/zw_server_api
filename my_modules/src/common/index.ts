@@ -1,6 +1,8 @@
 import {PromoCodeTypeEnum} from './enum'
+import * as generateTypes from './generateTypes'
 
-export {PromoCodeTypeEnum}
+// lsdkfj
+export {PromoCodeTypeEnum, generateTypes}
 
-export default PromoCodeTypeEnum
+export default {}
 

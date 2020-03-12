@@ -1,5 +1,5 @@
-import {addOne, getList, updateOne} from "@/db/promoCode";
-import { getDetail } from "@/db/category";
+import {addOne, getList, updateOne} from "../db/promoCode"
+import {getDetail} from "../db/category"
 
 export default {
   PromoCode: {

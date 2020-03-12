@@ -1,5 +1,5 @@
-import {addDictItem, getDictItem, getDictTypeList, updateDictItem} from "@/db/dictionary"
-import {dealResult} from "@/resolver/common";
+import {addDictItem, getDictItem, getDictTypeList, updateDictItem} from "../db/dictionary"
+import {dealResult} from "./common"
 
 export default {
   Query: {

@@ -1,4 +1,4 @@
-import {asyncQuery} from "@/mysql";
+import {asyncQuery} from "../mysql"
 
 export const getDataConfig = async (dataConfigInput: DataConfigInput) => {
   // language=MySQL

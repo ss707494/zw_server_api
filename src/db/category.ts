@@ -1,4 +1,4 @@
-import {asyncQuery} from "@/mysql";
+import {asyncQuery} from "../mysql"
 
 export const getDetail = async (option) => {
   if (option?.id) {

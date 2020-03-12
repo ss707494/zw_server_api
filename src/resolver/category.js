@@ -1,7 +1,7 @@
 import { asyncQuery } from "../mysql";
 import uuidV1 from 'uuid/v1'
 import { dealOrder, dealPage, dealResult, dealSet, dealWhere, dealWhereLike } from "./common";
-import { getDetail } from '@/db/category'
+import { getDetail } from '../db/category'
 
 export default {
   Category: {

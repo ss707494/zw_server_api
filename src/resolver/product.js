@@ -99,6 +99,7 @@ where p.is_delete = 0
 ${ListInput?.origin_category_id ? `and (c1.id = "${ListInput?.origin_category_id}" or c2.id = "${ListInput?.origin_category_id}" or c3.id = "${ListInput?.origin_category_id}")` : ''}
 ${dealWhere({
         category_id: ListInput?.category_id,
+        is_group: ListInput?.is_group === -1 ? null : ListInput?.is_group ? ListInput?.is_group : 0,
       }, 'p')}
 ${dealWhereLike({
         name: ListInput?.name,
