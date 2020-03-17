@@ -1,5 +1,6 @@
-import { Column, Entity } from "typeorm";
+import {Column, Entity, OneToOne} from "typeorm"
 import {Field, ObjectType} from "type-graphql"
+import {User} from "./User"
 
 @ObjectType()
 @Entity("user_info", { schema: "dw_server" })
@@ -39,4 +40,9 @@ export class UserInfo {
   @Column("varchar", { name: "email", nullable: true, length: 100 })
   @Field()
   email: string | null;
+
+  @OneToOne(type1 => User, object => object.userInfo)
+  @Field(returns => User, {nullable: true})
+  user: User | null;
+
 }

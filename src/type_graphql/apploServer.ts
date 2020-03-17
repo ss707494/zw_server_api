@@ -34,6 +34,8 @@ export const getServerByType__Graphql = async () => {
   const schemaType = await buildSchema({
     resolvers,
     dateScalarMode: "timestamp",
+    validate: false,
+    nullableByDefault: true,
     // automatically create `schema.gql` file with schema definition in current folder
     // emitSchemaFile: path.resolve(__dirname, "schemaType.gql"),
   })

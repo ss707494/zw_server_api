@@ -17,7 +17,10 @@
     "tsBuild": "npm run eTs && npm run copyByShell",
     "start": "pm2 start ./file/start.js --name dw",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "initBuild": "babel-node file/initBuild.js"
+    "initBuild": "babel-node file/initBuild.js",
+    "typeorm_schema:log": "typeorm schema:log",
+    "migration:generate": "typeorm migration:generate -n UserMigration",
+    "typeorm_migration:run": "typeorm migration:run"
   },
   "author": "",
   "license": "ISC",
@@ -73,7 +76,7 @@
     "reflect-metadata": "^0.1.13",
     "ss_common": "./my_modules/lib/common",
     "type-graphql": "^0.17.6",
-    "typeorm": "^0.2.24",
+    "typeorm": "0.3.0-alpha.24",
     "uuid": "^3.3.2"
   }
 }

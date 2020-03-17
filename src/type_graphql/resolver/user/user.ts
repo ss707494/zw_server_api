@@ -1,15 +1,34 @@
-import {Ctx, Query, Resolver} from "type-graphql"
-import {plainToClass} from "class-transformer"
-import {getRepository} from "typeorm"
+import {Arg, Ctx, Field, ObjectType, Query, Resolver} from "type-graphql"
+import {getRepository, Like} from "typeorm"
 import {Context} from "../../apploServer"
 import {User} from "../../../entity/User"
+import {UserListInput} from "../../types/input"
+import {PageResult} from "../../types/types"
+
+@ObjectType()
+export class UserPage extends PageResult<User> {
+  @Field(returns => [User])
+  list: User[]
+}
 
 @Resolver()
 export class UserResolve {
 
-  @Query(returns => [User])
-  async userList(@Ctx() content: Context) {
-    return plainToClass(User, await getRepository(User).find({relations: ['userInfo']}))
+  @Query(returns => UserPage)
+  async userList(@Ctx() content: Context, @Arg('userListInput')userListInput: UserListInput) {
+    const res = await getRepository(User)
+        .findAndCount({
+          where: {
+            userInfo: {
+              phone: Like(`%${userListInput.phone}%`),
+              email: Like(`%${userListInput.email}%`),
+            },
+            name: Like(`%${userListInput.name}%`),
+          },
+          take: userListInput.rows_per_page,
+          skip: userListInput.page * userListInput.rows_per_page,
+        })
+    return PageResult.setData<User>(res)
   }
 
 }
