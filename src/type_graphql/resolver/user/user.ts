@@ -18,6 +18,9 @@ export class UserResolve {
   async userList(@Ctx() content: Context, @Arg('userListInput')userListInput: UserListInput) {
     const res = await getRepository(User)
         .findAndCount({
+          relations: {
+            userInfo: true,
+          },
           where: {
             userInfo: {
               phone: Like(`%${userListInput.phone}%`),
