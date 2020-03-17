@@ -1,4 +1,4 @@
-import {Column, Entity, JoinTable, ManyToMany, ManyToOne} from "typeorm"
+import {Column, Entity, ManyToOne} from "typeorm"
 import {Product} from "./Product"
 import {OrderInfo} from "./OrderInfo"
 import {Field, ObjectType} from "type-graphql"
@@ -47,10 +47,9 @@ export class ROrderProduct {
   })
   count: number | null
 
-  @Field(returns => [Product], {nullable: true})
-  @ManyToMany(type => Product, object => object.rOrderProduct)
-  @JoinTable()
-  product: [Product] | null
+  @Field(returns => Product, {nullable: true})
+  @ManyToOne(type => Product, object => object.rOrderProduct)
+  product: Product | null
 
   @Field(returns => OrderInfo, {nullable: true})
   @ManyToOne(type => OrderInfo, object => object.rOrderProduct)

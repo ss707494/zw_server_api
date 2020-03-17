@@ -18,6 +18,7 @@ export class OrderResolve {
   async orderList(@Arg('orderInput')orderInput: OrderInput) {
     const res = await getRepository(OrderInfo)
         .findAndCount({
+          where: {},
           relations: {
             user: {
               userInfo: true,

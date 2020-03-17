@@ -1,4 +1,4 @@
-import {Column, Entity, Index, ManyToMany} from "typeorm"
+import {Column, Entity, Index, OneToMany} from "typeorm"
 import {ROrderProduct} from "./ROrderProduct"
 import {Field, ObjectType} from "type-graphql"
 
@@ -137,7 +137,7 @@ export class Product {
   groupRemark: string | null;
 
   @Field(returns => [ROrderProduct], {nullable: true})
-  @ManyToMany(type => ROrderProduct, object => object.product)
-  rOrderProduct: [ROrderProduct] | null;
+  @OneToMany(type => ROrderProduct, object => object.product)
+  rOrderProduct: ROrderProduct[] | null;
 
 }
