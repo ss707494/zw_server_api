@@ -47,6 +47,10 @@ export class Product {
   isNew: number | null;
 
   @Field()
+  @Column("varchar", { length: 200, name: "shelvesTypes", nullable: true, default: () => "''" })
+  shelvesTypes: string | null;
+
+  @Field()
   @Column("int", { name: "is_enable", nullable: true, default: () => "'0'" })
   isEnable: number | null;
 
