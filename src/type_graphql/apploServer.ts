@@ -36,6 +36,10 @@ export const getServerByType__Graphql = async () => {
     dateScalarMode: "timestamp",
     validate: false,
     nullableByDefault: true,
+    // scalarsMap: [{
+    //   type: Object,
+    //   scalar: JsonScalar,
+    // }],
     // automatically create `schema.gql` file with schema definition in current folder
     // emitSchemaFile: path.resolve(__dirname, "schemaType.gql"),
   })
