@@ -1,18 +1,17 @@
-import {Column, Entity, Index, OneToMany} from "typeorm"
+import {Column, Entity, OneToMany} from "typeorm"
 import {ROrderProduct} from "./ROrderProduct"
 import {Field, ObjectType} from "type-graphql"
 
 @ObjectType()
-@Index("number", ["number"], {})
-@Entity("product", { schema: "dw_server" })
+@Entity("product", {schema: "dw_server"})
 export class Product {
   @Field()
-  @Column("varchar", { primary: true, name: "id", length: 40 })
-  id: string;
+  @Column("varchar", {primary: true, name: "id", length: 40})
+  id: string
 
   @Field()
-  @Column("varchar", { name: "name", length: 200 })
-  name: string;
+  @Column("varchar", {name: "name", length: 200})
+  name: string
 
   @Field()
   @Column("timestamp", {
@@ -20,43 +19,43 @@ export class Product {
     nullable: true,
     default: () => "CURRENT_TIMESTAMP"
   })
-  createTime: Date | null;
+  createTime: Date | null
 
   @Field()
-  @Column("timestamp", { name: "update_time", nullable: true })
-  updateTime: Date | null;
+  @Column("timestamp", {name: "update_time", nullable: true})
+  updateTime: Date | null
 
   @Field()
-  @Column("int", { name: "is_delete", nullable: true, default: () => "'0'" })
-  isDelete: number | null;
+  @Column("int", {name: "is_delete", nullable: true, default: () => "'0'"})
+  isDelete: number | null
 
   @Field()
-  @Column("varchar", { name: "category_id", length: 40 })
-  categoryId: string;
+  @Column("varchar", {name: "category_id", length: 40})
+  categoryId: string
 
   @Field()
-  @Column("varchar", { name: "remark", nullable: true, length: 200 })
-  remark: string | null;
+  @Column("varchar", {name: "remark", nullable: true, length: 200})
+  remark: string | null
 
   @Field()
-  @Column("int", { name: "is_hot", nullable: true, default: () => "'0'" })
-  isHot: number | null;
+  @Column("int", {name: "is_hot", nullable: true, default: () => "'0'"})
+  isHot: number | null
 
   @Field()
-  @Column("int", { name: "is_new", nullable: true, default: () => "'0'" })
-  isNew: number | null;
+  @Column("int", {name: "is_new", nullable: true, default: () => "'0'"})
+  isNew: number | null
 
   @Field()
-  @Column("varchar", { length: 200, name: "shelvesTypes", nullable: true, default: () => "''" })
-  shelvesTypes: string | null;
+  @Column("varchar", {length: 200, name: "shelvesTypes", nullable: true, default: () => "''"})
+  shelvesTypes: string | null
 
   @Field()
-  @Column("int", { name: "is_enable", nullable: true, default: () => "'0'" })
-  isEnable: number | null;
+  @Column("int", {name: "is_enable", nullable: true, default: () => "'0'"})
+  isEnable: number | null
 
   @Field()
-  @Column("int", { name: "sort", nullable: true, default: () => "'0'" })
-  sort: number | null;
+  @Column("int", {name: "sort", nullable: true, default: () => "'0'"})
+  sort: number | null
 
   @Field()
   @Column("float", {
@@ -65,7 +64,16 @@ export class Product {
     precision: 12,
     default: () => "'0'"
   })
-  stock: number | null;
+  stock: number | null
+
+  @Field()
+  @Column("varchar", {
+    name: "packingUnit",
+    nullable: true,
+    length: 10,
+    default: () => "''"
+  })
+  packingUnit: string | null
 
   @Field()
   @Column("varchar", {
@@ -74,7 +82,7 @@ export class Product {
     length: 10,
     default: () => "'g'"
   })
-  unit: string | null;
+  unit: string | null
 
   @Field()
   @Column("float", {
@@ -83,7 +91,7 @@ export class Product {
     precision: 12,
     default: () => "'0'"
   })
-  weight: number | null;
+  weight: number | null
 
   @Field()
   @Column("float", {
@@ -92,7 +100,7 @@ export class Product {
     precision: 12,
     default: () => "'0'"
   })
-  priceIn: number | null;
+  priceIn: number | null
 
   @Field()
   @Column("float", {
@@ -101,7 +109,7 @@ export class Product {
     precision: 12,
     default: () => "'0'"
   })
-  priceOut: number | null;
+  priceOut: number | null
 
   @Field()
   @Column("float", {
@@ -110,19 +118,19 @@ export class Product {
     precision: 12,
     default: () => "'0'"
   })
-  priceMarket: number | null;
+  priceMarket: number | null
 
   @Field()
-  @Column("varchar", { name: "brand", nullable: true, length: 200 })
-  brand: string | null;
+  @Column("varchar", {name: "brand", nullable: true, length: 200})
+  brand: string | null
 
   @Field()
-  @Column({ type: "int", generated: 'increment', name: "number" })
-  number: number;
+  @Column("int", { name: "number", default: () => "'0'"})
+  number: number
 
   @Field()
-  @Column("int", { name: "is_group", nullable: true, default: () => "'0'" })
-  isGroup: number | null;
+  @Column("int", {name: "is_group", nullable: true, default: () => "'0'"})
+  isGroup: number | null
 
   @Field()
   @Column("int", {
@@ -130,18 +138,27 @@ export class Product {
     nullable: true,
     default: () => "'1'"
   })
-  groupPrecision: number | null;
+  groupPrecision: number | null
 
   @Field()
-  @Column("int", { name: "group_amount", nullable: true, default: () => "'1'" })
-  groupAmount: number | null;
+  @Column("int", {name: "group_amount", nullable: true, default: () => "'1'"})
+  groupAmount: number | null
 
   @Field()
-  @Column("varchar", { name: "group_remark", nullable: true, length: 100 })
-  groupRemark: string | null;
+  @Column("varchar", {name: "group_remark", nullable: true, length: 100})
+  groupRemark: string | null
+
+  @Field()
+  @Column("varchar", {
+    length: 20,
+    name: "groupAmountUnit",
+    nullable: true,
+    default: () => "''"
+  })
+  groupAmountUnit: string | null
 
   @Field(returns => [ROrderProduct], {nullable: true})
   @OneToMany(type => ROrderProduct, object => object.product)
-  rOrderProduct: ROrderProduct[] | null;
+  rOrderProduct: ROrderProduct[] | null
 
 }

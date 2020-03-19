@@ -1,12 +1,15 @@
 {
   "dependencies": {
-    "typescript": "^3.8.3",
-    "typeorm": "^0.2.24"
+    "typeorm": "^0.2.24",
+    "typescript": "^3.8.3"
   },
   "scripts": {
     "tsc": "tsc",
     "log": "tsc && typeorm schema:log",
-    "generate": "tsc && typeorm migration:generate -n UserMigration",
+    "generate": "rimraf -rf ../../../dist/migration && tsc && typeorm migration:generate -n UserMigration",
     "run": "tsc && typeorm migration:run"
+  },
+  "devDependencies": {
+    "rimraf": "^3.0.2"
   }
 }

@@ -132,13 +132,14 @@ where 1 = 1
         const id = uuidV1()
         // language=MySQL
         const sql = [`
-            insert dw_server.category (id, name, update_time, parent_id, full_parent_id)
-            values (?, ?, current_timestamp, ?, ?);
+            insert dw_server.category (id, name, update_time, parent_id, full_parent_id, number)
+            values (?, ?, current_timestamp, ?, ?, ifnull((select 1 + max(c.number) from dw_server.category c where c.parent_id = ?), 1));
         `, [
           id,
           Category?.name,
           Category?.parent_id ?? '',
-          Category?.full_parent_id ?? ''
+          Category?.full_parent_id ?? '',
+          Category?.parent_id ?? '',
         ]]
         const res = await asyncQuery(...sql)
         console.log(res)

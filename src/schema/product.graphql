@@ -36,6 +36,8 @@ type Product {
     group_info: GroupInfo
     count: Int
     shelvesTypes: String
+    groupAmountUnit: String
+    packingUnit: String
 }
 
 type ProductImg {
@@ -83,4 +85,6 @@ input ProductInput {
     group_amount: Int
     group_remark: String
     shelvesTypes: String
+    groupAmountUnit: String
+    packingUnit: String
 }

@@ -52,6 +52,7 @@ export const queryProductDetail = async (product) => {
                                          p.group_amount,
                                          p.group_precision,
                                          p.group_remark,
+       p.shelvesTypes, p.packingUnit, p.groupAmountUnit,
                                          c1.name   as c1_name,
                                          c1.id     as c1_id,
                                          c1.number as c1_number,
@@ -115,7 +116,7 @@ ${dealWhereLike({
       const sql = `
 select p.id, p.name, p.create_time, p.update_time, p.is_delete, p.remark, p.is_hot, p.is_new, p.stock, p.unit, p.weight, p.price_in, p.price_out, p.price_market, p.brand, p.number, p.category_id,p.is_enable,
        p.sort, p.is_group, p.group_amount, p.group_precision, p.group_remark,
-       p.shelvesTypes,
+       p.shelvesTypes, p.groupAmountUnit, p.packingUnit,
                  c1.name as c1_name,
                  c1.id as c1_id, 
                  c1.number as c1_number,
@@ -221,7 +222,7 @@ where 1 = 1
         const sql = `
 insert into dw_server.product
 set update_time = current_timestamp,
-    id = "${id}" 
+    id = "${id}", number = (select 1 + max(p.number) from dw_server.product p where p.is_group = ${ProductInput.is_group})
     ${dealSet(otherProduct)}
         `
         await asyncQuery(sql)
