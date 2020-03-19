@@ -35,10 +35,10 @@ export class ProductSupplement {
   @Column("varchar", { name: "number", length: 40 })
   number: string;
 
-  @Column("varchar", { name: "code", length: 40 })
+  @Column("varchar", { name: "code", length: 40, default: () => "''" })
   code: string;
 
-  @Column("varchar", { name: "supplier", length: 40 })
+  @Column("varchar", { name: "supplier", length: 40, default: () => "''" })
   supplier: string;
 
   @Column("varchar", { name: "user_id", length: 40 })
