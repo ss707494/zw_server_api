@@ -1,8 +1,9 @@
 import {Column, Entity, ManyToOne} from "typeorm"
 import {Product} from "./Product"
 import {OrderInfo} from "./OrderInfo"
-import {Field, ObjectType} from "type-graphql"
+import {Field, InputType, ObjectType} from "type-graphql"
 
+@InputType('ROrderProductItemInput')
 @ObjectType()
 @Entity("r_order_product", {schema: "dw_server"})
 export class ROrderProduct {

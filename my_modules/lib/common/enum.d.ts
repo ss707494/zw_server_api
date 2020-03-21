@@ -20,3 +20,12 @@ export declare enum ProductSupplement {
     Finish = 2
 }
 export declare const ProductSupplementString: any;
+export declare enum OrderState {
+    Ordered = 1,
+    Paid = 2,
+    Picking = 3,
+    PickedUp = 4,
+    Finish = 5,
+    Cancel = 6
+}
+export declare const orderStateKeys: string[];

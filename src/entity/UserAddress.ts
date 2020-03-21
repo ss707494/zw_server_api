@@ -1,7 +1,8 @@
 import {Column, Entity, OneToMany} from "typeorm"
-import {Field, ObjectType} from "type-graphql"
+import {Field, InputType, ObjectType} from "type-graphql"
 import {OrderInfo} from "./OrderInfo"
 
+@InputType('UserAddressItemInput')
 @ObjectType()
 @Entity("user_address", { schema: "dw_server" })
 export class UserAddress {

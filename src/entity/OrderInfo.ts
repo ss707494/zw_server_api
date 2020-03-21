@@ -1,10 +1,11 @@
 import {Column, Entity, ManyToOne, OneToMany, OneToOne} from "typeorm"
 import {ROrderUser} from "./ROrderUser"
-import {Field, ObjectType} from "type-graphql"
+import {Field, InputType, ObjectType} from "type-graphql"
 import {User} from "./User"
 import {ROrderProduct} from "./ROrderProduct"
 import {UserAddress} from "./UserAddress"
 
+@InputType('OrderInfoItemInput')
 @ObjectType()
 @Entity("order_info", {schema: "dw_server"})
 export class OrderInfo {
@@ -37,7 +38,7 @@ export class OrderInfo {
   number: string
 
   @Field()
-  @Column("int", {name: "state", nullable: true, default: () => "'1'"})
+  @Column("int", {name: "state", nullable: true, default: () => "'1'", comment: '1 已下单， 2 已收款， 3 已配货， 4 已取货， 5 订单完成， 6 订单取消'})
   state: number | null
 
   @Field()
@@ -134,5 +135,13 @@ export class OrderInfo {
   @Field(returns => UserAddress)
   @ManyToOne(type => UserAddress, object => object.orderInfo)
   userAddress: UserAddress | null
+
+  @Field({nullable: true})
+  @Column("timestamp", {name: "pickUpTime", nullable: true, comment: "取货时间"})
+  pickUpTime: Date | null
+
+  @Field({nullable: true})
+  @Column("int", {name: "pickUpType", nullable: true, comment: "取货方式 1: 自提 2: 配送", default:() => "1"})
+  pickUpType: number | null
 
 }

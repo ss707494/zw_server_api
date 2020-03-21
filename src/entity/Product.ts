@@ -1,7 +1,8 @@
 import {Column, Entity, OneToMany} from "typeorm"
 import {ROrderProduct} from "./ROrderProduct"
-import {Field, ObjectType} from "type-graphql"
+import {Field, InputType, ObjectType} from "type-graphql"
 
+@InputType('ProductItemInput')
 @ObjectType()
 @Entity("product", {schema: "dw_server"})
 export class Product {

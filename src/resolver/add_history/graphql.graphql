@@ -6,6 +6,7 @@ type AddHistory {
     update_time: Date
     is_delete: Int
 
+    state: Int
     supplement_id: String
     number: String
     supplier: String

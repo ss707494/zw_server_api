@@ -30,3 +30,13 @@ exports.ProductSupplementString = {
     1: '配货中',
     2: '已完成',
 };
+var OrderState;
+(function (OrderState) {
+    OrderState[OrderState["Ordered"] = 1] = "Ordered";
+    OrderState[OrderState["Paid"] = 2] = "Paid";
+    OrderState[OrderState["Picking"] = 3] = "Picking";
+    OrderState[OrderState["PickedUp"] = 4] = "PickedUp";
+    OrderState[OrderState["Finish"] = 5] = "Finish";
+    OrderState[OrderState["Cancel"] = 6] = "Cancel";
+})(OrderState = exports.OrderState || (exports.OrderState = {}));
+exports.orderStateKeys = Object.values(OrderState).filter(function (value) { return typeof (value) === 'string'; });

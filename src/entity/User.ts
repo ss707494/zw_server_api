@@ -1,9 +1,11 @@
 import {Column, Entity, JoinColumn, OneToMany, OneToOne} from "typeorm"
-import {Field, ObjectType} from "type-graphql"
+import {Field, InputType, ObjectType} from "type-graphql"
 import {UserInfo} from "./UserInfo"
 import {ROrderUser} from "./ROrderUser"
 import {OrderInfo} from "./OrderInfo"
+import {Type} from 'class-transformer'
 
+@InputType('UserItemInput')
 @ObjectType()
 @Entity("user", {schema: "dw_server"})
 export class User {
@@ -42,6 +44,7 @@ export class User {
   @Field(returns => UserInfo, {nullable: true})
   @OneToOne(type1 => UserInfo, object => object.user)
   @JoinColumn()
+  @Type()
   userInfo: UserInfo | null
 
   @Field(returns => [ROrderUser], {nullable: true})

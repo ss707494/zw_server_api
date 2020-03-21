@@ -39,7 +39,11 @@ export class DataConfigResolver {
   @Query(returns => DataConfig)
   async getDataConfig(@Arg('dataConfigInput')dataConfigInput: DataConfigInput) {
     const res = await getRepository(DataConfig)
-        .findOne()
+        .findOne({
+          where: {
+            type: dataConfigInput.type,
+          },
+        })
     return plainToClass(DataConfig, res)
   }
 

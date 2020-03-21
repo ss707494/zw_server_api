@@ -1,8 +1,10 @@
-import {Arg, Field, Float, ObjectType, Query, Resolver} from "type-graphql"
-import {getRepository, Like} from "typeorm"
+import {merge} from "lodash"
+import {Arg, Field, Float, Mutation, ObjectType, Query, Resolver} from "type-graphql"
+import {getRepository, In, Like} from "typeorm"
 import {User} from "../../../entity/User"
 import {UserListInput} from "../../types/input"
-import {PageResult} from "../../types/types"
+import {dealPageResult, PageResult} from "../../types/types"
+import {UserInfo} from '../../../entity/UserInfo'
 
 @ObjectType()
 export class UserPage extends PageResult<User> {
@@ -32,7 +34,7 @@ export class UserResolve {
           take: userListInput.rows_per_page,
           skip: userListInput.page * userListInput.rows_per_page,
         })
-    return PageResult.setData<User>(res)
+    return dealPageResult(res)
   }
 
   @Query(returns => Float)
@@ -44,6 +46,22 @@ export class UserResolve {
             userInfo: true,
           },
         }))[1]
+  }
+
+  @Mutation(returns => [User])
+  async saveUserList(@Arg('userItemInput', returns => [User])userItemInput: [User]) {
+    const database = await getRepository(User)
+    const data = await database.find({
+      relations: {
+        userInfo: true,
+      },
+      where: {
+        id: In(userItemInput.map(value => value.id)),
+      },
+    })
+    const merge1 = merge(data, userItemInput)
+    await getRepository(UserInfo).save(merge1.map(user => user.userInfo))
+    return merge1
   }
 
 }

@@ -1,9 +1,9 @@
 import {Arg, Field, Float, ObjectType, Query, Resolver} from "type-graphql"
 import {OrderInfo} from "../../../entity/OrderInfo"
-import {Between, FindOptions, getRepository, LessThan, MoreThan, Not} from "typeorm"
+import {Between, FindOptions, getRepository, LessThan, Like, MoreThan, Not} from "typeorm"
 import {OrderInput} from "./orderInput"
 import {dealPageData} from "../../types/input"
-import {PageResult} from "../../types/types"
+import {dealPageResult, PageResult} from "../../types/types"
 
 
 @ObjectType()
@@ -20,6 +20,19 @@ const dealWhere = (orderInput: OrderInput): FindOptions<OrderInfo> => {
           : orderInput.startTime ? MoreThan(orderInput.startTime)
               : orderInput.endTime ? LessThan(orderInput.endTime)
                   : Not('')),
+      number: Like(`%${orderInput.number}%`),
+      user: {
+        name: Like(`%${orderInput.registerName}%`),
+        userInfo: {
+          name: Like(`%${orderInput.userName}%`),
+        },
+      },
+      userAddress: {
+        zip: Like(`%${orderInput.zip}%`),
+        city: Like(`%${orderInput.city}%`),
+        province: Like(`%${orderInput.province}%`),
+      },
+      pickUpType: orderInput.pickUpType === 0 ? Not('') : orderInput.pickUpType,
     },
   }
 }
@@ -43,7 +56,7 @@ export class OrderResolve {
           },
           ...dealPageData(orderInput),
         })
-    return PageResult.setData<OrderInfo>(res)
+    return dealPageResult(res)
   }
 
   @Query(returns => Float)

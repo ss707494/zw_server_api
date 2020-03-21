@@ -1,17 +1,18 @@
 import {Column, Entity, OneToOne} from "typeorm"
-import {Field, ObjectType} from "type-graphql"
+import {Field, InputType, ObjectType} from "type-graphql"
 import {User} from "./User"
 
+@InputType('UserInfoItemInput')
 @ObjectType()
-@Entity("user_info", { schema: "dw_server" })
+@Entity("user_info", {schema: "dw_server"})
 export class UserInfo {
   @Field()
-  @Column("varchar", { primary: true, name: "id", length: 40 })
-  id: string;
+  @Column("varchar", {primary: true, name: "id", length: 40})
+  id: string
 
   @Field()
-  @Column("varchar", { name: "name", nullable: true, length: 200 })
-  name: string | null;
+  @Column("varchar", {name: "name", nullable: true, length: 200})
+  name: string | null
 
   @Field()
   @Column("timestamp", {
@@ -19,30 +20,34 @@ export class UserInfo {
     nullable: true,
     default: () => "CURRENT_TIMESTAMP"
   })
-  createTime: Date | null;
+  createTime: Date | null
 
   @Field()
-  @Column("timestamp", { name: "update_time", nullable: true })
-  updateTime: Date | null;
+  @Column("timestamp", {name: "update_time", nullable: true})
+  updateTime: Date | null
 
-  @Column("int", { name: "is_delete", nullable: true, default: () => "'0'" })
+  @Column("int", {name: "is_delete", nullable: true, default: () => "'0'"})
   @Field()
-  isDelete: number | null;
+  isDelete: number | null
 
-  @Column("varchar", { name: "user_id", length: 40 })
+  @Column("varchar", {name: "user_id", length: 40})
   @Field()
-  userId: string;
+  userId: string
 
-  @Column("varchar", { name: "phone", nullable: true, length: 40 })
+  @Column("varchar", {name: "phone", nullable: true, length: 40})
   @Field()
-  phone: string | null;
+  phone: string | null
 
-  @Column("varchar", { name: "email", nullable: true, length: 100 })
+  @Column("varchar", {name: "email", nullable: true, length: 100})
   @Field()
-  email: string | null;
+  email: string | null
+
+  @Column("varchar", {name: "userLevel", default: () => "''"})
+  @Field()
+  userLevel: string | null
 
   @OneToOne(type1 => User, object => object.userInfo)
   @Field(returns => User, {nullable: true})
-  user: User | null;
+  user: User | null
 
 }

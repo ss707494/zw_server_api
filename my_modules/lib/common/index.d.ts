@@ -1,5 +1,4 @@
 import { PromoCodeTypeEnum } from './enum';
-import * as generateTypes from './generateTypes';
-export { PromoCodeTypeEnum, generateTypes };
+export { PromoCodeTypeEnum };
 declare const _default: {};
 export default _default;

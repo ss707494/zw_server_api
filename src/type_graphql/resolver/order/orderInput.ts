@@ -17,7 +17,10 @@ export class OrderInput extends PageInput {
   state: number | null
 
   @Field()
-  userName: string
+  userName: string | null
+
+  @Field()
+  registerName: string | null
 
   @Field()
   zip: string | null;
@@ -33,5 +36,11 @@ export class OrderInput extends PageInput {
 
   @Field()
   address: string | null;
+
+  @Field({nullable: true})
+  pickUpTime: Date | null
+
+  @Field({nullable: true})
+  pickUpType: number | null
 
 }

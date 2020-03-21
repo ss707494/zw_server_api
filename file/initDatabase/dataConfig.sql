@@ -34,3 +34,8 @@ insert into dw_server.data_config
 (uuid(), 'HomeCarousel', 'HomeCarousel', '{}')
 ;
 
+insert into dw_server.data_config
+(id, name, type, value) VALUES
+(uuid(), 'OrderState', 'OrderState', '{}')
+;
+
