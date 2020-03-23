@@ -1,9 +1,11 @@
 import {Column, Entity, JoinColumn, OneToMany, OneToOne} from "typeorm"
-import {Field, InputType, ObjectType} from "type-graphql"
+import {Field, Float, InputType, ObjectType} from "type-graphql"
 import {UserInfo} from "./UserInfo"
 import {ROrderUser} from "./ROrderUser"
 import {OrderInfo} from "./OrderInfo"
 import {Type} from 'class-transformer'
+import {OrderState} from 'ss_common/enum'
+import {addMonths, isSameMonth} from 'date-fns'
 
 @InputType('UserItemInput')
 @ObjectType()
@@ -21,7 +23,7 @@ export class User {
   @Column("timestamp", {
     name: "create_time",
     nullable: true,
-    default: () => "CURRENT_TIMESTAMP"
+    default: () => "CURRENT_TIMESTAMP",
   })
   createTime: Date | null
 
@@ -55,4 +57,37 @@ export class User {
   @OneToMany(type => OrderInfo, object => object.user)
   orderInfo: OrderInfo[] | null
 
+  @Field(returns => Float, {nullable: true})
+  get orderCoinNextMonth() {
+    if (this.orderInfo?.length) {
+      const currentDate = new Date()
+      return this.orderInfo.filter(value => value.state === OrderState.Finish).reduce((previousValue, currentValue) => {
+        if (isSameMonth(currentValue.finishTime, currentDate)) {
+          return previousValue + currentValue.generateCoin
+        }
+        return previousValue
+      }, 0)
+    }
+    return 0
+  }
+
+  @Field(returns => Float, {nullable: true})
+  get orderCoinCurrentMonth() {
+    if (this.orderInfo?.length) {
+      const currentDate = new Date()
+      const lastDate = addMonths(currentDate, -1)
+      return this.orderInfo.filter(value => value.state === OrderState.Finish).reduce((previousValue, currentValue) => {
+        if (isSameMonth(currentValue.finishTime, lastDate)) {
+          return previousValue + currentValue.generateCoin
+        }
+        if (isSameMonth(currentValue.finishTime, currentDate)) {
+          return previousValue - currentValue.deductCoin
+        }
+        return previousValue
+      }, 0)
+    }
+    return 0
+  }
+
 }
+

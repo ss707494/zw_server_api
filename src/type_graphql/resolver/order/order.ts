@@ -1,9 +1,10 @@
-import {Arg, Field, Float, ObjectType, Query, Resolver} from "type-graphql"
+import {Arg, Field, Float, Mutation, ObjectType, Query, Resolver} from "type-graphql"
 import {OrderInfo} from "../../../entity/OrderInfo"
 import {Between, FindOptions, getRepository, LessThan, Like, MoreThan, Not} from "typeorm"
 import {OrderInput} from "./orderInput"
 import {dealPageData} from "../../types/input"
 import {dealPageResult, PageResult} from "../../types/types"
+import {OrderState} from 'ss_common/enum'
 
 
 @ObjectType()
@@ -65,6 +66,19 @@ export class OrderResolve {
         .count({
           ...dealWhere(orderInput).where,
         })
+  }
+
+  @Mutation(returns => [OrderInfo])
+  async saveOrderList(@Arg('orderInfoItemInput', returns => [OrderInfo])orderInfoItemInput: OrderInfo[]) {
+    return await getRepository(OrderInfo).save(orderInfoItemInput.map(value => ({
+      ...value,
+      ...(value.state === OrderState.PickedUp ? {
+        pickUpTime: new Date(),
+      } : {}),
+      ...(value.state === OrderState.Finish ? {
+        finishTime: new Date(),
+      } : {}),
+    })))
   }
 
 }

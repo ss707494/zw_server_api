@@ -39,3 +39,8 @@ insert into dw_server.data_config
 (uuid(), 'OrderState', 'OrderState', '{}')
 ;
 
+insert into dw_server.data_config
+(id, name, type, value) VALUES
+(uuid(), 'SelfAddress', 'SelfAddress', '{}')
+;
+

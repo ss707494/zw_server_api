@@ -29,6 +29,7 @@ export class UserResolve {
         .findAndCount({
           relations: {
             userInfo: true,
+            orderInfo: true,
           },
           where: dealWhere(userListInput),
           take: userListInput.rows_per_page,

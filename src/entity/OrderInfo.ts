@@ -90,7 +90,8 @@ export class OrderInfo {
     name: "transportation_costs",
     nullable: true,
     precision: 12,
-    default: () => "'0'"
+    default: () => "'0'",
+    comment: '运费',
   })
   transportationCosts: number | null
 
@@ -99,7 +100,8 @@ export class OrderInfo {
     name: "sale_tax",
     nullable: true,
     precision: 12,
-    default: () => "'0'"
+    default: () => "'0'",
+    comment: '税费',
   })
   saleTax: number | null
 
@@ -143,5 +145,23 @@ export class OrderInfo {
   @Field({nullable: true})
   @Column("int", {name: "pickUpType", nullable: true, comment: "取货方式 1: 自提 2: 配送", default:() => "1"})
   pickUpType: number | null
+
+  @Field({nullable: true})
+  @Column("float", {
+    nullable: true,
+    comment: "订单产生达人币",
+    precision: 12,
+    default: () => "'0'",
+  })
+  generateCoin: number | null
+
+  @Field({nullable: true})
+  @Column("float", {
+    nullable: true,
+    comment: "订单抵扣达人币",
+    precision: 12,
+    default: () => "'0'",
+  })
+  deductCoin: number | null
 
 }

@@ -8,9 +8,8 @@ import { getAllOrderListDb, getOrderListDb, getProductByOrderIdDb, updateOrder }
 import { getGroupOrderListDb, getProductByGroupOrderIdDb } from "../db/groupOrder";
 import { getUserById } from "../db/user";
 
-
 export const getOrderNumber = id => {
-  return dateFormat('yyyyMMddhhmmss', new Date()) + id.slice(0, 6)
+  return id.slice(0, 6) + dateFormat('yyyyMMddhhmmss', new Date())
 }
 
 const dealPaymentAddress = async (orderList) => {
