@@ -33,7 +33,7 @@ const dealWhere = (orderInput: OrderInput): FindOptions<OrderInfo> => {
         city: Like(`%${orderInput.city}%`),
         province: Like(`%${orderInput.province}%`),
       },
-      pickUpType: orderInput.pickUpType === 0 ? Not('') : orderInput.pickUpType,
+      pickUpType: Like(`%${orderInput.pickUpType}%`),
     },
   }
 }
@@ -54,6 +54,7 @@ export class OrderResolve {
               product: true,
             },
             userAddress: true,
+            userPayCard: true,
           },
           ...dealPageData(orderInput),
         })

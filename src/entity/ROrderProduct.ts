@@ -48,6 +48,15 @@ export class ROrderProduct {
   })
   count: number | null
 
+  @Field()
+  @Column("float", {
+    name: "dealPrice",
+    nullable: true,
+    precision: 12,
+    default: () => "'0'"
+  })
+  dealPrice: number | null
+
   @Field(returns => Product, {nullable: true})
   @ManyToOne(type => Product, object => object.rOrderProduct)
   product: Product | null

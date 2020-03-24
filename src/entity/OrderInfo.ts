@@ -4,6 +4,7 @@ import {Field, InputType, ObjectType} from "type-graphql"
 import {User} from "./User"
 import {ROrderProduct} from "./ROrderProduct"
 import {UserAddress} from "./UserAddress"
+import {UserPayCard} from './UserPayCard'
 
 @InputType('OrderInfoItemInput')
 @ObjectType()
@@ -143,8 +144,8 @@ export class OrderInfo {
   pickUpTime: Date | null
 
   @Field({nullable: true})
-  @Column("int", {name: "pickUpType", nullable: true, comment: "取货方式 1: 自提 2: 配送", default:() => "1"})
-  pickUpType: number | null
+  @Column("varchar", {name: "pickUpType", nullable: true, comment: "取货方式 Self: 自提 Delivery: 配送", default:() => "''"})
+  pickUpType: string | null
 
   @Field({nullable: true})
   @Column("float", {
@@ -163,5 +164,9 @@ export class OrderInfo {
     default: () => "'0'",
   })
   deductCoin: number | null
+
+  @Field(returns => UserPayCard)
+  @ManyToOne(type => UserPayCard, object => object.orderInfo)
+  userPayCard: UserPayCard | null
 
 }

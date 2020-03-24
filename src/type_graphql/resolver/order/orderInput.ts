@@ -41,6 +41,6 @@ export class OrderInput extends PageInput {
   pickUpTime: Date | null
 
   @Field({nullable: true})
-  pickUpType: number | null
+  pickUpType: string | null
 
 }

@@ -1,7 +1,8 @@
 import {Column, Entity, ManyToOne} from "typeorm"
-import {Field, ObjectType} from "type-graphql"
+import {Field, InputType, ObjectType} from "type-graphql"
 import {DictTypeFirst} from "./DictTypeFirst"
 
+@InputType('DictItemInput')
 @ObjectType()
 @Entity("dict", {schema: "dw_server"})
 export class Dict {
@@ -49,6 +50,7 @@ export class Dict {
   @Column("varchar", {name: "remark", length: 40, default: ''})
   remark: string
 
+  @Field(returns => DictTypeFirst)
   @ManyToOne(type => DictTypeFirst, object => object.dict)
   dictTypeFirst: DictTypeFirst | null
 

@@ -1,12 +1,14 @@
-import {Column, Entity, OneToMany} from "typeorm"
-import {Field, ObjectType} from "type-graphql"
+import {Column, Entity, Generated, OneToMany} from "typeorm"
+import {Field, InputType, ObjectType} from "type-graphql"
 import {Dict} from "./Dict"
 
+@InputType('DictTypeFirstItemInput')
 @ObjectType()
 @Entity("dict_type_first", {schema: "dw_server"})
 export class DictTypeFirst {
   @Field()
   @Column("varchar", {primary: true, name: "id", length: 40})
+  @Generated('uuid')
   id: string
 
   @Field()
@@ -42,9 +44,11 @@ export class DictTypeFirst {
   sort: number | null
 
   @Field()
-  @Column("varchar", {name: "remark", length: 40})
+  @Column("varchar", {name: "remark", length: 40, default: ''})
   remark: string
 
+  @Field(returns => Dict)
   @OneToMany(type => Dict, object => object.dictTypeFirst)
   dict: Dict | null
+
 }

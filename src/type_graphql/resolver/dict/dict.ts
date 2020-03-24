@@ -1,4 +1,4 @@
-import {Arg, Query, Resolver} from "type-graphql"
+import {Arg, Mutation, Query, Resolver} from "type-graphql"
 import {DictTypeFirst} from "../../../entity/DictTypeFirst"
 import {getRepository} from "typeorm"
 import {plainToClass} from "class-transformer"
@@ -8,12 +8,17 @@ import {DictInput} from "./dictInput"
 @Resolver()
 export class DictResolver {
 
+  @Mutation(returns => [DictTypeFirst])
+  async saveDictTypeFirst(@Arg('dictTypeFirstItemInput', returns => [DictTypeFirst])dictTypeFirstItemInput: DictTypeFirst[]) {
+    return await getRepository(DictTypeFirst).save(dictTypeFirstItemInput)
+  }
+
   @Query(returns => [DictTypeFirst])
   async getDictTypeList() {
     const res = await getRepository(DictTypeFirst)
         .find({
           where: {
-            isDelete: 0
+            isDelete: 0,
           },
         })
     return plainToClass(DictTypeFirst, res)
