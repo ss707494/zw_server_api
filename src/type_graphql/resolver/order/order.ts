@@ -1,6 +1,6 @@
 import {Arg, Field, Float, Mutation, ObjectType, Query, Resolver} from "type-graphql"
 import {OrderInfo} from "../../../entity/OrderInfo"
-import {Between, FindOptions, getRepository, LessThan, Like, MoreThan, Not} from "typeorm"
+import {Between, FindOptions, getRepository, LessThan, Like, MoreThan, Not, Raw} from "typeorm"
 import {OrderInput} from "./orderInput"
 import {dealPageData} from "../../types/input"
 import {dealPageResult, PageResult} from "../../types/types"
@@ -17,10 +17,12 @@ const dealWhere = (orderInput: OrderInput): FindOptions<OrderInfo> => {
   return {
     where: {
       state: orderInput.state === 0 ? Not('') : orderInput.state,
-      createTime: ((orderInput.startTime && orderInput.endTime) ? Between(orderInput.startTime, orderInput.endTime)
-          : orderInput.startTime ? MoreThan(orderInput.startTime)
-              : orderInput.endTime ? LessThan(orderInput.endTime)
-                  : Not('')),
+      ...((!orderInput.startTime && !orderInput.endTime) ? {} : {
+        finishTime: ((orderInput.startTime && orderInput.endTime) ? Between(orderInput.startTime, orderInput.endTime)
+            : orderInput.startTime ? MoreThan(orderInput.startTime)
+                : orderInput.endTime ? LessThan(orderInput.endTime)
+                    : Raw('is null ')),
+      }),
       number: Like(`%${orderInput.number}%`),
       user: {
         name: Like(`%${orderInput.registerName}%`),

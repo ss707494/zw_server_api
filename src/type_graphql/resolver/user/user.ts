@@ -1,24 +1,17 @@
 import {merge} from "lodash"
-import {Arg, Field, Float, Mutation, ObjectType, Query, Resolver} from "type-graphql"
+import {Arg, Ctx, Field, Mutation, ObjectType, Query, Resolver} from "type-graphql"
 import {getRepository, In, Like} from "typeorm"
 import {User} from "../../../entity/User"
 import {UserListInput} from "../../types/input"
 import {dealPageResult, PageResult} from "../../types/types"
 import {UserInfo} from '../../../entity/UserInfo'
+import {Context} from '../../apploServer'
 
 @ObjectType()
 export class UserPage extends PageResult<User> {
   @Field(returns => [User])
   list: User[]
 }
-
-const dealWhere = (userListInput: UserListInput) => ({
-  userInfo: {
-    phone: Like(`%${userListInput.phone}%`),
-    email: Like(`%${userListInput.email}%`),
-  },
-  name: Like(`%${userListInput.name}%`),
-})
 
 @Resolver()
 export class UserResolve {
@@ -31,22 +24,17 @@ export class UserResolve {
             userInfo: true,
             orderInfo: true,
           },
-          where: dealWhere(userListInput),
+          where: {
+            userInfo: {
+              phone: Like(`%${userListInput.phone}%`),
+              email: Like(`%${userListInput.email}%`),
+            },
+            name: Like(`%${userListInput.name}%`),
+          },
           take: userListInput.rows_per_page,
           skip: userListInput.page * userListInput.rows_per_page,
         })
     return dealPageResult(res)
-  }
-
-  @Query(returns => Float)
-  async userListTotal(@Arg('userListInput')userListInput: UserListInput) {
-    return (await getRepository(User)
-        .findAndCount({
-          where: dealWhere(userListInput),
-          relations: {
-            userInfo: true,
-          },
-        }))[1]
   }
 
   @Mutation(returns => [User])
@@ -65,4 +53,18 @@ export class UserResolve {
     return merge1
   }
 
+  @Query(returns => User)
+  async userInfo(@Ctx() { user }: Context) {
+    if (user?.id) {
+      return await getRepository(User).findOne({
+        where: {
+          id: (user.id),
+        },
+        relations: {
+          userInfo: true,
+        },
+      })
+    }
+    return {}
+  }
 }

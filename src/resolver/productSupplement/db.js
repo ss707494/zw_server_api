@@ -33,8 +33,14 @@ export const addRelationProductSupplementDb = async (addItemList, supplement_id)
           (id, supplement_id, product_id, count, amount, supplier, remark)
       values ?
   `, [
-    addItemList.map(e => [uuidV1(), supplement_id, e.product_id, e.addNumber ?? 0, e.addPrice ?? 0, e.addSupplier ?? '', e.addRemark ?? ''])
+    addItemList.map(e => [uuidV1(), supplement_id, e.product_id, e.addNumber ?? 0, e.addPrice ?? 0, e.addSupplier ?? '', e.addRemark ?? '']),
   ])
+  // language=MySQL
+  await asyncQuery(`update dw_server.r_product_supplement r
+      left join dw_server.product p on p.id = r.product_id
+                    set r.lastOutAmount = p.price_out
+                    where r.product_id in (?)
+  `, [addItemList.map(e => e.product_id)])
 
   return res
 }
@@ -108,7 +114,8 @@ export const getAddItemList = async (productSupplement) => {
              count,
              amount,
              supplier,
-             remark
+             remark,
+             lastOutAmount
       from dw_server.r_product_supplement
       where is_delete = 0
         and supplement_id = ?

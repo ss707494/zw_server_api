@@ -29,6 +29,7 @@ type AddItem {
     amount: Float
     supplier: String
     remark: String
+    lastOutAmount: Float
 
     product: Product
 }

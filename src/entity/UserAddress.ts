@@ -74,4 +74,9 @@ export class UserAddress {
   @OneToMany(type => OrderInfo, object => object.userAddress)
   orderInfo: OrderInfo[] | null
 
+  @Field(returns => String)
+  get combineAddress() {
+    return this.province + this.city + this.district + this.address
+  }
+
 }

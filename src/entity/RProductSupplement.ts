@@ -48,4 +48,13 @@ export class RProductSupplement {
 
   @Column("varchar", { name: "remark", length: 40 })
   remark: string;
+
+  @Column("float", {
+    name: "lastOutAmount",
+    nullable: true,
+    precision: 12,
+    default: () => "'0'",
+  })
+  lastOutAmount: number | null
+
 }
