@@ -7,6 +7,7 @@ import {dealPageResult, PageResult} from "../../types/types"
 import {UserInfo} from '../../../entity/UserInfo'
 import {Context} from '../../apploServer'
 
+//
 @ObjectType()
 export class UserPage extends PageResult<User> {
   @Field(returns => [User])
