@@ -7,7 +7,6 @@ import {dealPageResult, PageResult} from "../../types/types"
 import {UserInfo} from '../../../entity/UserInfo'
 import {Context} from '../../apploServer'
 
-//
 @ObjectType()
 export class UserPage extends PageResult<User> {
   @Field(returns => [User])
@@ -29,8 +28,9 @@ export class UserResolve {
             userInfo: {
               phone: Like(`%${userListInput.phone}%`),
               email: Like(`%${userListInput.email}%`),
+              name: Like(`%${userListInput.name}%`),
             },
-            name: Like(`%${userListInput.name}%`),
+            name: Like(`%${userListInput.registerName}%`),
           },
           take: userListInput.rows_per_page,
           skip: userListInput.page * userListInput.rows_per_page,

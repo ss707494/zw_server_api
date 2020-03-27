@@ -24,7 +24,8 @@ export const getSupplementListByProductId = async ({product_id}) => {
              r.product_id,
              r.count,
              r.amount,
-             r.supplement_id as id
+             r.supplement_id as id,
+             r.lastOutAmount
       from dw_server.r_product_supplement r
                left join dw_server.product_supplement ps on ps.id = r.supplement_id
       where r.product_id in (?)

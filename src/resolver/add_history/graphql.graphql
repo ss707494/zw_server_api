@@ -13,6 +13,7 @@ type AddHistory {
     product_id: String
     count: Float
     amount: Float
+    lastOutAmount: Float
 
 }
 

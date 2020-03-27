@@ -5,7 +5,7 @@ import {ROrderUser} from "./ROrderUser"
 import {OrderInfo} from "./OrderInfo"
 import {Type} from 'class-transformer'
 import {OrderState} from 'ss_common/enum'
-import {addMonths, isSameMonth} from 'date-fns'
+import {addMonths, isSameMonth, isSameYear} from 'date-fns'
 
 @InputType('UserItemInput')
 @ObjectType()
@@ -82,6 +82,20 @@ export class User {
         }
         if (isSameMonth(currentValue.finishTime, currentDate)) {
           return previousValue - currentValue.deductCoin
+        }
+        return previousValue
+      }, 0)
+    }
+    return 0
+  }
+
+  @Field(returns => Float, {nullable: true})
+  get orderAmountCurrentYear() {
+    if (this.orderInfo?.length) {
+      const currentDate = new Date()
+      return this.orderInfo.filter(value => value.state === OrderState.Finish).reduce((previousValue, currentValue) => {
+        if (isSameYear(currentValue.finishTime, currentDate)) {
+          return previousValue + currentValue.subtotal
         }
         return previousValue
       }, 0)

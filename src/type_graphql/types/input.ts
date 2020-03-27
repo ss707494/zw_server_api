@@ -55,5 +55,8 @@ export class UserListInput extends PageInput {
   @Field({nullable: true})
   email?: string = ''
 
+  @Field()
+  registerName: string = ''
+
 }
 
