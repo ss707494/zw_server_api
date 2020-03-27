@@ -20,6 +20,7 @@ type PromoCode {
     reuse_times: Int,
     code: String,
     category_data: Category,
+    isDisable: Int
 
 }
 
@@ -43,6 +44,6 @@ input PromoCodeInput {
     promo_code_type: String,
     reuse_times: Int,
     code: String,
-
+    isDisable: Int
 }
 

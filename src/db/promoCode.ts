@@ -22,6 +22,7 @@ export const getList = async (PromoCodeInput: PromoCode) => {
                       effective_date_end,
                       promo_code_type,
                       reuse_times,
+                      isDisable,
                       code
                from dw_server.promo_code
                where is_delete = 0
@@ -50,6 +51,7 @@ const promoCodeData: PromoCode = {
   remark: "",
   reuse_times: 1,
   title: "",
+  isDisable: 0,
   update_time: null
 }
 

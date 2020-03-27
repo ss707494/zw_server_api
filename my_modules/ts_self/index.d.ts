@@ -46,6 +46,7 @@ declare interface PromoCode {
   promo_code_type: string,
   reuse_times: number,
   code: string,
+  isDisable: number,
 
   category_data?: {
     id: string,
@@ -54,4 +55,5 @@ declare interface PromoCode {
     sort: number,
     parent_data: any,
   }
+
 }

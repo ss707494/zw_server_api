@@ -1,7 +1,8 @@
 import {Column, Entity, Generated} from "typeorm"
-import {Field, ObjectType} from "type-graphql"
+import {Field, InputType, ObjectType} from "type-graphql"
 import {JsonScalar} from "../type_graphql/types/json"
 
+@InputType('DataConfigItemInput')
 @ObjectType()
 @Entity("data_config", {schema: "dw_server"})
 export class DataConfig {

@@ -73,4 +73,8 @@ export class PromoCode {
 
   @Column("varchar", { name: "code", nullable: true, length: 100 })
   code: string | null;
+
+  @Column("int", { name: "isDisable", nullable: true, default: () => "'0'" })
+  isDisable: number | null;
+
 }
