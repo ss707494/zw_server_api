@@ -60,7 +60,10 @@ export class CategoryResolver implements ResolverInterface<Category> {
       },
     })
     return await dataBase.save({
-      ...plainToClass(Category, categoryItemInput),
+      ...plainToClass(Category, {
+        ...categoryItemInput,
+        parentId: categoryItemInput?.parentCategory?.id,
+      }),
       // parentCategory,
       number: 1 + (numberData?.number ?? 0),
     })

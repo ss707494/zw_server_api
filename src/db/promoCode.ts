@@ -86,7 +86,9 @@ export const updateOne = async (promoCodeInput: PromoCode) => {
   // language=MySQL
   const sql = `update dw_server.promo_code 
 set update_time = current_timestamp
+, isDisable = 0
 ${dealSet(promoCodeInputParam)}
+${promoCodeInputParam.isDisable === 0 ? ', isDisable = 0 ' : ''}
 where id = ?`
   const [res] = await asyncQuery(sql, [promoCodeInputParam.id])
   return dealResult(res?.affectedRows, '', {

@@ -169,4 +169,8 @@ export class OrderInfo {
   @ManyToOne(type => UserPayCard, object => object.orderInfo)
   userPayCard: UserPayCard | null
 
+  @Field()
+  @Column("int", {name: "selfAddressIndex", nullable: true, default: () => "'0'"})
+  selfAddressIndex: number | null
+
 }
