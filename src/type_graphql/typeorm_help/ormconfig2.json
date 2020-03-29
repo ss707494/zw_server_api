@@ -1,10 +1,10 @@
 {
   "name": "default",
   "type": "mysql",
-  "host": "localhost",
-  "port": 3306,
+  "host": "47.75.157.220",
+  "port": 3307,
   "username": "root",
-  "password": "ss123",
+  "password": "dw88913830",
   "database": "dw_server",
   "synchronize": false,
   "logging": false,

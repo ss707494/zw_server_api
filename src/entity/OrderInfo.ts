@@ -170,10 +170,10 @@ export class OrderInfo {
   userPayCard: UserPayCard | null
 
   @Field()
-  @Column("int", {name: "selfAddressIndex", nullable: true, default: () => "'0'"})
-  selfAddressIndex: number | null
+  @Column("varchar", {name: "selfAddressId", length: 40, default: () => "''"})
+  selfAddressId: string | null
 
-  @Column("varchar", {name: "userLevel", default: () => "''"})
+  @Column("varchar", {name: "currentUserLevel", default: () => "''"})
   @Field()
   currentUserLevel: string | null
 
