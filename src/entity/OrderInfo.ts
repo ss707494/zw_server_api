@@ -173,4 +173,8 @@ export class OrderInfo {
   @Column("int", {name: "selfAddressIndex", nullable: true, default: () => "'0'"})
   selfAddressIndex: number | null
 
+  @Column("varchar", {name: "userLevel", default: () => "''"})
+  @Field()
+  currentUserLevel: string | null
+
 }

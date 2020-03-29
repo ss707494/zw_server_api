@@ -3,9 +3,10 @@ import jwt from 'jsonwebtoken'
 import {ApolloServer} from "apollo-server-express"
 import {secret} from "../jwtConfig"
 import {tokenHandle, UnauthorizedError} from "../common/tokenHandle"
-import {createConnection} from "typeorm"
+import {createConnection, getConnectionOptions} from "typeorm"
 import {User} from "../entity/User"
 import {resolvers} from "./resolver"
+import {ormDatabaseConfig} from '../config/database'
 
 export type Context = {
   user?: User
@@ -50,8 +51,11 @@ export const getServerByType__Graphql = async () => {
 }
 
 export const dealAppByType__Graphql = async (app) => {
-
-  await createConnection() // typeorm
+  const connectionOptions = await getConnectionOptions()
+  await createConnection({
+    ...connectionOptions,
+    ...ormDatabaseConfig(),
+  }) // typeorm
 
   const serverByType__Graphql = await getServerByType__Graphql()
 

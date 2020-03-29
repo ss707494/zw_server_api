@@ -6,7 +6,7 @@ import { getDetail } from '../db/category'
 export default {
   Category: {
     parent_data: async (item) => {
-      if (item?.parent_id) {
+      if (item?.parent_id && item?.parent_id !== 'root') {
         return getDetail({
           id: item?.parent_id,
         })
@@ -22,6 +22,7 @@ export default {
           select count(id) as num
           from dw_server.category
           where is_delete = 0 
+          and id != 'root'
           ${dealWhere({
         parent_id: CategoryInput?.parent_id,
       })}
@@ -58,9 +59,9 @@ select
 from dw_server.category c1
          left join dw_server.category c2 on c1.id = c2.parent_id
          left join dw_server.category c3 on c2.id = c3.parent_id
-         left join dw_server.category p2 on c1.parent_id = p2.id
-         left join dw_server.category p3 on p2.parent_id = p3.id
-where c1.is_delete = 0
+         left join dw_server.category p2 on c1.parent_id = p2.id and p2.id != 'root' 
+         left join dw_server.category p3 on p2.parent_id = p3.id and p3.id != 'root'
+where c1.is_delete = 0 and c1.id != 'root'
           ${dealWhere({
             parent_id: CategoryInput?.parent_id,
           }, 'c1')}
