@@ -7,7 +7,9 @@
     "tsc": "tsc",
     "log": "tsc && typeorm schema:log",
     "generate": "rimraf -rf ../../../dist/migration && tsc && typeorm migration:generate -n UserMigration",
-    "run": "tsc && typeorm migration:run"
+    "run": "tsc && typeorm migration:run",
+    "log:47.75.157.220": "typeorm schema:log --config ormconfig2.json",
+    "run:47.75.157.220": "typeorm migration:run --config ormconfig2.json"
   },
   "devDependencies": {
     "rimraf": "^3.0.2"
