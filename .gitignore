@@ -27,3 +27,4 @@ package-lock.json
 yarn.lock
 /build/upload/*
 /upload_file
+*.gitignore*

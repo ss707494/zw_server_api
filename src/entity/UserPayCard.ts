@@ -72,7 +72,7 @@ export class UserPayCard {
   orderInfo: OrderInfo | null
 
   @Field()
-  @Column("timestamp", {name: "expirationTime", nullable: true})
+  @Column("timestamp", {name: "expirationTime22", nullable: true})
   expirationTime: Date | null
 
 }

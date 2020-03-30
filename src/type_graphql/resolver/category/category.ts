@@ -1,9 +1,19 @@
-import {Arg, Field, FieldResolver, Mutation, ObjectType, Query, Resolver, ResolverInterface, Root} from "type-graphql"
+import {
+  Arg,
+  Field,
+  FieldResolver,
+  InputType,
+  Mutation,
+  ObjectType,
+  Query,
+  Resolver,
+  ResolverInterface,
+  Root,
+} from "type-graphql"
 import {Category} from "../../../entity/Category"
 import {getRepository} from "typeorm"
 import {dealPageResult, PageResult} from "../../types/types"
-import {CategoryInput} from "./categoryInput"
-import {dealOrderBy, dealPageData} from "../../types/input"
+import {dealOrderBy, dealPageData, OrderByInput, PageInput} from "../../types/input"
 import {plainToClass} from "class-transformer"
 
 @ObjectType()
@@ -12,16 +22,26 @@ class CategoryPage extends PageResult<Category> {
   list: Category[]
 }
 
+@InputType()
+class CategoryListInput {
+  @Field()
+  category: Category
+  @Field()
+  pageInput: PageInput
+  @Field()
+  orderByInput: OrderByInput
+}
+
 @Resolver(of => Category)
 export class CategoryResolver implements ResolverInterface<Category> {
 
   @Query(returns => CategoryPage)
-  async getCategoryList(@Arg('categoryInput') categoryInput: CategoryInput) {
+  async categoryList(@Arg('data') data: CategoryListInput) {
     const res = await getRepository(Category)
         .findAndCount({
           where: {
             parentCategory: {
-              id: categoryInput.categoryId,
+              id: data.category.parentCategory.id,
             },
           },
           relations: {
@@ -29,20 +49,19 @@ export class CategoryResolver implements ResolverInterface<Category> {
               parentCategory: true,
             },
           },
-          order: dealOrderBy(categoryInput),
-          ...dealPageData(categoryInput),
+          order: dealOrderBy(data.orderByInput),
+          ...dealPageData(data.pageInput),
         })
-
     return dealPageResult(res)
   }
 
   @Query(returns => Category)
-  async getCategory(@Arg('categoryInput') categoryInput: CategoryInput) {
+  async getCategory(@Arg('data') data: Category) {
     return await getRepository(Category)
         .findOne({
           relations: {
             parentCategory: true,
-          }
+          },
         })
   }
 

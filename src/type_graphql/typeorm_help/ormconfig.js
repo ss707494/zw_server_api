@@ -1,4 +1,4 @@
-{
+module.exports = {
   "name": "default",
   "type": "mysql",
   "host": "localhost",
@@ -9,17 +9,17 @@
   "synchronize": false,
   "logging": false,
   "entities": [
-    "../../../dist/entity/*.js"
+    "../../../dist/entity/*.js",
   ],
   "subscribers": [
-    "../../../dist/subscriber/*.js"
+    "../../../dist/subscriber/*.js",
   ],
   "migrations": [
-    "../../../dist/migration/*.js"
+    "../../../dist/migration/*.js",
   ],
   "cli": {
     "entitiesDir": "../../../src/entity",
     "migrationsDir": "../../../src/migration",
-    "subscribersDir": "../../../src/subscriber"
-  }
+    "subscribersDir": "../../../src/subscriber",
+  },
 }
