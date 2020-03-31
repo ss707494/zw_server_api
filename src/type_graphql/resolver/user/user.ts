@@ -1,8 +1,8 @@
 import {merge} from "lodash"
-import {Arg, Ctx, Field, Mutation, ObjectType, Query, Resolver} from "type-graphql"
+import {Arg, Ctx, Field, InputType, Mutation, ObjectType, Query, Resolver} from "type-graphql"
 import {getRepository, In, Like} from "typeorm"
 import {User} from "../../../entity/User"
-import {UserListInput} from "../../types/input"
+import {PageInput} from "../../types/input"
 import {dealPageResult, PageResult} from "../../types/types"
 import {UserInfo} from '../../../entity/UserInfo'
 import {Context} from '../../apploServer'
@@ -11,6 +11,23 @@ import {Context} from '../../apploServer'
 export class UserPage extends PageResult<User> {
   @Field(returns => [User])
   list: User[]
+}
+
+@InputType()
+export class UserListInput extends PageInput {
+
+  @Field({nullable: true})
+  name?: string = ''
+
+  @Field({nullable: true})
+  phone?: string = ''
+
+  @Field({nullable: true})
+  email?: string = ''
+
+  @Field()
+  registerName: string = ''
+
 }
 
 @Resolver()
@@ -68,4 +85,5 @@ export class UserResolve {
     }
     return {}
   }
+
 }

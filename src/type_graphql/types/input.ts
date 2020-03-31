@@ -43,20 +43,4 @@ export class OrderByAndPageInput extends PageInput {
 
 }
 
-@InputType()
-export class UserListInput extends PageInput {
-
-  @Field({nullable: true})
-  name?: string = ''
-
-  @Field({nullable: true})
-  phone?: string = ''
-
-  @Field({nullable: true})
-  email?: string = ''
-
-  @Field()
-  registerName: string = ''
-
-}
 
