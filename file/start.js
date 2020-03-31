@@ -1,4 +1,3 @@
-
 var shelljs = require('shelljs')
 
 function callback (code, stdout, stderr) {
