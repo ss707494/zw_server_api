@@ -38,4 +38,36 @@ export enum OrderState {
   Cancel = 6,
 }
 
+// 配置管理
+export enum DictTypeEnum {
+  GroupPrecision = 'GroupPrecision',
+  UserLevel = 'UserLevel',
+  Freight = 'Freight',
+  HelpDocumentationType = 'HelpDocumentationType',
+  HelpDocumentation = 'HelpDocumentation',
+  PromotionThemeSelect = 'PromotionThemeSelect',
+  PromotionFlashSale = 'PromotionFlashSale',
+  HomeCarousel = 'HomeCarousel',
+  OrderState = 'OrderState',
+  SelfAddress = 'SelfAddress',
+  AppModule = 'AppModule',
+}
+
+// 轮播图关联项
+export enum RelatedObjTypeEnum {
+  PromoCode = 'PromoCode',
+  PromotionFlashSale = 'PromotionFlashSale',
+  PromotionThemeSelect = 'PromotionThemeSelect',
+}
+
+export enum AppModuleTypeEnum {
+  categorySelection = 'categorySelection',
+  limitTime = 'limitTime',
+  salesRank = 'salesRank',
+  themeSelection = 'themeSelection',
+  mayLike = 'mayLike',
+  lineRanking = 'lineRanking',
+  topRanking = 'topRanking',
+}
+
 export const orderStateKeys: string[] = Object.values(OrderState).filter(value => typeof (value) === 'string') as string[]

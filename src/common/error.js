@@ -19,3 +19,7 @@ export default function(err, req, res, next) {
     // return res.json({ error: err })
   }
 }
+
+export const netError = () => {
+  return new Error('Network')
+}

@@ -1,18 +1,24 @@
 import jwt from 'jsonwebtoken'
 import { secret } from '../jwtConfig'
-import { compareSync } from 'bcrypt'
+import { compareSync, genSaltSync, hashSync } from 'bcrypt'
 import { signToken } from '../common/utils'
-import { asyncQuery } from "../mysql";
-import { catchErr } from "../common/error";
-import { UnauthorizedError } from "../common/tokenHandle";
+import { asyncQuery } from "../mysql"
+import { catchErr } from "../common/error"
+import { UnauthorizedError } from "../common/tokenHandle"
+import { getRepository } from 'typeorm'
+import { User } from '../entity/User'
+import { plainToClass } from 'class-transformer'
+import { UserInfo } from '../entity/UserInfo'
 
 export const dealLogin = (app) => {
   app.use('/api/login', catchErr(login))
+  app.use('/api/registerUser', catchErr(registerUser))
   app.use('/api/getTokenRefresh', catchErr(getTokenRefresh))
 }
 
 export const login = async (req, res) => {
-  const { name, password } = req.body
+  const name = req.body?.name?.replace(/\t/g, '') || ''
+  const password = req.body?.password?.replace(/\t/g, '') || ''
   if (!name || !password) {
     res.json({
       code: 200,
@@ -49,6 +55,53 @@ select * from dw_server.user where name = ?
       message: '密码错误'
     })
   }
+}
+
+export const registerUser = async (req, res) => {
+  const { name, password, userName, userPhone, userEmail } = req.body
+  const userDatabase = await getRepository(User)
+  const res2 = await userDatabase.findOne({ name })
+  if (await userDatabase.findOne({ name })) {
+    res.json({
+      statusCode: 400,
+      code: 400,
+      data: 0,
+      message: '用户名重复',
+      statusMessage: '用户名重复',
+    })
+    return
+  }
+  const _user = plainToClass(User, {
+    name,
+    password: hashSync(password, genSaltSync(10)),
+  })
+  const _userInfo = plainToClass(UserInfo, {
+    name: userName,
+    phone: userPhone,
+    email: userEmail,
+  })
+  _user.userInfo = _userInfo
+  const userInfoRedult = await getRepository(UserInfo)
+      .save(_userInfo)
+  const userResult = await userDatabase.save(_user)
+  // 兼容处理 type_graphql todo
+  if (userInfoRedult.id && userResult.id) {
+    await getRepository(UserInfo)
+        .save({
+          ..._userInfo,
+          userId: userResult.id,
+        })
+  }
+  res.json({
+    statusCode: 200,
+    code: 200,
+    data: {
+      ...userResult,
+      userInfo: {
+        ...userInfoRedult,
+      },
+    },
+  })
 }
 
 // noinspection JSUnusedLocalSymbols

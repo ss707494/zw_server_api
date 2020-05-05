@@ -1,4 +1,4 @@
-import {Column, Entity, JoinColumn, OneToMany, OneToOne} from "typeorm"
+import {Column, Entity, Generated, JoinColumn, OneToMany, OneToOne} from "typeorm"
 import {Field, Float, InputType, ObjectType} from "type-graphql"
 import {UserInfo} from "./UserInfo"
 import {ROrderUser} from "./ROrderUser"
@@ -13,6 +13,7 @@ import {addMonths, isSameMonth, isSameYear} from 'date-fns'
 export class User {
   @Field()
   @Column("varchar", {primary: true, name: "id", length: 40})
+  @Generated('uuid')
   id: string
 
   @Field()

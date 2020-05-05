@@ -28,4 +28,31 @@ export declare enum OrderState {
     Finish = 5,
     Cancel = 6
 }
+export declare enum DictTypeEnum {
+    GroupPrecision = "GroupPrecision",
+    UserLevel = "UserLevel",
+    Freight = "Freight",
+    HelpDocumentationType = "HelpDocumentationType",
+    HelpDocumentation = "HelpDocumentation",
+    PromotionThemeSelect = "PromotionThemeSelect",
+    PromotionFlashSale = "PromotionFlashSale",
+    HomeCarousel = "HomeCarousel",
+    OrderState = "OrderState",
+    SelfAddress = "SelfAddress",
+    AppModule = "AppModule"
+}
+export declare enum RelatedObjTypeEnum {
+    PromoCode = "PromoCode",
+    PromotionFlashSale = "PromotionFlashSale",
+    PromotionThemeSelect = "PromotionThemeSelect"
+}
+export declare enum AppModuleTypeEnum {
+    categorySelection = "categorySelection",
+    limitTime = "limitTime",
+    salesRank = "salesRank",
+    themeSelection = "themeSelection",
+    mayLike = "mayLike",
+    lineRanking = "lineRanking",
+    topRanking = "topRanking"
+}
 export declare const orderStateKeys: string[];

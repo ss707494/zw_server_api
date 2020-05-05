@@ -1,11 +1,12 @@
 import {merge} from "lodash"
-import {Arg, Ctx, Field, InputType, Mutation, ObjectType, Query, Resolver} from "type-graphql"
+import {Arg, Authorized, Ctx, Field, InputType, Mutation, ObjectType, Query, Resolver} from "type-graphql"
 import {getRepository, In, Like} from "typeorm"
 import {User} from "../../../entity/User"
 import {PageInput} from "../../types/input"
 import {dealPageResult, PageResult} from "../../types/types"
 import {UserInfo} from '../../../entity/UserInfo'
-import {Context} from '../../apploServer'
+import {ContextType} from '../../apploServer'
+import {netError} from '../../../common/error'
 
 @ObjectType()
 export class UserPage extends PageResult<User> {
@@ -33,6 +34,15 @@ export class UserListInput extends PageInput {
 @Resolver()
 export class UserResolve {
 
+  @Authorized('admin')
+  @Query(returns => String)
+  async testLongApi() {
+    const delay = (time: number) => (new Promise(resolve => setTimeout(resolve, time)))
+    await delay(1000)
+    return 'success111'
+  }
+
+  @Authorized()
   @Query(returns => UserPage)
   async userList(@Arg('userListInput')userListInput: UserListInput) {
     const res = await getRepository(User)
@@ -55,6 +65,7 @@ export class UserResolve {
     return dealPageResult(res)
   }
 
+  @Authorized()
   @Mutation(returns => [User])
   async saveUserList(@Arg('userItemInput', returns => [User])userItemInput: [User]) {
     const database = await getRepository(User)
@@ -71,8 +82,9 @@ export class UserResolve {
     return merge1
   }
 
+  @Authorized()
   @Query(returns => User)
-  async userInfo(@Ctx() { user }: Context) {
+  async oneUser(@Ctx() {user}: ContextType) {
     if (user?.id) {
       return await getRepository(User).findOne({
         where: {
@@ -84,6 +96,16 @@ export class UserResolve {
       })
     }
     return {}
+  }
+
+  @Authorized()
+  @Mutation(returns => User)
+  async registerUser(@Arg('data', returns => User)data: User) {
+    const userDatabase = await getRepository(User)
+    if (await userDatabase.find({name: data.name})) {
+      throw netError()
+    }
+    return data
   }
 
 }

@@ -14,10 +14,18 @@ shell.echo('3')
 
 try {
   const res = shell.cd('../zw_backstage')
-  shell.echo('4')
+  shell.echo('go to zw_backstage')
   if (res.code === 0) {
     shell.exec('yarn add ../zw_server_api/my_modules/lib/common')
     shell.exec('yarn add ../zw_server_api/my_modules/ts_self')
+  }
+  shell.cd('../zw_server_api')
+  shell.echo('5')
+
+  const res2 = shell.cd('../zw_client_web')
+  shell.echo('go to zw_client_web')
+  if (res2.code === 0) {
+    shell.exec('yarn add ../zw_server_api/my_modules/lib/common')
   }
   shell.cd('../zw_server_api')
   shell.echo('5')

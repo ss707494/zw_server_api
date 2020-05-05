@@ -1,4 +1,4 @@
-import {Arg, Field, Float, Mutation, ObjectType, Query, Resolver} from "type-graphql"
+import {Arg, Authorized, Field, Float, Mutation, ObjectType, Query, Resolver} from "type-graphql"
 import {OrderInfo} from "../../../entity/OrderInfo"
 import {Between, FindOptions, getRepository, LessThan, Like, MoreThan, Not, Raw} from "typeorm"
 import {OrderInput} from "./orderInput"
@@ -43,6 +43,7 @@ const dealWhere = (orderInput: OrderInput): FindOptions<OrderInfo> => {
 @Resolver()
 export class OrderResolve {
 
+  @Authorized()
   @Query(returns => OrderPage)
   async orderList(@Arg('orderInput')orderInput: OrderInput) {
     const res = await getRepository(OrderInfo)
@@ -63,6 +64,7 @@ export class OrderResolve {
     return dealPageResult(res)
   }
 
+  @Authorized()
   @Query(returns => Float)
   async orderListTotal(@Arg('orderInput')orderInput: OrderInput) {
     return await getRepository(OrderInfo)
@@ -71,6 +73,7 @@ export class OrderResolve {
         })
   }
 
+  @Authorized()
   @Mutation(returns => [OrderInfo])
   async saveOrderList(@Arg('orderInfoItemInput', returns => [OrderInfo])orderInfoItemInput: OrderInfo[]) {
     return await getRepository(OrderInfo).save(orderInfoItemInput.map(value => ({

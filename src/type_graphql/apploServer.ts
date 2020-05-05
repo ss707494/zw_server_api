@@ -2,17 +2,17 @@ import {buildSchema} from "type-graphql"
 import jwt from 'jsonwebtoken'
 import {ApolloServer} from "apollo-server-express"
 import {secret} from "../jwtConfig"
-import {tokenHandle, UnauthorizedError} from "../common/tokenHandle"
 import {createConnection, getConnectionOptions} from "typeorm"
 import {User} from "../entity/User"
 import {resolvers} from "./resolver"
 import {ormDatabaseConfig} from '../config/database'
+import {customAuthChecker} from './common/customAuthChecker'
 
-export type Context = {
+export type ContextType = {
   user?: User
 }
 
-const context = (data):Context => {
+const context = (data):ContextType => {
   const { req } = data
   if (req.headers.authorization) {
     const parts = (req.headers.authorization).split(' ')
@@ -21,7 +21,7 @@ const context = (data):Context => {
       user = jwt.verify(parts[1], secret) as User
     } catch (e) {
       console.log(e)
-      throw new UnauthorizedError('invalid_token', { ...e, message: 'invalid_token' })
+      return {}
     }
     return {
       user,
@@ -37,6 +37,7 @@ export const getServerByType__Graphql = async () => {
     dateScalarMode: "timestamp",
     validate: false,
     nullableByDefault: true,
+    authChecker: customAuthChecker,
     // scalarsMap: [{
     //   type: Object,
     //   scalar: JsonScalar,
@@ -59,9 +60,9 @@ export const dealAppByType__Graphql = async (app) => {
 
   const serverByType__Graphql = await getServerByType__Graphql()
 
-  serverByType__Graphql.applyMiddleware({app, path: '/type__graphql/graphQL'})
+  // serverByType__Graphql.applyMiddleware({app, path: '/type__graphql/graphQL'})
 
-  app.use('/type__graphql/api', tokenHandle)
+  // app.use('/type__graphql/api', tokenHandle)
 
   serverByType__Graphql.applyMiddleware({app, path: '/type__graphql/api'})
 

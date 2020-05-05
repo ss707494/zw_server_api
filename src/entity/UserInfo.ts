@@ -1,4 +1,4 @@
-import {Column, Entity, OneToOne} from "typeorm"
+import {Column, Entity, Generated, OneToOne} from "typeorm"
 import {Field, InputType, ObjectType} from "type-graphql"
 import {User} from "./User"
 
@@ -8,6 +8,7 @@ import {User} from "./User"
 export class UserInfo {
   @Field()
   @Column("varchar", {primary: true, name: "id", length: 40})
+  @Generated('uuid')
   id: string
 
   @Field()
@@ -30,7 +31,7 @@ export class UserInfo {
   @Field()
   isDelete: number | null
 
-  @Column("varchar", {name: "user_id", length: 40})
+  @Column("varchar", {name: "user_id", length: 40, default: () => "''"})
   @Field()
   userId: string
 

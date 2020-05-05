@@ -4,6 +4,7 @@ import {DataConfigResolver} from "./dataConfig/dataConfig"
 import {DictResolver} from "./dict/dict"
 import {CategoryResolver} from "./category/category"
 import {PromoCodeResolver} from './promoCode/promoCode'
+import {AuthResolver} from './auth/auth'
 
 //
 export const resolvers = [
@@ -13,5 +14,6 @@ export const resolvers = [
   DictResolver,
   CategoryResolver,
   PromoCodeResolver,
+  AuthResolver,
 ]
 

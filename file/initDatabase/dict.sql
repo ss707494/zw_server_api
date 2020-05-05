@@ -20,6 +20,10 @@ insert into dw_server.dict_type_first
 (id, name, code, sort, update_time)
 values (uuid(), '分团精度', 'GroupPrecision', 6, current_timestamp)
 ;
+insert into dw_server.dict_type_first
+(id, name, code, sort, update_time)
+values (uuid(), '送货类型', 'DeliveryType', 7, current_timestamp)
+;
 
 insert into dw_server.dict
 (id, name, update_time, dict_type_code, code, sort) values

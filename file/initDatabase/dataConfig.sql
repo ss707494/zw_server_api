@@ -44,3 +44,13 @@ insert into dw_server.data_config
 (uuid(), 'SelfAddress', 'SelfAddress', '{}')
 ;
 
+insert into dw_server.data_config
+(id, name, type, value) VALUES
+(uuid(), 'App模块设置', 'AppModule', '{}')
+;
+
+insert into dw_server.data_config
+(id, name, type, value) VALUES
+(uuid(), '帮助文档分类', 'HelpDocumentationType', '{}')
+;
+

@@ -13,18 +13,18 @@ export const dealPageData = (pageInput: object & PageInput) => {
 export class PageInput {
 
   @Field({defaultValue: 10})
-  rows_per_page: number
+  rows_per_page: number = 10
 
   @Field({defaultValue: 0})
-  page: number
+  page: number = 0
 
 }
 
 export const dealOrderBy = (orderByInput: OrderByInput) => {
-  return orderByInput.orderByObject.reduce((previousValue, currentValue) => ({
+  return orderByInput?.orderByObject?.reduce((previousValue, currentValue) => ({
     ...previousValue,
     [currentValue[0]]: currentValue[1],
-  }), {})
+  }), {}) ?? {}
 }
 
 @InputType()

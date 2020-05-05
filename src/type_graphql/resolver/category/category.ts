@@ -1,5 +1,5 @@
 import {
-  Arg,
+  Arg, Authorized,
   Field,
   FieldResolver,
   InputType,
@@ -26,7 +26,7 @@ class CategoryPage extends PageResult<Category> {
 class CategoryListInput {
   @Field()
   category: Category
-  @Field()
+  @Field({defaultValue: new PageInput()})
   pageInput: PageInput
   @Field()
   orderByInput: OrderByInput
@@ -35,13 +35,14 @@ class CategoryListInput {
 @Resolver(of => Category)
 export class CategoryResolver implements ResolverInterface<Category> {
 
+  @Authorized('web_client')
   @Query(returns => CategoryPage)
   async categoryList(@Arg('data') data: CategoryListInput) {
     const res = await getRepository(Category)
         .findAndCount({
           where: {
             parentCategory: {
-              id: data.category.parentCategory.id,
+              id: data.category?.parentCategory?.id,
             },
           },
           relations: {
@@ -55,6 +56,7 @@ export class CategoryResolver implements ResolverInterface<Category> {
     return dealPageResult(res)
   }
 
+  @Authorized()
   @Query(returns => Category)
   async oneCategory(@Arg('data') data: Category) {
     return await getRepository(Category)
@@ -65,6 +67,7 @@ export class CategoryResolver implements ResolverInterface<Category> {
         })
   }
 
+  @Authorized()
   @Mutation(returns => Category)
   async saveCategory(@Arg('categoryItemInput') categoryItemInput: Category) {
     const dataBase = getRepository(Category)

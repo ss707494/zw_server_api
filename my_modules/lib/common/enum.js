@@ -39,4 +39,36 @@ var OrderState;
     OrderState[OrderState["Finish"] = 5] = "Finish";
     OrderState[OrderState["Cancel"] = 6] = "Cancel";
 })(OrderState = exports.OrderState || (exports.OrderState = {}));
+// 配置管理
+var DictTypeEnum;
+(function (DictTypeEnum) {
+    DictTypeEnum["GroupPrecision"] = "GroupPrecision";
+    DictTypeEnum["UserLevel"] = "UserLevel";
+    DictTypeEnum["Freight"] = "Freight";
+    DictTypeEnum["HelpDocumentationType"] = "HelpDocumentationType";
+    DictTypeEnum["HelpDocumentation"] = "HelpDocumentation";
+    DictTypeEnum["PromotionThemeSelect"] = "PromotionThemeSelect";
+    DictTypeEnum["PromotionFlashSale"] = "PromotionFlashSale";
+    DictTypeEnum["HomeCarousel"] = "HomeCarousel";
+    DictTypeEnum["OrderState"] = "OrderState";
+    DictTypeEnum["SelfAddress"] = "SelfAddress";
+    DictTypeEnum["AppModule"] = "AppModule";
+})(DictTypeEnum = exports.DictTypeEnum || (exports.DictTypeEnum = {}));
+// 轮播图关联项
+var RelatedObjTypeEnum;
+(function (RelatedObjTypeEnum) {
+    RelatedObjTypeEnum["PromoCode"] = "PromoCode";
+    RelatedObjTypeEnum["PromotionFlashSale"] = "PromotionFlashSale";
+    RelatedObjTypeEnum["PromotionThemeSelect"] = "PromotionThemeSelect";
+})(RelatedObjTypeEnum = exports.RelatedObjTypeEnum || (exports.RelatedObjTypeEnum = {}));
+var AppModuleTypeEnum;
+(function (AppModuleTypeEnum) {
+    AppModuleTypeEnum["categorySelection"] = "categorySelection";
+    AppModuleTypeEnum["limitTime"] = "limitTime";
+    AppModuleTypeEnum["salesRank"] = "salesRank";
+    AppModuleTypeEnum["themeSelection"] = "themeSelection";
+    AppModuleTypeEnum["mayLike"] = "mayLike";
+    AppModuleTypeEnum["lineRanking"] = "lineRanking";
+    AppModuleTypeEnum["topRanking"] = "topRanking";
+})(AppModuleTypeEnum = exports.AppModuleTypeEnum || (exports.AppModuleTypeEnum = {}));
 exports.orderStateKeys = Object.values(OrderState).filter(function (value) { return typeof (value) === 'string'; });
