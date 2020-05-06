@@ -8,7 +8,7 @@ import { getOrderNumber } from "../order";
 import uuidV1 from "uuid/v1";
 import { dealResult } from "../common";
 import { queryProductDetail } from "../product";
-import {ProductSupplement} from "ss_common/enum"
+import {ProductSupplement} from '../../common/ss_common/enum'
 
 export default {
   AddItem: {

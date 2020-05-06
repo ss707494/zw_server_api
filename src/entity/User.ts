@@ -4,8 +4,8 @@ import {UserInfo} from "./UserInfo"
 import {ROrderUser} from "./ROrderUser"
 import {OrderInfo} from "./OrderInfo"
 import {Type} from 'class-transformer'
-import {OrderState} from 'ss_common/enum'
 import {addMonths, isSameMonth, isSameYear} from 'date-fns'
+import {OrderState} from '../common/ss_common/enum'
 
 @InputType('UserItemInput')
 @ObjectType()

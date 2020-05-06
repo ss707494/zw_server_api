@@ -4,8 +4,7 @@ import {Between, FindOptions, getRepository, LessThan, Like, MoreThan, Not, Raw}
 import {OrderInput} from "./orderInput"
 import {dealPageData} from "../../types/input"
 import {dealPageResult, PageResult} from "../../types/types"
-import {OrderState} from 'ss_common/enum'
-
+import {OrderState} from '../../../common/ss_common/enum'
 
 @ObjectType()
 export class OrderPage extends PageResult<OrderInfo> {

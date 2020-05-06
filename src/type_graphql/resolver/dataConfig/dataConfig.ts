@@ -2,8 +2,8 @@ import {Arg, Authorized, Mutation, Query, Resolver} from "type-graphql"
 import {DataConfig} from "../../../entity/DataConfig"
 import {getRepository, In} from "typeorm"
 import {plainToClass} from "class-transformer"
-import {DictTypeEnum, RelatedObjTypeEnum} from 'ss_common/enum'
 import {PromoCode} from '../../../entity/PromoCode'
+import {DictTypeEnum, RelatedObjTypeEnum} from '../../../common/ss_common/enum'
 
 @Resolver()
 export class DataConfigResolver {
