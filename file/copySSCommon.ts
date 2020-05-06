@@ -1,8 +1,8 @@
 
 import * as shell from "shelljs";
 
-const enumPath = './my_modules/src/common/enum.ts'
-const declarePath = './my_modules/ts_self/index.d.ts'
+const enumPath = './src/common/ss_common/enum.ts'
+const declarePath = './src/common/ss_common/index.d.ts'
 
 // shell.cd('my_modules')
 //
@@ -25,16 +25,16 @@ try {
   // shell.cd('../zw_server_api')
   // shell.echo('5')
 
-  shell.cp("-Rf", enumPath, "../zw_server_api/src/common/ss_common/enum.ts");
-  shell.cp("-Rf", declarePath, "../zw_server_api/src/common/ss_common/index.d.ts");
+  // shell.cp("-Rf", enumPath, "../zw_server_api/src/common/ss_common/enum.ts");
+  // shell.cp("-Rf", declarePath, "../zw_server_api/src/common/ss_common/index.d.ts");
 
 
   shell.echo('zw_backstage')
   shell.cp("-Rf", enumPath, "../zw_backstage/src/common/ss_common/enum.ts");
   shell.cp("-Rf", declarePath, "../zw_backstage/src/common/ss_common/index.d.ts");
 
-  shell.cp("-Rf", "./my_modules/src/common/enum.ts", "../zw_client_web/utils/ss_common/enum.ts");
-  shell.echo('6')
+  shell.echo('zw_client_web')
+  shell.cp("-Rf", enumPath, "../zw_client_web/utils/ss_common/enum.ts");
 
   // const res2 = shell.cd('../zw_client_web')
   // shell.echo('go to zw_client_web')

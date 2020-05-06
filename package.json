@@ -7,7 +7,7 @@
     "startDev": "ts-node file/script/start_dev.ts",
     "startPro": "ts-node file/script/start_build.ts",
     "eTs": "tsc",
-    "dealCommonModule": "ts-node my_modules/build.ts",
+    "dealCommonModule": "ts-node file/copySSCommon.ts",
     "ddwatch:copyCommon": "nodemon -e json,ts --watch my_modules/src --watch my_modules/ts_self --exec npm run dealCommonModule",
     "testStart": "ts-node src/server.js",
     "start": "pm2 start ./file/start.js --name dw",
