@@ -71,6 +71,8 @@ export class User {
     }
     return 0
   }
+  set orderCoinNextMonth(v) {
+  }
 
   @Field(returns => Float, {nullable: true})
   get orderCoinCurrentMonth() {
@@ -89,6 +91,7 @@ export class User {
     }
     return 0
   }
+  set orderCoinCurrentMonth(v) {}
 
   @Field(returns => Float, {nullable: true})
   get orderAmountCurrentYear() {
@@ -103,6 +106,7 @@ export class User {
     }
     return 0
   }
+  set orderAmountCurrentYear(v) {}
 
 }
 

@@ -60,6 +60,14 @@ export enum RelatedObjTypeEnum {
   PromotionThemeSelect = 'PromotionThemeSelect',
 }
 
+export enum AppFootBar {
+  home = 'home',
+  group = 'group',
+  card = 'card',
+  cart = 'cart',
+  me = 'me'
+}
+
 export enum AppModuleTypeEnum {
   categorySelection = 'categorySelection',
   limitTime = 'limitTime',

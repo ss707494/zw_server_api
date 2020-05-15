@@ -1,5 +1,6 @@
 import {
-  Arg, Authorized,
+  Arg,
+  Authorized,
   Field,
   FieldResolver,
   InputType,

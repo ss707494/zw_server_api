@@ -6,6 +6,10 @@ import {CategoryResolver} from "./category/category"
 import {PromoCodeResolver} from './promoCode/promoCode'
 import {AuthResolver} from './auth/auth'
 
+export enum authType {
+  web_client = 'web_client',
+}
+
 //
 export const resolvers = [
   UserResolve,
