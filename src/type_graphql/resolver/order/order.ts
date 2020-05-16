@@ -1,10 +1,11 @@
-import {Arg, Authorized, Field, Float, Mutation, ObjectType, Query, Resolver} from "type-graphql"
+import {Arg, Authorized, Ctx, Field, Float, Mutation, ObjectType, Query, Resolver} from "type-graphql"
 import {OrderInfo} from "../../../entity/OrderInfo"
-import {Between, FindOptions, getRepository, LessThan, Like, MoreThan, Not, Raw} from "typeorm"
+import {Between, Equal, FindOptions, getRepository, LessThan, Like, MoreThan, Not, Raw} from "typeorm"
 import {OrderInput} from "./orderInput"
 import {dealPageData} from "../../types/input"
 import {dealPageResult, PageResult} from "../../types/types"
 import {OrderState} from '../../../common/ss_common/enum'
+import {ContextType} from '../../apploServer'
 
 @ObjectType()
 export class OrderPage extends PageResult<OrderInfo> {
@@ -28,6 +29,7 @@ const dealWhere = (orderInput: OrderInput): FindOptions<OrderInfo> => {
         userInfo: {
           name: Like(`%${orderInput.userName}%`),
         },
+        id: Equal(orderInput.userId),
       },
       userAddress: {
         zip: Like(`%${orderInput.zip}%`),
@@ -44,10 +46,13 @@ export class OrderResolve {
 
   @Authorized()
   @Query(returns => OrderPage)
-  async orderList(@Arg('orderInput')orderInput: OrderInput) {
+  async orderList(@Arg('orderInput')orderInput: OrderInput, @Arg('fromUser')fromUser: boolean, @Ctx() {user}: ContextType) {
     const res = await getRepository(OrderInfo)
         .findAndCount({
-          ...dealWhere(orderInput),
+          ...dealWhere(fromUser ? {
+            ...orderInput,
+            userId: user?.id,
+          } : orderInput),
           relations: {
             user: {
               userInfo: true,

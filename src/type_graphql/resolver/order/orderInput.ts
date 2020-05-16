@@ -23,6 +23,9 @@ export class OrderInput extends PageInput {
   registerName: string | null
 
   @Field()
+  userId: string | null
+
+  @Field()
   zip: string | null;
 
   @Field()
