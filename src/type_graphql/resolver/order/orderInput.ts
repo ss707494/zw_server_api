@@ -4,6 +4,22 @@ import {Field, InputType} from "type-graphql"
 @InputType()
 export class OrderInput extends PageInput {
 
+  static defautl() {
+    return {
+      state: 0,
+      address: '',
+      city: '',
+      district: '',
+      number: '',
+      pickUpType: '',
+      pickUpTime: null,
+      province: '',
+      registerName: '',
+      userName: '',
+      zip: '',
+    } as OrderInput
+  }
+
   @Field()
   startTime: Date | null
 
@@ -26,19 +42,19 @@ export class OrderInput extends PageInput {
   userId: string | null
 
   @Field()
-  zip: string | null;
+  zip: string | null
 
   @Field()
-  province: string | null;
+  province: string | null
 
   @Field()
-  city: string | null;
+  city: string | null
 
   @Field()
-  district: string | null;
+  district: string | null
 
   @Field()
-  address: string | null;
+  address: string | null
 
   @Field({nullable: true})
   pickUpTime: Date | null

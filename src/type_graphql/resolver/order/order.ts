@@ -29,7 +29,7 @@ const dealWhere = (orderInput: OrderInput): FindOptions<OrderInfo> => {
         userInfo: {
           name: Like(`%${orderInput.userName}%`),
         },
-        id: Equal(orderInput.userId),
+        ...(orderInput.userId ? {id: Equal(orderInput.userId)} : {}),
       },
       userAddress: {
         zip: Like(`%${orderInput.zip}%`),
@@ -49,16 +49,21 @@ export class OrderResolve {
   async orderList(@Arg('orderInput')orderInput: OrderInput, @Arg('fromUser')fromUser: boolean, @Ctx() {user}: ContextType) {
     const res = await getRepository(OrderInfo)
         .findAndCount({
-          ...dealWhere(fromUser ? {
-            ...orderInput,
-            userId: user?.id,
-          } : orderInput),
+          ...dealWhere({
+            ...OrderInput.defautl(),
+            ...fromUser ? {
+              ...orderInput,
+              userId: user?.id,
+            } : orderInput,
+          }),
           relations: {
             user: {
               userInfo: true,
             },
             rOrderProduct: {
-              product: true,
+              product: {
+                img: true,
+              },
             },
             userAddress: true,
             userPayCard: true,
@@ -74,6 +79,29 @@ export class OrderResolve {
     return await getRepository(OrderInfo)
         .count({
           ...dealWhere(orderInput).where,
+        })
+  }
+
+  @Authorized()
+  @Query(returns => OrderInfo)
+  async orderDetail(@Arg('id')id: string) {
+    return await getRepository(OrderInfo)
+        .findOne({
+          where: {
+            id: Equal(id),
+          },
+          relations: {
+            rOrderProduct: {
+              product: {
+                img: true,
+              },
+            },
+            user: {
+              userInfo: true,
+            },
+            userPayCard: true,
+            userAddress: true,
+          },
         })
   }
 

@@ -1,6 +1,7 @@
 import {Column, Entity, OneToMany} from "typeorm"
 import {ROrderProduct} from "./ROrderProduct"
 import {Field, InputType, ObjectType} from "type-graphql"
+import {ProductImg} from './ProductImg'
 
 @InputType('ProductItemInput')
 @ObjectType()
@@ -161,5 +162,9 @@ export class Product {
   @Field(returns => [ROrderProduct], {nullable: true})
   @OneToMany(type => ROrderProduct, object => object.product)
   rOrderProduct: ROrderProduct[] | null
+
+  @Field(returns => [ProductImg])
+  @OneToMany(type => ProductImg, object => object.product)
+  img: ProductImg[] | null
 
 }

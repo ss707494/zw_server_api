@@ -173,7 +173,7 @@ where 1 = 1
             const [imgRes] = await asyncQuery(`
                 select id
                 from dw_server.product_img
-                where product_id = ?
+                where productId = ?
                   and number = ?
             `, [ProductInput?.id, e?.number])
             if (imgRes.length) {
@@ -182,15 +182,15 @@ where 1 = 1
                                 set update_time = current_timestamp,
                                     i.url       = ?,
                                     name        = ?
-                                where i.product_id = ?
+                                where i.productId = ?
                                   and i.number = ?;`,
                   [e?.url, e?.name, ProductInput?.id, e?.number])
             } else {
               // language=MySQL
               const sql = `insert into dw_server.product_img
-                               (update_time, id, product_id, number, name, url)
+                               (update_time, id, product_id, number, name, url, productId)
                            values ?`
-              await asyncQuery(sql, [[[raw('current_timestamp'), raw('uuid()'), ProductInput?.id, e?.number, e?.name, e?.url]]])
+              await asyncQuery(sql, [[[raw('current_timestamp'), raw('uuid()'), ProductInput?.id, e?.number, e?.name, e?.url, ProductInput?.id]]])
             }
           }
 //           // language=MySQL
@@ -230,9 +230,9 @@ set update_time = current_timestamp,
           // language=MySQL
           const insertImg = `
 insert into dw_server.product_img
-(update_time, id, product_id, number, name, url)
+(update_time, id, product_id, productId, number, name, url)
 values 
-${imgs.map(e => `(current_timestamp, uuid(), "${id}", ${e?.number}, "${e?.name ?? ''}", "${e?.url}")`).join(' , ')}
+${imgs.map(e => `(current_timestamp, uuid(), "${id}", "${id}", ${e?.number}, "${e?.name ?? ''}", "${e?.url}")`).join(' , ')}
           `
           await asyncQuery(insertImg)
           // console.log(imgRes)
