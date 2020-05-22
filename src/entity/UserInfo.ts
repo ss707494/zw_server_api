@@ -51,4 +51,8 @@ export class UserInfo {
   @Field(returns => User, {nullable: true})
   user: User | null
 
+  @Column("varchar", {name: "pickupAddressId", length: 40, default: () => "''"})
+  @Field()
+  pickupAddressId: string | null
+
 }

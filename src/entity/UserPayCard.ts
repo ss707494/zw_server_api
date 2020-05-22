@@ -1,6 +1,7 @@
-import {Column, Entity, Generated, OneToMany} from "typeorm"
+import {Column, Entity, Generated, ManyToOne, OneToMany} from "typeorm"
 import {Field, InputType, ObjectType} from 'type-graphql'
 import {OrderInfo} from './OrderInfo'
+import {User} from './User'
 
 @InputType('UserPayCardItemInput')
 @ObjectType()
@@ -74,5 +75,9 @@ export class UserPayCard {
   @Field()
   @Column("timestamp", {name: "expirationTime", nullable: true})
   expirationTime: Date | null
+
+  @Field(returns => User)
+  @ManyToOne(type => User, object => object.userPayCard)
+  user: User | null
 
 }

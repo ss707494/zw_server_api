@@ -6,6 +6,7 @@ import {OrderInfo} from "./OrderInfo"
 import {Type} from 'class-transformer'
 import {addMonths, isSameMonth, isSameYear} from 'date-fns'
 import {OrderState} from '../common/ss_common/enum'
+import {UserPayCard} from './UserPayCard'
 
 @InputType('UserItemInput')
 @ObjectType()
@@ -57,6 +58,10 @@ export class User {
   @Field(returns => [OrderInfo], {nullable: true})
   @OneToMany(type => OrderInfo, object => object.user)
   orderInfo: OrderInfo[] | null
+
+  @Field(returns => [UserPayCard])
+  @OneToMany(type => UserPayCard, object => object.user)
+  userPayCard: UserPayCard[] | null
 
   @Field(returns => Float, {nullable: true})
   get orderCoinNextMonth() {

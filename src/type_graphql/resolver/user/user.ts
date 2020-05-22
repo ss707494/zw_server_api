@@ -1,6 +1,6 @@
 import {merge} from "lodash"
 import {Arg, Authorized, Ctx, Field, InputType, Mutation, ObjectType, Query, Resolver} from "type-graphql"
-import {genSaltSync, hashSync} from 'bcrypt'
+import {compareSync, genSaltSync, hashSync} from 'bcrypt'
 import {getRepository, In, Like} from "typeorm"
 import {User} from "../../../entity/User"
 import {PageInput} from "../../types/input"
@@ -9,6 +9,7 @@ import {UserInfo} from '../../../entity/UserInfo'
 import {ContextType} from '../../apploServer'
 import {plainToClass} from 'class-transformer'
 import {signToken} from '../../../common/utils'
+import {AuthBody} from '../auth/auth'
 
 @ObjectType()
 export class UserInRegister {
@@ -45,6 +46,29 @@ export class UserListInput extends PageInput {
   @Field()
   registerName: string = ''
 
+}
+
+@InputType()
+export class UpdatePasswordInput {
+
+  @Field()
+  oldPassword: string
+
+  @Field()
+  newPassword: string
+
+  @Field()
+  confirmPassword: string
+
+}
+
+@ObjectType()
+class UpdatePasswordRes {
+  @Field()
+  authBody: AuthBody
+
+  @Field()
+  user: User
 }
 
 @Resolver()
@@ -120,12 +144,14 @@ export class UserResolve {
     if (!data?.name || !data?.password || !data?.userInfo?.email || !data?.userInfo?.phone || !data?.userInfo?.name) {
       throw '参数校验失败'
     }
-    const { name, password, userInfo: {
-      email: userEmail, phone: userPhone, name: userName,
-    } } = data
+    const {
+      name, password, userInfo: {
+        email: userEmail, phone: userPhone, name: userName,
+      },
+    } = data
     const userDatabase = await getRepository(User)
-    const res2 = await userDatabase.findOne({ name })
-    if (await userDatabase.findOne({ name })) {
+    const res2 = await userDatabase.findOne({name})
+    if (await userDatabase.findOne({name})) {
       throw '用户名重复'
     }
     const _user = plainToClass(User, {
@@ -149,7 +175,7 @@ export class UserResolve {
             userId: userResult.id,
           })
     }
-    const { token, refreshtoken } = signToken(_user)
+    const {token, refreshtoken} = signToken(_user)
 
     return {
       token,
@@ -161,6 +187,32 @@ export class UserResolve {
         },
       },
     }
+  }
+
+  @Authorized('')
+  @Mutation(returns => UpdatePasswordRes)
+  async updatePassword(@Ctx() {user}: ContextType, @Arg('data')data: UpdatePasswordInput) {
+    if (user.id && compareSync(data.oldPassword, user.password) && data.newPassword) {
+      const _user = await getRepository(User).save({
+        id: user.id,
+        password: hashSync(data.newPassword, genSaltSync(10)),
+      })
+      const authBody = signToken({
+        ...user,
+        ..._user,
+      })
+      return {
+        authBody,
+        user: _user,
+      }
+    }
+    throw '参数校验失败'
+  }
+
+  @Authorized()
+  @Mutation(returns => UserInfo)
+  async updateUserInfo(@Arg('userInfo')userInfo: UserInfo) {
+    return getRepository(UserInfo).save(userInfo)
   }
 
 }

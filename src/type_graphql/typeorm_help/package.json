@@ -8,8 +8,8 @@
     "log": "tsc && typeorm schema:log",
     "generate": "rimraf -rf ../../../dist/migration && tsc && typeorm migration:generate -n UserMigration",
     "run": "tsc && typeorm migration:run",
-    "log:47.75.157.220": "typeorm schema:log --config ormconfig2.gitignore.js",
-    "run:47.75.157.220": "typeorm migration:run --config ormconfig2.gitignore.js"
+    "log:8.210.23.30": "typeorm schema:log --config ormconfig2.gitignore.js",
+    "run:8.210.23.30": "typeorm migration:run --config ormconfig2.gitignore.js"
   },
   "devDependencies": {
     "rimraf": "^3.0.2"

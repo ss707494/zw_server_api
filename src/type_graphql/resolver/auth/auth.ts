@@ -8,7 +8,7 @@ import {User} from '../../../entity/User'
 import {getRepository} from 'typeorm'
 
 @ObjectType()
-class AuthBody {
+export class AuthBody {
   @Field()
   token: string
 
