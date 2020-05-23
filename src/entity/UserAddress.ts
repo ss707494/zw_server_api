@@ -1,6 +1,7 @@
-import {Column, Entity, OneToMany} from "typeorm"
+import {Column, Entity, Generated, ManyToOne, OneToMany} from "typeorm"
 import {Field, InputType, ObjectType} from "type-graphql"
 import {OrderInfo} from "./OrderInfo"
+import {User} from './User'
 
 @InputType('UserAddressItemInput')
 @ObjectType()
@@ -8,6 +9,7 @@ import {OrderInfo} from "./OrderInfo"
 export class UserAddress {
   @Field()
   @Column("varchar", { primary: true, name: "id", length: 40 })
+  @Generated('uuid')
   id: string;
 
   @Field()
@@ -78,5 +80,11 @@ export class UserAddress {
   get combineAddress() {
     return this.province + this.city + this.district + this.address
   }
+  set combineAddress(v) {
+  }
+
+  @Field(returns => User)
+  @ManyToOne(type => User, object => object.userPayCard)
+  user: User | null
 
 }
