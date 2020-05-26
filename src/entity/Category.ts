@@ -1,6 +1,7 @@
 import {Column, Entity, Generated, ManyToOne, OneToMany} from "typeorm"
 import {Field, InputType, ObjectType} from "type-graphql"
 import {Type} from "class-transformer"
+import {Product} from './Product'
 
 @ObjectType()
 @InputType('CategoryItemInput')
@@ -74,5 +75,9 @@ export class Category {
 
   @Field(returns => Category)
   categoryParent: Category | null
+
+  @Field(returns => [Product])
+  @OneToMany(type => Product, object => object.category)
+  product: Product | null
 
 }

@@ -159,7 +159,10 @@ ${dealPage(ListInput)}
         const sql = `
 update dw_server.product
 set update_time = current_timestamp
-    ${dealSet(otherProduct)}
+    ${dealSet({
+          ...otherProduct,
+          categoryId: otherProduct?.category_id,
+        })}
 where 1 = 1
       ${dealWhere({
           id: otherProduct?.id
@@ -223,7 +226,10 @@ where 1 = 1
 insert into dw_server.product
 set update_time = current_timestamp,
     id = "${id}", number = (select 1 + max(p.number) from dw_server.product p where p.is_group = ${ProductInput.is_group})
-    ${dealSet(otherProduct)}
+    ${dealSet({
+          ...otherProduct,
+          categoryId: otherProduct?.category_id,
+        })}
         `
         await asyncQuery(sql)
         if (imgs?.length) {

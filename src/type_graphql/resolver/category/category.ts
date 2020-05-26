@@ -12,10 +12,12 @@ import {
   Root,
 } from "type-graphql"
 import {Category} from "../../../entity/Category"
-import {getRepository} from "typeorm"
+import {getRepository, In} from "typeorm"
 import {dealPageResult, PageResult} from "../../types/types"
 import {dealOrderBy, dealPageData, OrderByInput, PageInput} from "../../types/input"
 import {plainToClass} from "class-transformer"
+import {Product} from '../../../entity/Product'
+import {commonQueryWhere} from '../../common/query'
 
 @ObjectType()
 class CategoryPage extends PageResult<Category> {
@@ -70,7 +72,7 @@ export class CategoryResolver implements ResolverInterface<Category> {
 
   @Authorized()
   @Mutation(returns => Category)
-  async saveCategory(@Arg('categoryItemInput') categoryItemInput: Category) {
+  async saveCategory(@Arg('categoryItemInput', returns => Category) categoryItemInput: Category) {
     const dataBase = getRepository(Category)
     const numberData = await dataBase.findOne({
       where: {
@@ -94,9 +96,57 @@ export class CategoryResolver implements ResolverInterface<Category> {
 
   @FieldResolver(returns => Category)
   categoryParent(@Root() category: Category) {
-
     return category
   }
 
+  @Authorized()
+  @Query(returns => [Product])
+  async productsInCategory(@Arg('categoryItemInput', returns => Category) categoryItemInput: Category) {
+    const _condition = {
+      ...commonQueryWhere,
+      isEnable: 1,
+    }
+    const categories = await getRepository(Category)
+        .find({
+          relations: {
+            parentCategory: {
+              parentCategory: {
+                parentCategory: true,
+              },
+            },
+          },
+          where: [{
+            id: categoryItemInput.id,
+            ..._condition,
+          }, {
+            ..._condition,
+            parentCategory: {
+              ..._condition,
+              id: categoryItemInput.id,
+            },
+          }, {
+            ..._condition,
+            parentCategory: {
+              ..._condition,
+              parentCategory: {
+                ..._condition,
+                id: categoryItemInput.id,
+              },
+            },
+          }],
+        })
+    return await getRepository(Product)
+        .find({
+          relations: {
+            img: true,
+          },
+          where: {
+            ..._condition,
+            category: {
+              id: In(categories.map(value => value.id)),
+            },
+          },
+        })
+  }
 
 }
