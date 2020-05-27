@@ -135,6 +135,9 @@ export class CategoryResolver implements ResolverInterface<Category> {
             },
           }],
         })
+    if (categories.length === 0) {
+      return []
+    }
     return await getRepository(Product)
         .find({
           relations: {
