@@ -8,6 +8,7 @@ import {addMonths, isSameMonth, isSameYear} from 'date-fns'
 import {OrderState} from '../common/ss_common/enum'
 import {UserPayCard} from './UserPayCard'
 import {UserAddress} from './UserAddress'
+import {ShopCart} from './ShopCart'
 
 @InputType('UserItemInput')
 @ObjectType()
@@ -117,6 +118,10 @@ export class User {
     return 0
   }
   set orderAmountCurrentYear(v) {}
+
+  @Field(returns => [ShopCart])
+  @OneToMany(type1 => ShopCart, object => object.user)
+  shopCart: ShopCart[] | null
 
 }
 

@@ -7,6 +7,7 @@ import {PromoCodeResolver} from './promoCode/promoCode'
 import {AuthResolver} from './auth/auth'
 import {UserPayCardResolve} from './userPayCard/userPayCard'
 import { UserAddressResolve } from "./userAddress/userAddress"
+import {ShopCartResolver} from './shopCart/shopCart'
 
 export enum authType {
   web_client = 'web_client',
@@ -23,5 +24,6 @@ export const resolvers = [
   AuthResolver,
   UserPayCardResolve,
   UserAddressResolve,
+  ShopCartResolver,
 ]
 

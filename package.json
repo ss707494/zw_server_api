@@ -6,6 +6,8 @@
   "scripts": {
     "startDev": "ts-node file/script/start_dev.ts",
     "startPro": "ts-node file/script/start_build.ts",
+    "copyStaticAssets": "ts-node file/copyStaticAssets.ts",
+    "startServerJs": "cross-env NODE_ENV=production node dist/server.js",
     "eTs": "tsc",
     "dealCommonModule": "ts-node file/copySSCommon.ts",
     "ddwatch:copyCommon": "nodemon -e json,ts --watch my_modules/src --watch my_modules/ts_self --exec npm run dealCommonModule",

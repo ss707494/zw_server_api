@@ -18,6 +18,7 @@ import {dealOrderBy, dealPageData, OrderByInput, PageInput} from "../../types/in
 import {plainToClass} from "class-transformer"
 import {Product} from '../../../entity/Product'
 import {commonQueryWhere} from '../../common/query'
+import {CategoryRootName} from '../../../common/ss_common/enum'
 
 @ObjectType()
 class CategoryPage extends PageResult<Category> {
@@ -150,6 +151,33 @@ export class CategoryResolver implements ResolverInterface<Category> {
             },
           },
         })
+  }
+
+  @Authorized()
+  @Query(returns => Number)
+  async categoryLevel(@Arg('categoryItemInput', returns => Category) categoryItemInput: Category) {
+    const res = await getRepository(Category)
+        .findOne({
+          where: {
+            id: categoryItemInput.id,
+          },
+          relations: {
+            parentCategory: {
+              parentCategory: {
+                parentCategory: true,
+              },
+            },
+          },
+        })
+    if (res?.parentCategory?.id === CategoryRootName) {
+      return 1
+    } else if (res?.parentCategory?.parentCategory?.id === CategoryRootName) {
+      return 2
+    } else if (res?.parentCategory?.parentCategory?.parentCategory?.id === CategoryRootName) {
+      return 3
+    } else {
+      return -1
+    }
   }
 
 }

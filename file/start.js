@@ -7,9 +7,9 @@ function callback (code, stdout, stderr) {
 }
 
 shelljs.exec('git pull')
-shelljs.exec('tsc', {windowsHide: true})
-shelljs.exec('ts-node file/copyStaticAssets.ts', {windowsHide: true})
-shelljs.exec('cross-env NODE_ENV=production node dist/server.js', {windowsHide: true}, callback)
+shelljs.exec('npm run eTs', {windowsHide: true})
+shelljs.exec('npm run copyStaticAssets', {windowsHide: true})
+shelljs.exec('npm run startServerJs', {windowsHide: true}, callback)
 
 
 

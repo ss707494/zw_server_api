@@ -3,6 +3,7 @@ import {ROrderProduct} from "./ROrderProduct"
 import {Field, InputType, ObjectType} from "type-graphql"
 import {ProductImg} from './ProductImg'
 import {Category} from './Category'
+import {ShopCart} from './ShopCart'
 
 @InputType('ProductItemInput')
 @ObjectType()
@@ -171,5 +172,9 @@ export class Product {
   @Field(returns => Category)
   @ManyToOne(type => Category, object => object.product)
   category: Category | null
+
+  @Field(returns => [ShopCart])
+  @OneToMany(type => ShopCart, object => object.product)
+  shopCart: ShopCart[]
 
 }
