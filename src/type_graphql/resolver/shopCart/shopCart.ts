@@ -40,6 +40,13 @@ export class ShopCartResolver {
   }
 
   @Authorized()
+  @Mutation(returns => ShopCart)
+  async updateShopCart(@Ctx() {user}: ContextType, @Arg('shopCart')shopCart: ShopCart) {
+    return await getRepository(ShopCart)
+        .save(shopCart)
+  }
+
+  @Authorized()
   @Query(returns => [ShopCart])
   async shopCartList(@Ctx() {user}: ContextType) {
     return await getRepository(ShopCart)
