@@ -4,8 +4,10 @@ import {Between, Equal, FindOptions, getRepository, LessThan, Like, MoreThan, No
 import {OrderInput} from "./orderInput"
 import {dealPageData} from "../../types/input"
 import {dealPageResult, PageResult} from "../../types/types"
-import {OrderState} from '../../../common/ss_common/enum'
+import {OrderState, PickUpTypeEnum} from '../../../common/ss_common/enum'
 import {ContextType} from '../../apploServer'
+import {getOrderNumber} from '../../../resolver/order'
+import {ShopCart} from '../../../entity/ShopCart'
 
 @ObjectType()
 export class OrderPage extends PageResult<OrderInfo> {
@@ -32,9 +34,15 @@ const dealWhere = (orderInput: OrderInput): FindOptions<OrderInfo> => {
         ...(orderInput.userId ? {id: Equal(orderInput.userId)} : {}),
       },
       userAddress: {
-        zip: Like(`%${orderInput.zip}%`),
-        city: Like(`%${orderInput.city}%`),
-        province: Like(`%${orderInput.province}%`),
+        ...((orderInput.zip && {
+          zip: Like(`%${orderInput.zip}%`),
+        }) || {}),
+        ...((orderInput.city && {
+          city: Like(`%${orderInput.city}%`),
+        }) || {}),
+        ...((orderInput.province && {
+          province: Like(`%${orderInput.province}%`),
+        }) || {}),
       },
       pickUpType: Like(`%${orderInput.pickUpType}%`),
     },
@@ -69,6 +77,9 @@ export class OrderResolve {
             userPayCard: true,
           },
           ...dealPageData(orderInput),
+          order: {
+            createTime: 'desc',
+          }
         })
     return dealPageResult(res)
   }
@@ -110,6 +121,7 @@ export class OrderResolve {
   async saveOrderList(@Arg('orderInfoItemInput', returns => [OrderInfo])orderInfoItemInput: OrderInfo[]) {
     return await getRepository(OrderInfo).save(orderInfoItemInput.map(value => ({
       ...value,
+      updateTime: new Date(),
       ...(value.state === OrderState.PickedUp ? {
         pickUpTime: new Date(),
       } : {}),
@@ -117,6 +129,58 @@ export class OrderResolve {
         finishTime: new Date(),
       } : {}),
     })))
+  }
+
+  @Authorized()
+  @Mutation(returns => OrderInfo)
+  async saveOrder(@Arg('orderInfoItemInput', returns => OrderInfo)orderInfoItemInput: OrderInfo, @Ctx() {user}: ContextType) {
+    const res = await getRepository(OrderInfo)
+        .save({
+          ...orderInfoItemInput,
+          user: {
+            id: user.id,
+          },
+          rOrderUser: {
+            userId: user.id,
+            user: {
+              id: user.id,
+            },
+          },
+          userPayCard: {
+            id: orderInfoItemInput.paymentMethodCardId,
+          },
+          addressId: orderInfoItemInput.addressId,
+          ...((
+              orderInfoItemInput.pickUpType === PickUpTypeEnum.Self && {
+                selfAddressId: orderInfoItemInput.addressId,
+              }) || (
+              orderInfoItemInput.pickUpType === PickUpTypeEnum.Delivery && {
+                userAddress: {
+                  id: orderInfoItemInput.addressId,
+                },
+              }) || {}),
+          ...((orderInfoItemInput.number && {}) || {
+            number: getOrderNumber(user.id),
+          }),
+        })
+    await getRepository(ShopCart).createQueryBuilder()
+        .update(ShopCart).set({
+          isDelete: 1,
+        }).where({
+          isNext: 0,
+          user: {
+            id: user.id,
+          },
+        }).execute()
+    await getRepository(ShopCart).createQueryBuilder()
+        .update(ShopCart).set({
+          isNext: 0,
+        }).where({
+          user: {
+            id: user.id,
+          },
+        }).execute()
+    return res
   }
 
 }

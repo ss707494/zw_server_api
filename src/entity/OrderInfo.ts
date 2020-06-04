@@ -1,4 +1,4 @@
-import {Column, Entity, ManyToOne, OneToMany, OneToOne} from "typeorm"
+import {Column, Entity, Generated, ManyToOne, OneToMany, OneToOne} from "typeorm"
 import {ROrderUser} from "./ROrderUser"
 import {Field, InputType, ObjectType} from "type-graphql"
 import {User} from "./User"
@@ -12,6 +12,7 @@ import {UserPayCard} from './UserPayCard'
 export class OrderInfo {
   @Field()
   @Column("varchar", {primary: true, name: "id", length: 40})
+  @Generated('uuid')
   id: string
 
   @Field({nullable: true})

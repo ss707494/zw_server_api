@@ -100,7 +100,7 @@ export class CategoryResolver implements ResolverInterface<Category> {
     return category
   }
 
-  @Authorized()
+  @Authorized('web_client')
   @Query(returns => [Product])
   async productsInCategory(@Arg('categoryItemInput', returns => Category) categoryItemInput: Category) {
     const _condition = {

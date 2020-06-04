@@ -8,6 +8,7 @@ import {AuthResolver} from './auth/auth'
 import {UserPayCardResolve} from './userPayCard/userPayCard'
 import { UserAddressResolve } from "./userAddress/userAddress"
 import {ShopCartResolver} from './shopCart/shopCart'
+import {ProductResolver} from './product/product'
 
 export enum authType {
   web_client = 'web_client',
@@ -25,5 +26,6 @@ export const resolvers = [
   UserPayCardResolve,
   UserAddressResolve,
   ShopCartResolver,
+  ProductResolver,
 ]
 

@@ -43,7 +43,10 @@ export class ShopCartResolver {
   @Mutation(returns => ShopCart)
   async updateShopCart(@Ctx() {user}: ContextType, @Arg('shopCart')shopCart: ShopCart) {
     return await getRepository(ShopCart)
-        .save(shopCart)
+        .save({
+          ...shopCart,
+          updateTime: new Date(),
+        })
   }
 
   @Authorized()
