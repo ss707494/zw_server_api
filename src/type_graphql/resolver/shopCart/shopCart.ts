@@ -49,9 +49,10 @@ export class ShopCartResolver {
         })
   }
 
-  @Authorized()
+  @Authorized('web_client')
   @Query(returns => [ShopCart])
   async shopCartList(@Ctx() {user}: ContextType) {
+    if (!user?.id) return []
     return await getRepository(ShopCart)
         .find({
           where: {

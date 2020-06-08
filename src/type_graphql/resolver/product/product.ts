@@ -25,6 +25,9 @@ export class ProductResolver {
           where: {
             ...commonQueryWhere,
             isEnable: 1,
+            category: {
+              id: categoryInput.category.id,
+            },
           },
           order: dealOrderBy(orderByInput),
         })
