@@ -10,8 +10,8 @@ export const customAuthChecker: AuthChecker<ContextType> = async (
   if (!context?.user) {
     if (roles.includes(authType.web_client)) return true
     if (process.env.NODE_ENV === 'production') {
-      throw new AuthenticationError('first')
     }
+    throw new AuthenticationError('first')
   }
   console.log(context?.user)
   // here we can read the user from context

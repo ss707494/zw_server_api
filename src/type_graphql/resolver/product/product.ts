@@ -1,7 +1,7 @@
 import {Arg, Authorized, Field, Query, Resolver, ObjectType} from 'type-graphql'
 import {Product} from '../../../entity/Product'
 import {dealPageResult, PageResult} from '../../types/types'
-import {getRepository} from 'typeorm'
+import {getRepository, In} from 'typeorm'
 import {commonQueryWhere} from '../../common/query'
 import {dealOrderBy, OrderByInput} from '../../types/input'
 
@@ -30,6 +30,24 @@ export class ProductResolver {
             },
           },
           order: dealOrderBy(orderByInput),
+        })
+    return dealPageResult(res)
+  }
+
+  @Authorized('web_client')
+  @Query(returns => ProductPage)
+  async productListByIds(@Arg('ids', returns => [String]) ids: string[]) {
+    if (ids.length === 0) return []
+    const res = await getRepository(Product)
+        .findAndCount({
+          relations: {
+            img: true,
+          },
+          where: {
+            ...commonQueryWhere,
+            isEnable: 1,
+            id: In(ids),
+          },
         })
     return dealPageResult(res)
   }
