@@ -177,4 +177,16 @@ export class Product {
   @OneToMany(type => ShopCart, object => object.product)
   shopCart: ShopCart[]
 
+  @Field()
+  unitString: string
+
+  @Field()
+  packingUnitString: string
+
+  @Field()
+  groupAmountUnitString: string
+
+  @Field()
+  groupPrecisionString: string
+
 }

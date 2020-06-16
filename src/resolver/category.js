@@ -108,6 +108,7 @@ ${dealSet({
           name: Category?.name,
           full_parent_id: Category?.full_parent_id,
           parent_id: Category?.parent_id,
+          parentCategoryId: Category?.parent_id,
           img_url: Category?.img_url,
           is_enable: Category?.is_enable,
 })}
@@ -133,15 +134,18 @@ where 1 = 1
         const id = uuidV1()
         // language=MySQL
         const sql = [`
-            insert dw_server.category (id, name, update_time, parent_id, full_parent_id, number)
-            values (?, ?, current_timestamp, ?, ?, ifnull((select 1 + max(c.number) from dw_server.category c where c.parent_id = ?), 1));
+            insert dw_server.category (id, is_enable, name, update_time, parent_id, parentCategoryId, full_parent_id, number, img_url)
+            values (?, ?, ?, current_timestamp, ?, ?, ?, ifnull((select 1 + max(c.number) from dw_server.category c where c.parent_id = ?), 1), ?);
         `, [
           id,
+          1,
           Category?.name,
+          Category?.parent_id ?? '',
           Category?.parent_id ?? '',
           Category?.full_parent_id ?? '',
           Category?.parent_id ?? '',
-        ]]
+          Category?.img_url,
+      ]]
         const res = await asyncQuery(...sql)
         console.log(res)
         return dealResult(1, '', {

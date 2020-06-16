@@ -19,6 +19,7 @@ import {plainToClass} from "class-transformer"
 import {Product} from '../../../entity/Product'
 import {commonQueryWhere} from '../../common/query'
 import {CategoryRootName} from '../../../common/ss_common/enum'
+import {dealProductForDict} from '../product/product'
 
 @ObjectType()
 class CategoryPage extends PageResult<Category> {
@@ -102,7 +103,7 @@ export class CategoryResolver implements ResolverInterface<Category> {
 
   @Authorized('web_client')
   @Query(returns => [Product])
-  async productsInCategory(@Arg('categoryItemInput', returns => Category) categoryItemInput: Category) {
+  async productsInCategory(@Arg('categoryItemInput', returns => Category) categoryItemInput: Category, @Arg('productItemInput', returns => Product) productItemInput: Product) {
     const _condition = {
       ...commonQueryWhere,
       isEnable: 1,
@@ -134,23 +135,27 @@ export class CategoryResolver implements ResolverInterface<Category> {
                 id: categoryItemInput.id,
               },
             },
-          }],
+          }].map(value => ({
+            ...value,
+          })),
         })
     if (categories.length === 0) {
       return []
     }
-    return await getRepository(Product)
+    const products = await getRepository(Product)
         .find({
           relations: {
             img: true,
           },
           where: {
             ..._condition,
+            isGroup: productItemInput?.isGroup ?? 0,
             category: {
               id: In(categories.map(value => value.id)),
             },
           },
         })
+    return dealProductForDict(products)
   }
 
   @Authorized()

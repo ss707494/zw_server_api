@@ -228,6 +228,7 @@ set update_time = current_timestamp,
     id = "${id}", number = (select 1 + max(p.number) from dw_server.product p where p.is_group = ${ProductInput.is_group})
     ${dealSet({
           ...otherProduct,
+          is_enable: 1,
           categoryId: otherProduct?.category_id,
         })}
         `
