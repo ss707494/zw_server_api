@@ -79,7 +79,7 @@ export class OrderResolve {
           ...dealPageData(orderInput),
           order: {
             createTime: 'desc',
-          }
+          },
         })
     return dealPageResult(res)
   }
@@ -181,6 +181,15 @@ export class OrderResolve {
           },
         }).execute()
     return res
+  }
+
+  @Authorized()
+  @Mutation(returns => OrderInfo)
+  async updateOrder(@Arg('orderInfoItemInput', returns => OrderInfo)orderInfoItemInput: OrderInfo) {
+    return await getRepository(OrderInfo)
+        .save({
+          ...orderInfoItemInput,
+        })
   }
 
 }

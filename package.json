@@ -52,6 +52,7 @@
     "bcrypt": "^3.0.6",
     "body-parser": "^1.18.3",
     "class-transformer": "^0.2.3",
+    "cors": "^2.8.5",
     "date-fns": "^2.9.0",
     "date-format": "^2.1.0",
     "dotenv": "^8.1.0",
@@ -68,6 +69,7 @@
     "mysql": "mysqljs/mysql",
     "nodemon": "^1.18.10",
     "reflect-metadata": "^0.1.13",
+    "square-connect": "^4.20200625.0",
     "type-graphql": "^0.17.6",
     "typeorm": "0.3.0-rc.19",
     "uuid": "^3.3.2"

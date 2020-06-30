@@ -66,6 +66,9 @@ export class CategoryResolver implements ResolverInterface<Category> {
   async oneCategory(@Arg('data') data: Category) {
     return await getRepository(Category)
         .findOne({
+          where: {
+            id: data.id,
+          },
           relations: {
             parentCategory: true,
           },

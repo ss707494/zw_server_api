@@ -1,3 +1,5 @@
+import { dealPay } from './common/pay'
+
 require('module-alias/register')
 import { resolveApp, uploadFilePath } from './common/pathConfig'
 
@@ -41,6 +43,7 @@ const init = async () => {
     app.use('/api(/*)?', tokenHandle)
 
     dealUpload(app)
+    dealPay(app)
 
     server.applyMiddleware({ app, path: '/api' })
 

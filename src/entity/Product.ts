@@ -4,6 +4,7 @@ import {Field, InputType, ObjectType} from "type-graphql"
 import {ProductImg} from './ProductImg'
 import {Category} from './Category'
 import {ShopCart} from './ShopCart'
+import {GroupQueue} from './GroupQueue'
 
 @InputType('ProductItemInput')
 @ObjectType()
@@ -188,5 +189,9 @@ export class Product {
 
   @Field()
   groupPrecisionString: string
+
+  @Field(returns => [GroupQueue])
+  @OneToMany(type => GroupQueue, object => object.product)
+  groupQueue: GroupQueue
 
 }
