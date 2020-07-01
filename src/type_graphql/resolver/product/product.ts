@@ -29,6 +29,7 @@ export class ProductResolver {
             category: {
               id: categoryInput.category.id,
             },
+            isGroup: categoryInput.isGroup ?? 0,
           },
           order: dealOrderBy(orderByInput),
         })
