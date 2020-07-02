@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { CategoryPage } from '../../utils/view/category/[id]';\nexport default CategoryPage;","map":null,"metadata":{},"sourceType":"module"}

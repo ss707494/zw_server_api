@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { OrderDetail } from '../../../utils/view/me/orderDetail/orderDetail';\nexport default OrderDetail;","map":null,"metadata":{},"sourceType":"module"}

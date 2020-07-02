@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { createMuiTheme } from \"@material-ui/core\";\nimport { mpStyle } from './common';\nexport const theme = createMuiTheme({\n  palette: {\n    secondary: {\n      main: mpStyle.red\n    }\n  }\n});","map":null,"metadata":{},"sourceType":"module"}

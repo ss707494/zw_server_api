@@ -1,0 +1,1 @@
+{"ast":null,"code":"var __jsx = React.createElement;\nimport React from 'react';\nimport { FootBar } from '../../utils/components/FootBar/FootBar';\nexport default function Group() {\n  return __jsx(\"div\", null, \"group\", __jsx(FootBar, null));\n}","map":null,"metadata":{},"sourceType":"module"}

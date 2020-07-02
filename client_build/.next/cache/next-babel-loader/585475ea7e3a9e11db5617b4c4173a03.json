@@ -1,0 +1,1 @@
+{"ast":null,"code":"export var ls = function ls(key) {\n  return key !== null && key !== void 0 ? key : '';\n};","map":null,"metadata":{},"sourceType":"module"}

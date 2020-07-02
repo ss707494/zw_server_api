@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { ShopCartPage } from '../../utils/view/cart';\nexport default ShopCartPage;","map":null,"metadata":{},"sourceType":"module"}

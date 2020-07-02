@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { Pay } from \"../../utils/view/pay\";\nexport default Pay;","map":{"version":3,"sources":["D:/code/zw/zw_client_web/pages/pay/index.tsx"],"names":["Pay"],"mappings":"AAAA,SAASA,GAAT,QAAoB,sBAApB;AAEA,eAAeA,GAAf","sourcesContent":["import { Pay } from \"../../utils/view/pay\";\r\n\r\nexport default Pay\r\n"]},"metadata":{},"sourceType":"module"}

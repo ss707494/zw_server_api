@@ -1,0 +1,1 @@
+{"ast":null,"code":"export const isDev = false;\nexport const ssLog = data => {\n  if (isDev) {\n    console.log(data);\n  }\n\n  return data;\n};","map":null,"metadata":{},"sourceType":"module"}
