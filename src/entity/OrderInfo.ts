@@ -5,6 +5,7 @@ import {User} from "./User"
 import {ROrderProduct} from "./ROrderProduct"
 import {UserAddress} from "./UserAddress"
 import {UserPayCard} from './UserPayCard'
+import {GroupOrder} from "./GroupOrder";
 
 @InputType('OrderInfoItemInput')
 @ObjectType()
@@ -177,5 +178,9 @@ export class OrderInfo {
   @Column("varchar", {name: "currentUserLevel", default: () => "''"})
   @Field()
   currentUserLevel: string | null
+
+  @Field(returns => GroupOrder)
+  @OneToOne(type => GroupOrder, object => object.orderInfo)
+  groupOrder: GroupOrder
 
 }

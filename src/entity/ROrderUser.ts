@@ -1,4 +1,4 @@
-import {Column, Entity, ManyToOne, OneToOne} from "typeorm"
+import {Column, Entity, JoinColumn, ManyToOne, OneToOne} from "typeorm"
 import {OrderInfo} from "./OrderInfo"
 import {User} from "./User"
 import {Field, InputType, ObjectType} from "type-graphql"
@@ -41,6 +41,7 @@ export class ROrderUser {
 
   @Field(returns => OrderInfo, {nullable: true})
   @OneToOne(type => OrderInfo, object => object.rOrderUser)
+  @JoinColumn()
   orderInfo: OrderInfo | null
 
   @Field(returns => User, {nullable: true})

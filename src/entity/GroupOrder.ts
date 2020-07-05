@@ -1,13 +1,23 @@
-import { Column, Entity } from "typeorm";
+import {Column, Entity, Generated, JoinColumn, ManyToOne, OneToOne} from "typeorm";
+import {Field, InputType, ObjectType} from "type-graphql";
+import {GroupQueue} from "./GroupQueue";
+import {OrderInfo} from "./OrderInfo";
+import {User} from "./User";
 
-@Entity("group_order", { schema: "dw_server" })
+@InputType('GroupOrderItemInput')
+@ObjectType()
+@Entity("group_order", {schema: "dw_server"})
 export class GroupOrder {
-  @Column("varchar", { primary: true, name: "id", length: 40 })
+  @Field()
+  @Column("varchar", {primary: true, name: "id", length: 40})
+  @Generated('uuid')
   id: string;
 
-  @Column("varchar", { name: "name", nullable: true, length: 200 })
+  @Field()
+  @Column("varchar", {name: "name", nullable: true, length: 200})
   name: string | null;
 
+  @Field()
   @Column("timestamp", {
     name: "create_time",
     nullable: true,
@@ -15,18 +25,23 @@ export class GroupOrder {
   })
   createTime: Date | null;
 
-  @Column("timestamp", { name: "update_time", nullable: true })
+  @Field()
+  @Column("timestamp", {name: "update_time", nullable: true})
   updateTime: Date | null;
 
-  @Column("int", { name: "is_delete", nullable: true, default: () => "'0'" })
+  @Field()
+  @Column("int", {name: "is_delete", nullable: true, default: () => "'0'"})
   isDelete: number | null;
 
-  @Column("varchar", { name: "group_queue_id", length: 40 })
+  @Field()
+  @Column("varchar", {name: "group_queue_id", length: 40})
   groupQueueId: string;
 
-  @Column("varchar", { name: "user_id", length: 40 })
+  @Column("varchar", {name: "user_id", length: 40})
+  @Field()
   userId: string;
 
+  @Field()
   @Column("int", {
     name: "order_group_amount",
     nullable: true,
@@ -34,6 +49,21 @@ export class GroupOrder {
   })
   orderGroupAmount: number | null;
 
-  @Column("varchar", { name: "order_id", nullable: true, length: 40 })
+  @Field()
+  @Column("varchar", {name: "order_id", nullable: true, length: 40})
   orderId: string | null;
+
+  @Field(returns => OrderInfo)
+  @OneToOne(type => OrderInfo, object => object.groupOrder)
+  @JoinColumn()
+  orderInfo: OrderInfo
+
+  @Field(returns => GroupQueue)
+  @ManyToOne(type => GroupQueue, object => object.groupOrder)
+  groupQueue: GroupQueue
+
+  @Field(returns => User)
+  @ManyToOne(type => User, object => object.groupOrder)
+  user: User
+
 }

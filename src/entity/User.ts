@@ -9,6 +9,7 @@ import {OrderState} from '../common/ss_common/enum'
 import {UserPayCard} from './UserPayCard'
 import {UserAddress} from './UserAddress'
 import {ShopCart} from './ShopCart'
+import {GroupOrder} from "./GroupOrder";
 
 @InputType('UserItemInput')
 @ObjectType()
@@ -122,6 +123,10 @@ export class User {
   @Field(returns => [ShopCart])
   @OneToMany(type1 => ShopCart, object => object.user)
   shopCart: ShopCart[] | null
+
+  @Field(returns => GroupOrder)
+  @OneToMany(type => GroupOrder, object => object.user)
+  groupOrder: GroupOrder
 
 }
 
