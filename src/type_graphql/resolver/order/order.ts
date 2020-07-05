@@ -49,6 +49,38 @@ const dealWhere = (orderInput: OrderInput): FindOptions<OrderInfo> => {
   }
 }
 
+export const saveOrderInfoFun: (orderInfoItemInput, user) => Promise<OrderInfo> = async (orderInfoItemInput, user) => {
+  return await getRepository(OrderInfo)
+      .save({
+        ...orderInfoItemInput,
+        user: {
+          id: user.id,
+        },
+        rOrderUser: {
+          userId: user.id,
+          user: {
+            id: user.id,
+          },
+        },
+        userPayCard: {
+          id: orderInfoItemInput.paymentMethodCardId,
+        },
+        addressId: orderInfoItemInput.addressId,
+        ...((
+            orderInfoItemInput.pickUpType === PickUpTypeEnum.Self && {
+              selfAddressId: orderInfoItemInput.addressId,
+            }) || (
+            orderInfoItemInput.pickUpType === PickUpTypeEnum.Delivery && {
+              userAddress: {
+                id: orderInfoItemInput.addressId,
+              },
+            }) || {}),
+        ...((orderInfoItemInput.number && {}) || {
+          number: getOrderNumber(user.id),
+        }),
+      })
+}
+
 @Resolver()
 export class OrderResolve {
 
@@ -134,35 +166,7 @@ export class OrderResolve {
   @Authorized()
   @Mutation(returns => OrderInfo)
   async saveOrder(@Arg('orderInfoItemInput', returns => OrderInfo)orderInfoItemInput: OrderInfo, @Ctx() {user}: ContextType) {
-    const res = await getRepository(OrderInfo)
-        .save({
-          ...orderInfoItemInput,
-          user: {
-            id: user.id,
-          },
-          rOrderUser: {
-            userId: user.id,
-            user: {
-              id: user.id,
-            },
-          },
-          userPayCard: {
-            id: orderInfoItemInput.paymentMethodCardId,
-          },
-          addressId: orderInfoItemInput.addressId,
-          ...((
-              orderInfoItemInput.pickUpType === PickUpTypeEnum.Self && {
-                selfAddressId: orderInfoItemInput.addressId,
-              }) || (
-              orderInfoItemInput.pickUpType === PickUpTypeEnum.Delivery && {
-                userAddress: {
-                  id: orderInfoItemInput.addressId,
-                },
-              }) || {}),
-          ...((orderInfoItemInput.number && {}) || {
-            number: getOrderNumber(user.id),
-          }),
-        })
+    const res = await saveOrderInfoFun(orderInfoItemInput, user)
     await getRepository(ShopCart).createQueryBuilder()
         .update(ShopCart).set({
           isDelete: 1,
