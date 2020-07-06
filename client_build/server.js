@@ -17,7 +17,6 @@ app.prepare()
       const port = parseInt(process.env.PORT, 10) || 3006
 // console.log('process.env.NODE_ENV')
 // console.log(process.env.img_domain)
-
       const server = express()
 
       server.use(
@@ -31,7 +30,6 @@ app.prepare()
       server.get('*', (req, res) => {
         return handle(req, res)
       })
-      console.log(process.env.client_api_uri)
 
       server.listen(port, (err) => {
         if (err) throw err
