@@ -1,1 +1,0 @@
-{"ast":null,"code":"import { PickupAddress } from '../../../utils/view/me/pickupAddress/list';\nexport default PickupAddress;","map":null,"metadata":{},"sourceType":"module"}

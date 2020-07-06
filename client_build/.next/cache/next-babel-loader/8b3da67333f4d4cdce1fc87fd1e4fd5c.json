@@ -1,1 +1,0 @@
-{"ast":null,"code":"import { HomeAppModule, HomeType } from '../../utils/view/home/appModule';\nexport var __N_SSG = true;\nexport default HomeAppModule(HomeType.group);","map":null,"metadata":{},"sourceType":"module"}

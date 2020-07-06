@@ -1,1 +1,0 @@
-{"ast":null,"code":"export var mpStyle = {\n  red: '#F84033'\n};","map":{"version":3,"sources":["D:/code/zw/zw_client_web/utils/style/common.ts"],"names":["mpStyle","red"],"mappings":"AACA,OAAO,IAAMA,OAAO,GAAG;AACrBC,EAAAA,GAAG,EAAE;AADgB,CAAhB","sourcesContent":["\r\nexport const mpStyle = {\r\n  red: '#F84033',\r\n}\r\n"]},"metadata":{},"sourceType":"module"}

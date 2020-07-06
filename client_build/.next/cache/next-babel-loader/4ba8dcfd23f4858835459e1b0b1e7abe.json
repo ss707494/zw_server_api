@@ -1,1 +1,0 @@
-{"ast":null,"code":"export var ls = function ls(key) {\n  return key;\n};","map":{"version":3,"sources":["D:/code/zw/zw_client_web/utils/tools/dealKey.ts"],"names":["ls","key"],"mappings":"AACA,OAAO,IAAMA,EAAE,GAAG,SAALA,EAAK,CAACC,GAAD;AAAA,SAAiBA,GAAjB;AAAA,CAAX","sourcesContent":["\r\nexport const ls = (key: string) => key\r\n"]},"metadata":{},"sourceType":"module"}

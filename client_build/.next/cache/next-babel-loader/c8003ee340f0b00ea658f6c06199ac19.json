@@ -1,1 +1,0 @@
-{"ast":null,"code":"import styled from \"styled-components\";\nexport var Box = styled.div.withConfig({\n  displayName: \"Box\",\n  componentId: \"sc-1w0dei9-0\"\n})([\"padding:0 20px;\"]);","map":null,"metadata":{},"sourceType":"module"}

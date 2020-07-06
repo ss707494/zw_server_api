@@ -1,1 +1,0 @@
-{"ast":null,"code":"/* global localStorage */\nexport const setToken = (token, name = 'token') => localStorage.setItem(name, token);\nexport const getToken = (name = 'token') => localStorage.getItem(name) || '';","map":null,"metadata":{},"sourceType":"module"}
