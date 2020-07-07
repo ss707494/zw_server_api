@@ -122,7 +122,7 @@ export class UserResolve {
     return merge1
   }
 
-  @Authorized('')
+  @Authorized('web_client')
   @Query(returns => User)
   async oneUser(@Ctx() {user}: ContextType) {
     if (user?.id) {
