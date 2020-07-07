@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[28],{"1uoE":function(o,n,u){(window.__NEXT_P=window.__NEXT_P||[]).push(["/group/[appModule]",function(){return u("VctW")}])},VctW:function(o,n,u){"use strict";u.r(n);var p=u("26vd");n.default=Object(p.a)(p.b.group)}},[["1uoE",1,0,5,2,3,4,6,7,8,9,10,11,12,14,13,15]]]);
