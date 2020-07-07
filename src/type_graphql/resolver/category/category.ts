@@ -61,7 +61,7 @@ export class CategoryResolver implements ResolverInterface<Category> {
     return dealPageResult(res)
   }
 
-  @Authorized()
+  @Authorized('web_client')
   @Query(returns => Category)
   async oneCategory(@Arg('data') data: Category) {
     return await getRepository(Category)
