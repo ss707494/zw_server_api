@@ -14,6 +14,7 @@ export class ShopCartResolver {
     const one = await shopCartRepository
         .findOne({
           where: {
+            ...commonQueryWhere,
             product: {
               id: shopCart.product?.id,
             },
