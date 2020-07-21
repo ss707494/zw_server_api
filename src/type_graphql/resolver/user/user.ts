@@ -162,6 +162,7 @@ export class UserResolve {
       name: userName,
       phone: userPhone,
       email: userEmail,
+      userLevel: 'user_3',
     })
     _user.userInfo = _userInfo
     const userInfoRedult = await getRepository(UserInfo)
