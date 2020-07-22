@@ -5,12 +5,13 @@ import {getRepository, Like} from 'typeorm'
 @Resolver()
 export class PromoCodeResolver {
 
-  @Authorized()
+  @Authorized('web_client')
   @Query(returns => [PromoCode])
   promoCodeList(@Arg('promoCodeItemInput', returns => PromoCode)promoCodeItemInput: PromoCode) {
     return getRepository(PromoCode).find({
       where: {
         promoCodeType: promoCodeItemInput?.promoCodeType ?? Like('%%'),
+        code: promoCodeItemInput?.code,
         isDelete: 0,
       },
     })

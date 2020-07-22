@@ -150,7 +150,6 @@ export class UserResolve {
       },
     } = data
     const userDatabase = await getRepository(User)
-    const res2 = await userDatabase.findOne({name})
     if (await userDatabase.findOne({name})) {
       throw '用户名重复'
     }

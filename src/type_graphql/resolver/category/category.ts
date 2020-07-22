@@ -188,4 +188,22 @@ export class CategoryResolver implements ResolverInterface<Category> {
     }
   }
 
+  @Authorized('web_client')
+  @Query(returns => Category)
+  async categoryRootParent(@Arg('categoryItemInput', returns => Category) categoryItemInput: Category) {
+    return await getRepository(Category)
+        .findOne({
+          where: {
+            id: categoryItemInput.id,
+          },
+          relations: {
+            parentCategory: {
+              parentCategory: {
+                parentCategory: true,
+              },
+            },
+          },
+        })
+  }
+
 }

@@ -1,6 +1,7 @@
 import uuidV1 from "uuid/v1"
 import {asyncQuery} from "../mysql"
 import {dealResult, dealSet} from "../resolver/common"
+import {makeid} from '../common/utils'
 
 export const getList = async (PromoCodeInput: PromoCode) => {
 
@@ -69,7 +70,7 @@ export const addOne = async (promoCodeInput: PromoCode) => {
                                                  effective_date_start, effective_date_end, promo_code_type, reuse_times,
                                                  code)
                VALUES (?)`
-  const [res] = await asyncQuery(sql, [[_id, promoCodeInputParam?.name, promoCodeInputParam?.remark, promoCodeInputParam?.title, promoCodeInputParam?.discount_type, promoCodeInputParam?.discount_amount, promoCodeInputParam?.discount_condition, promoCodeInputParam?.discount_condition_amount, promoCodeInputParam.product_category, promoCodeInputParam.img_url, promoCodeInputParam.effective_date_start, promoCodeInputParam.effective_date_end, promoCodeInputParam.promo_code_type, promoCodeInputParam.reuse_times, promoCodeInputParam.code]])
+  const [res] = await asyncQuery(sql, [[_id, promoCodeInputParam?.name, promoCodeInputParam?.remark, promoCodeInputParam?.title, promoCodeInputParam?.discount_type, promoCodeInputParam?.discount_amount, promoCodeInputParam?.discount_condition, promoCodeInputParam?.discount_condition_amount, promoCodeInputParam.product_category, promoCodeInputParam.img_url, promoCodeInputParam.effective_date_start, promoCodeInputParam.effective_date_end, promoCodeInputParam.promo_code_type, promoCodeInputParam.reuse_times, promoCodeInputParam.code || makeid(8)]])
   return dealResult(res?.affectedRows, '', {
     promoCode: {
       ...promoCodeInputParam,
