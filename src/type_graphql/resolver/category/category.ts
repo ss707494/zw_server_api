@@ -1,16 +1,4 @@
-import {
-  Arg,
-  Authorized,
-  Field,
-  FieldResolver,
-  InputType,
-  Mutation,
-  ObjectType,
-  Query,
-  Resolver,
-  ResolverInterface,
-  Root,
-} from "type-graphql"
+import {Arg, Authorized, Field, InputType, Mutation, ObjectType, Query, Resolver} from "type-graphql"
 import {Category} from "../../../entity/Category"
 import {getRepository, In} from "typeorm"
 import {dealPageResult, PageResult} from "../../types/types"
@@ -38,7 +26,7 @@ class CategoryListInput {
 }
 
 @Resolver(of => Category)
-export class CategoryResolver implements ResolverInterface<Category> {
+export class CategoryResolver {
 
   @Authorized('web_client')
   @Query(returns => CategoryPage)
@@ -97,11 +85,6 @@ export class CategoryResolver implements ResolverInterface<Category> {
       // parentCategory,
       number: 1 + (numberData?.number ?? 0),
     })
-  }
-
-  @FieldResolver(returns => Category)
-  categoryParent(@Root() category: Category) {
-    return category
   }
 
   @Authorized('web_client')

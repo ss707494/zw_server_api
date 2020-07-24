@@ -64,6 +64,11 @@ export class ShopCartResolver {
           },
           relations: {
             product: {
+              category: {
+                parentCategory: {
+                  parentCategory: true,
+                },
+              },
               img: true,
             },
           },

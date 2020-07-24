@@ -73,9 +73,6 @@ export class Category {
   @OneToMany(type => Category, category => category.parentCategory)
   childCategories: Category[]
 
-  @Field(returns => Category)
-  categoryParent: Category | null
-
   @Field(returns => [Product])
   @OneToMany(type => Product, object => object.category)
   product: Product | null
