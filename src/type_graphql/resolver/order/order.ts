@@ -1,6 +1,6 @@
 import {Arg, Authorized, Ctx, Field, Float, Mutation, ObjectType, Query, Resolver} from "type-graphql"
 import {OrderInfo} from "../../../entity/OrderInfo"
-import {Between, Equal, FindOptions, getRepository, LessThan, Like, MoreThan, Not, Raw} from "typeorm"
+import {Between, Equal, FindOptions, getRepository, In, IsNull, LessThan, Like, MoreThan, Not, Raw} from "typeorm"
 import {OrderInput} from "./orderInput"
 import {dealPageData} from "../../types/input"
 import {dealPageResult, PageResult} from "../../types/types"
@@ -8,6 +8,7 @@ import {OrderState, PickUpTypeEnum} from '../../../common/ss_common/enum'
 import {ContextType} from '../../apploServer'
 import {getOrderNumber} from '../../../resolver/order'
 import {ShopCart} from '../../../entity/ShopCart'
+import {GroupOrder} from '../../../entity/GroupOrder'
 
 @ObjectType()
 export class OrderPage extends PageResult<OrderInfo> {
@@ -15,7 +16,7 @@ export class OrderPage extends PageResult<OrderInfo> {
   list: OrderInfo[]
 }
 
-const dealWhere = (orderInput: OrderInput): FindOptions<OrderInfo> => {
+const dealWhereForOrder = (orderInput: OrderInput): FindOptions<OrderInfo> => {
   return {
     where: {
       state: orderInput.state === 0 ? Not('') : orderInput.state,
@@ -89,14 +90,24 @@ export class OrderResolve {
   async orderList(@Arg('orderInput')orderInput: OrderInput, @Arg('fromUser')fromUser: boolean, @Ctx() {user}: ContextType) {
     const res = await getRepository(OrderInfo)
         .findAndCount({
-          ...dealWhere({
-            ...OrderInput.defautl(),
-            ...fromUser ? {
-              ...orderInput,
-              userId: user?.id,
-            } : orderInput,
-          }),
+          where: {
+            ...dealWhereForOrder({
+              ...OrderInput.defautl(),
+              ...fromUser ? {
+                ...orderInput,
+                userId: user?.id,
+              } : orderInput,
+            }).where,
+            ...(orderInput.isGroup ? {
+              groupOrder: {
+                id: Not(IsNull()),
+              },
+            } : {
+              id: Not(In((await getRepository(GroupOrder).find({relations: {orderInfo: true}})).map(v => v.orderInfo?.id ?? ''))),
+            }),
+          },
           relations: {
+            groupOrder: true,
             user: {
               userInfo: true,
             },
@@ -121,7 +132,9 @@ export class OrderResolve {
   async orderListTotal(@Arg('orderInput')orderInput: OrderInput) {
     return await getRepository(OrderInfo)
         .count({
-          ...dealWhere(orderInput).where,
+          where: {
+            ...dealWhereForOrder(orderInput).where,
+          },
         })
   }
 

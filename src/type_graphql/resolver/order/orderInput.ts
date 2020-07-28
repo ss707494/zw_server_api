@@ -62,4 +62,7 @@ export class OrderInput extends PageInput {
   @Field({nullable: true})
   pickUpType: string | null
 
+  @Field({nullable: true})
+  isGroup: number | null
+
 }
