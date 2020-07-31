@@ -45,6 +45,7 @@ export default {
           id,
           userId: user.id,
           number,
+          isGroup: productSupplementInput.isGroup,
         })
         const addRelationProductSupplementRes = await addRelationProductSupplementDb(productSupplementInput.addList, id)
         console.log(addRelationProductSupplementRes)

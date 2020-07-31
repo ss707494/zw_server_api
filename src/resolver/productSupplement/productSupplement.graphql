@@ -1,76 +1,78 @@
 type ProductSupplement {
-    id: String
-    name: String
-    create_time: Date
-    update_time: Date
-    is_delete: Int
+  id: String
+  name: String
+  create_time: Date
+  update_time: Date
+  is_delete: Int
 
-    state: Int
-    amount: Float
-    number: String
-    code: String
-    supplier: String
-    user_id: String
+  state: Int
+  amount: Float
+  number: String
+  code: String
+  supplier: String
+  user_id: String
 
-    addItemList: [AddItem]
+  addItemList: [AddItem]
 
 }
 
 type AddItem {
-    id: String
-    name: String
-    create_time: Date
-    update_time: Date
-    is_delete: Int
+  id: String
+  name: String
+  create_time: Date
+  update_time: Date
+  is_delete: Int
 
-    supplement_id: String
-    product_id: String
-    count: Float
-    amount: Float
-    supplier: String
-    remark: String
-    lastOutAmount: Float
+  supplement_id: String
+  product_id: String
+  count: Float
+  amount: Float
+  supplier: String
+  remark: String
+  lastOutAmount: Float
 
-    product: Product
+  product: Product
 }
 
 input AddItemInput {
-    id: String
-    product_id: String
-    addNumber: Float
-    addPrice: Float
-    addSupplier: String
-    addRemark: String
+  id: String
+  product_id: String
+  addNumber: Float
+  addPrice: Float
+  addSupplier: String
+  addRemark: String
 }
 
 input ProductSupplementInput {
-    id: String
-    state: Int
-    addList: [AddItemInput]
+  id: String
+  state: Int
+  isGroup: Int
+  addList: [AddItemInput]
 }
 
 input ProductSupplementListInput {
-    id: String
-    name: String
-    create_time: Date
-    update_time: Date
-    is_delete: Int
+  id: String
+  name: String
+  create_time: Date
+  update_time: Date
+  is_delete: Int
 
-    state: Int
-    amount: Float
-    number: String
-    code: String
-    supplier: String
-    user_id: String
+  state: Int
+  amount: Float
+  number: String
+  code: String
+  supplier: String
+  user_id: String
+  isGroup: Int
 
-    page: Int
-    rows_per_page: Int
+  page: Int
+  rows_per_page: Int
 
 }
 
 
 extend type Mutation {
 
-    save_product_supplement(productSupplementInput: ProductSupplementInput): result
+  save_product_supplement(productSupplementInput: ProductSupplementInput): result
 
 }

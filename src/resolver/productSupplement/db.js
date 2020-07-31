@@ -6,9 +6,9 @@ export const addProductSupplementDb = async (item) => {
   // language=MySQL
   const [res] = await asyncQuery(`
       insert into dw_server.product_supplement
-          (id, user_id, number, state)
+          (id, user_id, number, state, isGroup)
       values ?
-  `, [[[item.id, item.userId, item.number, 1]]])
+  `, [[[item.id, item.userId, item.number, 1, item.isGroup]]])
 
   return res
 }
@@ -79,6 +79,7 @@ export const updateProdectDb = async (addItem) => {
 }
 
 export const getProductSupplementList = async (productSupplementListInput) => {
+  console.log(productSupplementListInput.isGroup)
   // language=MySQL
   const sql = `
       select id,
@@ -91,9 +92,11 @@ export const getProductSupplementList = async (productSupplementListInput) => {
              number,
              code,
              supplier,
+             isGroup,
              user_id
       from dw_server.product_supplement
       where is_delete = 0
+      and isGroup = ${productSupplementListInput.isGroup ?? 0 }
       ${dealOrder(productSupplementListInput, ' order by create_time desc')}
       ${dealPage(productSupplementListInput)}
   `

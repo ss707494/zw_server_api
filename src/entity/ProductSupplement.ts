@@ -43,4 +43,8 @@ export class ProductSupplement {
 
   @Column("varchar", {name: "user_id", length: 40})
   userId: string
+
+  @Column("int", {nullable: true, default: () => "'0'"})
+  isGroup: number | null
+
 }
