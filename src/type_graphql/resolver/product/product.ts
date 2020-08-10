@@ -5,6 +5,11 @@ import {getRepository, In} from 'typeorm'
 import {commonQueryWhere} from '../../common/query'
 import {dealOrderBy, OrderByInput} from '../../types/input'
 import {Dict} from '../../../entity/Dict'
+import {getConnection} from 'typeorm/index'
+import {ROrderProduct} from '../../../entity/ROrderProduct'
+import {SaleRankTypeEnum} from '../../../common/ss_common/enum'
+import {startOfDay, startOfMonth, startOfWeek} from 'date-fns'
+import {sqlDateFormat} from '../../../common/date'
 
 @ObjectType()
 class ProductPage extends PageResult<Product> {
@@ -52,6 +57,50 @@ export class ProductResolver {
           },
         })
     return dealPageResult([await dealProductForDict(res[0]), res[1]])
+  }
+
+  @Authorized('web_client')
+  @Query(returns => ProductPage)
+  async productListOrderByOrder(@Arg('orderByType')orderByType: string) {
+    const qb = await getConnection().createQueryBuilder()
+
+    const dateQuery =
+        orderByType === SaleRankTypeEnum.OneDay && `'${sqlDateFormat(startOfDay(new Date()))}' and '${sqlDateFormat(new Date())}'`
+        || orderByType === SaleRankTypeEnum.OneWeek && `'${sqlDateFormat(startOfWeek(new Date()))}' and '${sqlDateFormat(new Date())}'`
+        || orderByType === SaleRankTypeEnum.OneMonth && `'${sqlDateFormat(startOfMonth(new Date()))}' and '${sqlDateFormat(new Date())}'`
+        || ''
+    const query = await qb
+        .select('product')
+        .addSelect('leftOrder.sumOrder', 'sumOrder')
+        .from(Product, 'product')
+        .where('product.isGroup = :isGroup', {isGroup: 0})
+        .andWhere('product.isDelete = :isDelete', {isDelete: 0})
+        .andWhere('product.isEnable = :isEnable', {isEnable: 1})
+        .leftJoinAndSelect('product.rOrderProduct', 'rOrderProduct')
+        .leftJoinAndSelect('rOrderProduct.orderInfo', 'orderInfo')
+        .leftJoinAndSelect('product.img', 'img')
+        .leftJoin(db => {
+          return db
+              .select('subProduct.id', 'id')
+              .addSelect('COUNT(`rOrderProduct`.`id`)', 'sumOrder')
+              .from(Product, 'subProduct')
+              .leftJoin(db => db
+                      .select('rOrderProduct.id', 'id')
+                      .addSelect('rOrderProduct.productId', 'productId')
+                      .from(ROrderProduct, 'rOrderProduct')
+                      .where(`${dateQuery ? `rOrderProduct.create_time between ${dateQuery}` : ''}`)
+                  , 'rOrderProduct', 'rOrderProduct.productId = subProduct.id')
+              .groupBy('subProduct.id')
+        }, 'leftOrder', 'leftOrder.id = product.id')
+        .orderBy('sumOrder', 'DESC')
+    const list = await query.getRawMany()
+    console.log(list.map(v => ({
+      sumOrder: v.sumOrder,
+      product_name: v.product_name,
+    })))
+    const res = await query.getManyAndCount()
+
+    return dealPageResult(res)
   }
 
 }
