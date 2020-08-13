@@ -1,10 +1,11 @@
 import {Arg, Authorized, Ctx, Mutation, Query, Resolver} from 'type-graphql'
 import {GroupQueue} from '../../../entity/GroupQueue'
 import {getRepository} from 'typeorm'
-import {OrderInfo} from "../../../entity/OrderInfo"
-import {saveOrderInfoFun} from "../order/order"
-import {ContextType} from "../../apploServer"
-import {GroupOrder} from "../../../entity/GroupOrder"
+import {OrderInfo} from '../../../entity/OrderInfo'
+import {saveOrderInfoFun} from '../order/order'
+import {ContextType} from '../../apploServer'
+import {GroupOrder} from '../../../entity/GroupOrder'
+import {commonQueryWhere} from '../../common/query'
 
 @Resolver(of => GroupQueue)
 export class GroupQueueResolver {
@@ -16,7 +17,11 @@ export class GroupQueueResolver {
         .find({
           where: {
             product: {
-              id: groupQueueItemInput.product?.id,
+              ...commonQueryWhere,
+              isEnable: 1,
+              ...(groupQueueItemInput?.product?.id ? {
+                id: groupQueueItemInput.product?.id,
+              } : {}),
             },
           },
           relations: {
@@ -38,7 +43,7 @@ export class GroupQueueResolver {
           ...groupQueueItemInput,
         })
 
-    const newGroupOrder = await getRepository(GroupOrder)
+    await getRepository(GroupOrder)
         .save({
           ...groupOrderItemInput,
           orderInfo: newOrder,

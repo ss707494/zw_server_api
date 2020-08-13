@@ -2,6 +2,7 @@ import {Column, Entity, ManyToOne} from "typeorm"
 import {Product} from "./Product"
 import {OrderInfo} from "./OrderInfo"
 import {Field, InputType, ObjectType} from "type-graphql"
+import {Generated} from 'typeorm/index'
 
 @InputType('ROrderProductItemInput')
 @ObjectType()
@@ -9,6 +10,7 @@ import {Field, InputType, ObjectType} from "type-graphql"
 export class ROrderProduct {
   @Field()
   @Column("varchar", {primary: true, name: "id", length: 40})
+  @Generated('uuid')
   id: string
 
   @Field()

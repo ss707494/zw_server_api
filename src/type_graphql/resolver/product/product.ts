@@ -61,7 +61,7 @@ export class ProductResolver {
 
   @Authorized('web_client')
   @Query(returns => ProductPage)
-  async productListOrderByOrder(@Arg('orderByType')orderByType: string) {
+  async productListOrderByOrder(@Arg('orderByType')orderByType: string, @Arg('productInput', returns => Product) productInput?: Product) {
     const qb = await getConnection().createQueryBuilder()
 
     const dateQuery =
@@ -73,7 +73,7 @@ export class ProductResolver {
         .select('product')
         .addSelect('leftOrder.sumOrder', 'sumOrder')
         .from(Product, 'product')
-        .where('product.isGroup = :isGroup', {isGroup: 0})
+        .where('product.isGroup = :isGroup', {isGroup: productInput?.isGroup ?? 0})
         .andWhere('product.isDelete = :isDelete', {isDelete: 0})
         .andWhere('product.isEnable = :isEnable', {isEnable: 1})
         .leftJoinAndSelect('product.rOrderProduct', 'rOrderProduct')
@@ -93,16 +93,16 @@ export class ProductResolver {
               .groupBy('subProduct.id')
         }, 'leftOrder', 'leftOrder.id = product.id')
         .orderBy('sumOrder', 'DESC')
-    const list = await query.getRawMany()
-    console.log(list.map(v => ({
-      sumOrder: v.sumOrder,
-      product_name: v.product_name,
-    })))
+        .addOrderBy('product.create_time')
+    // const list = await query.getRawMany()
+    // console.log(list.map(v => ({
+    //   sumOrder: v.sumOrder,
+    //   product_name: v.product_name,
+    // })))
     const res = await query.getManyAndCount()
 
     return dealPageResult(res)
   }
-
 }
 
 export const dealProductForDict = async (products: Product[]) => {

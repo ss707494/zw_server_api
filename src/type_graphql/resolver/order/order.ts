@@ -1,14 +1,15 @@
-import {Arg, Authorized, Ctx, Field, Float, Mutation, ObjectType, Query, Resolver} from "type-graphql"
-import {OrderInfo} from "../../../entity/OrderInfo"
-import {Between, Equal, FindOptions, getRepository, In, IsNull, LessThan, Like, MoreThan, Not, Raw} from "typeorm"
-import {OrderInput} from "./orderInput"
-import {dealPageData} from "../../types/input"
-import {dealPageResult, PageResult} from "../../types/types"
+import {Arg, Authorized, Ctx, Field, Float, Mutation, ObjectType, Query, Resolver} from 'type-graphql'
+import {OrderInfo} from '../../../entity/OrderInfo'
+import {Between, Equal, FindOptions, getRepository, In, IsNull, LessThan, Like, MoreThan, Not, Raw} from 'typeorm'
+import {OrderInput} from './orderInput'
+import {dealPageData} from '../../types/input'
+import {dealPageResult, PageResult} from '../../types/types'
 import {OrderState, PickUpTypeEnum} from '../../../common/ss_common/enum'
 import {ContextType} from '../../apploServer'
 import {getOrderNumber} from '../../../resolver/order'
 import {ShopCart} from '../../../entity/ShopCart'
 import {GroupOrder} from '../../../entity/GroupOrder'
+import {ROrderProduct} from '../../../entity/ROrderProduct'
 
 @ObjectType()
 export class OrderPage extends PageResult<OrderInfo> {
@@ -50,8 +51,8 @@ const dealWhereForOrder = (orderInput: OrderInput): FindOptions<OrderInfo> => {
   }
 }
 
-export const saveOrderInfoFun: (orderInfoItemInput, user) => Promise<OrderInfo> = async (orderInfoItemInput, user) => {
-  return await getRepository(OrderInfo)
+export const saveOrderInfoFun: (orderInfoItemInput, user) => Promise<OrderInfo> = async (orderInfoItemInput: OrderInfo, user) => {
+  const newOrderInfo = await getRepository(OrderInfo)
       .save({
         ...orderInfoItemInput,
         user: {
@@ -80,6 +81,13 @@ export const saveOrderInfoFun: (orderInfoItemInput, user) => Promise<OrderInfo> 
           number: getOrderNumber(user.id),
         }),
       })
+  await getRepository(ROrderProduct)
+      .save(orderInfoItemInput.rOrderProduct.map(v => ({
+        ...v,
+        orderId: newOrderInfo.id,
+        orderInfo: newOrderInfo,
+      })))
+  return newOrderInfo
 }
 
 @Resolver()
