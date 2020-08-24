@@ -10,6 +10,9 @@ export class PromoCodeResolver {
   promoCodeList(@Arg('promoCodeItemInput', returns => PromoCode)promoCodeItemInput: PromoCode) {
     return getRepository(PromoCode).find({
       where: {
+        ...(promoCodeItemInput?.title && {
+          title: Like(`%${promoCodeItemInput?.title}%`),
+        } || {}),
         promoCodeType: promoCodeItemInput?.promoCodeType ?? Like('%%'),
         code: promoCodeItemInput?.code,
         isDelete: 0,

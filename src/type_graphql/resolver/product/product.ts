@@ -5,7 +5,7 @@ import {getRepository, In} from 'typeorm'
 import {commonQueryWhere} from '../../common/query'
 import {dealOrderBy, OrderByInput} from '../../types/input'
 import {Dict} from '../../../entity/Dict'
-import {getConnection} from 'typeorm/index'
+import {getConnection, Like} from 'typeorm/index'
 import {ROrderProduct} from '../../../entity/ROrderProduct'
 import {SaleRankTypeEnum} from '../../../common/ss_common/enum'
 import {startOfDay, startOfMonth, startOfWeek} from 'date-fns'
@@ -31,9 +31,14 @@ export class ProductResolver {
           where: {
             ...commonQueryWhere,
             isEnable: 1,
-            category: {
-              id: categoryInput.category.id,
-            },
+            ...(categoryInput.category?.id && {
+              category: {
+                id: categoryInput.category?.id,
+              },
+            } || {}),
+            ...(categoryInput.name && {
+              name: Like(`%${categoryInput.name}%`),
+            } || {}),
             isGroup: categoryInput.isGroup ?? 0,
           },
           order: dealOrderBy(orderByInput),
@@ -94,14 +99,20 @@ export class ProductResolver {
         }, 'leftOrder', 'leftOrder.id = product.id')
         .orderBy('sumOrder', 'DESC')
         .addOrderBy('product.create_time')
-    // const list = await query.getRawMany()
+    const rawList = await query.getRawMany()
     // console.log(list.map(v => ({
     //   sumOrder: v.sumOrder,
     //   product_name: v.product_name,
     // })))
     const res = await query.getManyAndCount()
 
-    return dealPageResult(res)
+    return dealPageResult([
+      res[0].map(v => ({
+        ...v,
+        sumOrder: rawList?.find(value => value.product_id === v.id)?.sumOrder,
+      })),
+      res[1],
+    ])
   }
 }
 

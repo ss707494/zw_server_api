@@ -194,4 +194,7 @@ export class Product {
   @OneToMany(type => GroupQueue, object => object.product)
   groupQueue: GroupQueue
 
+  @Field()
+  sumOrder: number | null
+
 }
