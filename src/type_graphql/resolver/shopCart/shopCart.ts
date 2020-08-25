@@ -26,6 +26,7 @@ export class ShopCartResolver {
         })
     return shopCartRepository.save((one?.id && {
       ...one,
+      updateTime: new Date(),
       number: one.number + updateNum,
     }) || ({
       product: {
@@ -36,7 +37,8 @@ export class ShopCartResolver {
         id: user.id,
       },
       userId: user.id,
-      number: 1,
+      number: updateNum ?? 1,
+      updateTime: new Date(),
     }))
   }
 
@@ -71,6 +73,9 @@ export class ShopCartResolver {
               },
               img: true,
             },
+          },
+          order: {
+            updateTime: 'desc',
           },
         })
   }
