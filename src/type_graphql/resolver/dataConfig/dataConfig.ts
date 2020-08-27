@@ -83,12 +83,6 @@ export class DataConfigResolver {
       ]
     }
 
-    console.log(value.list.map(v => ({
-      ...v,
-      imgUrl: imgList?.find(val => val.id === v.relatedObjId)?.imgUrl,
-    })))
-
-    // console.log(value.list)
     return {
       ...dataConfigInput,
       value: {
@@ -96,6 +90,7 @@ export class DataConfigResolver {
         list: value.list.map(v => ({
           ...v,
           imgUrl: imgList?.find(val => val.id === v.relatedObjId)?.imgUrl,
+          objData: imgList?.find(val => val.id === v.relatedObjId) ?? {},
         })),
       },
     }
