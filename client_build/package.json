@@ -12,6 +12,7 @@
     "pm2": "pm2 start ecosystem.config.js --name 'client_web'"
   },
   "dependencies": {
+    "@date-io/date-fns": "1.x",
     "@material-ui/core": "^4.9.12",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/styles": "^4.9.13",
