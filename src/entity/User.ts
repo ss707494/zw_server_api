@@ -69,6 +69,7 @@ export class User {
   @Field(returns => [UserAddress])
   @OneToMany(type => UserAddress, object => object.user)
   userAddress: UserAddress[] | null
+  userRes: any
 
   @Field(returns => Float, {nullable: true})
   get orderCoinNextMonth() {

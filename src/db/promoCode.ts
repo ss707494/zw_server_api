@@ -24,7 +24,8 @@ export const getList = async (PromoCodeInput: PromoCode) => {
                       promo_code_type,
                       reuse_times,
                       isDisable,
-                      code
+                      code,
+                      userLevelId
                from dw_server.promo_code
                where is_delete = 0
                  and promo_code_type = ?
@@ -53,7 +54,8 @@ const promoCodeData: PromoCode = {
   reuse_times: 1,
   title: "",
   isDisable: 0,
-  update_time: null
+  update_time: null,
+  userLevelId: '',
 }
 
 export const addOne = async (promoCodeInput: PromoCode) => {
@@ -68,9 +70,9 @@ export const addOne = async (promoCodeInput: PromoCode) => {
                                                  discount_type, discount_amount, discount_condition,
                                                  discount_condition_amount, product_category, img_url,
                                                  effective_date_start, effective_date_end, promo_code_type, reuse_times,
-                                                 code)
+                                                 code, userLevelId)
                VALUES (?)`
-  const [res] = await asyncQuery(sql, [[_id, promoCodeInputParam?.name, promoCodeInputParam?.remark, promoCodeInputParam?.title, promoCodeInputParam?.discount_type, promoCodeInputParam?.discount_amount, promoCodeInputParam?.discount_condition, promoCodeInputParam?.discount_condition_amount, promoCodeInputParam.product_category, promoCodeInputParam.img_url, promoCodeInputParam.effective_date_start, promoCodeInputParam.effective_date_end, promoCodeInputParam.promo_code_type, promoCodeInputParam.reuse_times, promoCodeInputParam.code || makeid(8)]])
+  const [res] = await asyncQuery(sql, [[_id, promoCodeInputParam?.name, promoCodeInputParam?.remark, promoCodeInputParam?.title, promoCodeInputParam?.discount_type, promoCodeInputParam?.discount_amount, promoCodeInputParam?.discount_condition, promoCodeInputParam?.discount_condition_amount, promoCodeInputParam.product_category, promoCodeInputParam.img_url, promoCodeInputParam.effective_date_start, promoCodeInputParam.effective_date_end, promoCodeInputParam.promo_code_type, promoCodeInputParam.reuse_times, promoCodeInputParam.code || makeid(8), promoCodeInputParam.userLevelId]])
   return dealResult(res?.affectedRows, '', {
     promoCode: {
       ...promoCodeInputParam,

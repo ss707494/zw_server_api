@@ -1,5 +1,7 @@
-import {Column, Entity} from "typeorm"
+import {Column, Entity} from 'typeorm'
 import {Field, InputType, ObjectType} from 'type-graphql'
+import {ManyToOne} from 'typeorm/index'
+import {Dict} from './Dict'
 
 @InputType('PromoCodeItemInput')
 @ObjectType()
@@ -98,5 +100,9 @@ export class PromoCode {
   @Field()
   @Column("int", { name: "isDisable", nullable: true, default: () => "'0'" })
   isDisable: number | null;
+
+  @Field(returns => Dict)
+  @ManyToOne(type => Dict, object => object.promoCode)
+  userLevel: Dict | null;
 
 }

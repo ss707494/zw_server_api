@@ -1,6 +1,7 @@
 import {Column, Entity, Generated, OneToOne} from "typeorm"
 import {Field, InputType, ObjectType} from "type-graphql"
 import {User} from "./User"
+import {Dict} from './Dict'
 
 @InputType('UserInfoItemInput')
 @ObjectType()
@@ -46,6 +47,9 @@ export class UserInfo {
   @Column("varchar", {name: "userLevel", default: () => "''"})
   @Field()
   userLevel: string | null
+
+  @Field(returns => Dict, {nullable: true})
+  userLevelDict: Dict | null
 
   @OneToOne(type1 => User, object => object.userInfo)
   @Field(returns => User, {nullable: true})

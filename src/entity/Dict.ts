@@ -1,6 +1,8 @@
 import {Column, Entity, ManyToOne} from "typeorm"
 import {Field, InputType, ObjectType} from "type-graphql"
 import {DictTypeFirst} from "./DictTypeFirst"
+import {OneToMany} from 'typeorm/index'
+import {PromoCode} from './PromoCode'
 
 @InputType('DictItemInput')
 @ObjectType()
@@ -53,5 +55,9 @@ export class Dict {
   @Field(returns => DictTypeFirst)
   @ManyToOne(type => DictTypeFirst, object => object.dict)
   dictTypeFirst: DictTypeFirst | null
+
+  @Field(returns => [PromoCode])
+  @OneToMany(type => PromoCode, object => object.userLevel)
+  promoCode: PromoCode[] | null
 
 }

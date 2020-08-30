@@ -1,15 +1,17 @@
-import {merge} from "lodash"
-import {Arg, Authorized, Ctx, Field, InputType, Mutation, ObjectType, Query, Resolver} from "type-graphql"
+import {merge} from 'lodash'
+import {Arg, Authorized, Ctx, Field, InputType, Mutation, ObjectType, Query, Resolver} from 'type-graphql'
 import {compareSync, genSaltSync, hashSync} from 'bcrypt'
-import {getRepository, In, Like} from "typeorm"
-import {User} from "../../../entity/User"
-import {PageInput} from "../../types/input"
-import {dealPageResult, PageResult} from "../../types/types"
+import {getRepository, In, Like} from 'typeorm'
+import {User} from '../../../entity/User'
+import {PageInput} from '../../types/input'
+import {dealPageResult, PageResult} from '../../types/types'
 import {UserInfo} from '../../../entity/UserInfo'
 import {ContextType} from '../../apploServer'
 import {plainToClass} from 'class-transformer'
 import {signToken} from '../../../common/utils'
 import {AuthBody} from '../auth/auth'
+import {Dict} from '../../../entity/Dict'
+import {DictTypeEnum} from '../../../common/ss_common/enum'
 
 @ObjectType()
 export class UserInRegister {
@@ -126,7 +128,7 @@ export class UserResolve {
   @Query(returns => User)
   async oneUser(@Ctx() {user}: ContextType) {
     if (user?.id) {
-      return await getRepository(User).findOne({
+      const userRes = await getRepository(User).findOne({
         where: {
           id: (user.id),
         },
@@ -134,6 +136,21 @@ export class UserResolve {
           userInfo: true,
         },
       })
+
+      const userLevelDict = await getRepository(Dict)
+          .findOne({
+            where: {
+              dictTypeCode: DictTypeEnum.UserLevel,
+              code: userRes.userInfo.userLevel,
+            },
+          })
+      return {
+        ...userRes,
+        userInfo: {
+          ...userRes.userInfo,
+          userLevelDict,
+        }
+      }
     }
     return {}
   }
