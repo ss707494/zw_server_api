@@ -1,4 +1,4 @@
-import {Column, Entity, Generated, ManyToOne, OneToMany} from "typeorm"
+import {Column, Entity, Generated, ManyToOne, OneToMany} from 'typeorm'
 import {Field, InputType, ObjectType} from 'type-graphql'
 import {OrderInfo} from './OrderInfo'
 import {User} from './User'
@@ -57,10 +57,6 @@ export class UserPayCard {
   zipCode: string | null
 
   @Field()
-  @Column("varchar", {name: "city", nullable: true, length: 20})
-  city: string | null
-
-  @Field()
   @Column("varchar", {name: "contact", nullable: true, length: 20})
   contact: string | null
 
@@ -79,5 +75,29 @@ export class UserPayCard {
   @Field(returns => User)
   @ManyToOne(type => User, object => object.userPayCard)
   user: User | null
+
+  @Field()
+  @Column("varchar", {default: () => "'Select'"})
+  creditAddressInputType: string | null
+
+  @Field()
+  @Column("varchar", {length: 20})
+  zip: string | null
+
+  @Field()
+  @Column("varchar", {name: "city", nullable: true, length: 20})
+  city: string | null
+
+  @Field()
+  @Column("varchar", { name: "province", nullable: true, length: 40 })
+  province: string | null;
+
+  @Field()
+  @Column("varchar", { name: "district", nullable: true, length: 40 })
+  district: string | null;
+
+  @Field()
+  @Column("varchar", { name: "address", nullable: true, length: 200 })
+  address: string | null;
 
 }
