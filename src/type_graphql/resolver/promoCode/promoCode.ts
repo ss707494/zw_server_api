@@ -2,7 +2,7 @@ import {Arg, Authorized, Ctx, Query, Resolver} from 'type-graphql'
 import {PromoCode} from '../../../entity/PromoCode'
 import {getRepository, Like} from 'typeorm'
 import {ContextType} from '../../apploServer'
-import {MoreThanOrEqual} from 'typeorm/index'
+import {MoreThanOrEqual, Raw} from 'typeorm/index'
 import {Dict} from '../../../entity/Dict'
 import {DictTypeEnum, PromoCodeTypeEnum} from '../../../common/ss_common/enum'
 import {User} from '../../../entity/User'
@@ -22,6 +22,8 @@ export class PromoCodeResolver {
           promoCodeType: promoCodeItemInput?.promoCodeType ?? Like('%%'),
           code: promoCodeItemInput?.code,
           isDelete: 0,
+          effectiveDateStart: Raw(alias =>`${alias} < NOW()`),
+          effectiveDateEnd: Raw(alias =>`${alias} > NOW()`),
         },
         relations: {
           userLevel: true
@@ -53,6 +55,8 @@ export class PromoCodeResolver {
               promoCodeType: PromoCodeTypeEnum.PromoCode,
               code: promoCodeItemInput?.code,
               isDelete: 0,
+              effectiveDateStart: Raw(alias =>`${alias} < NOW()`),
+              effectiveDateEnd: Raw(alias =>`${alias} > NOW()`),
             },
             relations: {
               userLevel: true
@@ -69,6 +73,8 @@ export class PromoCodeResolver {
             promoCodeType: PromoCodeTypeEnum.DarenCard,
             code: promoCodeItemInput?.code,
             isDelete: 0,
+            effectiveDateStart: Raw(alias =>`${alias} < NOW()`),
+            effectiveDateEnd: Raw(alias =>`${alias} > NOW()`),
           },
           relations: {
             userLevel: true
