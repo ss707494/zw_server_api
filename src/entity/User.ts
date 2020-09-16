@@ -88,6 +88,37 @@ export class User {
   }
 
   @Field(returns => Float, {nullable: true})
+  get orderCoinCurrentMonthCost() {
+    if (this.orderInfo?.length) {
+      const currentDate = new Date()
+      return this.orderInfo.filter(value => value.state === OrderState.Finish).reduce((previousValue, currentValue) => {
+        if (isSameMonth(currentValue.finishTime, currentDate)) {
+          return previousValue - currentValue.deductCoin
+        }
+        return previousValue
+      }, 0)
+    }
+    return 0
+  }
+  set orderCoinCurrentMonthCost(v) {}
+
+  @Field(returns => Float, {nullable: true})
+  get orderCoinLastMonthGet() {
+    if (this.orderInfo?.length) {
+      const currentDate = new Date()
+      const lastDate = addMonths(currentDate, -1)
+      return this.orderInfo.filter(value => value.state === OrderState.Finish).reduce((previousValue, currentValue) => {
+        if (isSameMonth(currentValue.finishTime, lastDate)) {
+          return previousValue + currentValue.generateCoin
+        }
+        return previousValue
+      }, 0)
+    }
+    return 0
+  }
+  set orderCoinLastMonthGet(v) {}
+
+  @Field(returns => Float, {nullable: true})
   get orderCoinCurrentMonth() {
     if (this.orderInfo?.length) {
       const currentDate = new Date()
