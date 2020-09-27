@@ -5,14 +5,14 @@ import {getRepository, In} from 'typeorm'
 import {commonQueryWhere} from '../../common/query'
 import {dealOrderBy, OrderByInput} from '../../types/input'
 import {Dict} from '../../../entity/Dict'
-import {getConnection, Like} from 'typeorm/index'
+import {getConnection, Like} from 'typeorm'
 import {ROrderProduct} from '../../../entity/ROrderProduct'
 import {SaleRankTypeEnum} from '../../../common/ss_common/enum'
 import {startOfDay, startOfMonth, startOfWeek} from 'date-fns'
 import {sqlDateFormat} from '../../../common/date'
 
 @ObjectType()
-class ProductPage extends PageResult<Product> {
+export class ProductPage extends PageResult<Product> {
   @Field(returns => [Product])
   list: Product[]
 }

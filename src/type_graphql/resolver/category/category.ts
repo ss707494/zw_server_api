@@ -2,12 +2,12 @@ import {Arg, Authorized, Field, InputType, Mutation, ObjectType, Query, Resolver
 import {Category} from "../../../entity/Category"
 import {getRepository, In} from "typeorm"
 import {dealPageResult, PageResult} from "../../types/types"
-import {dealOrderBy, dealPageData, OrderByInput, PageInput} from "../../types/input"
+import {dealOrderBy, dealPageData, OrderByAndPageInput, OrderByInput, PageInput} from '../../types/input'
 import {plainToClass} from "class-transformer"
 import {Product} from '../../../entity/Product'
 import {commonQueryWhere} from '../../common/query'
 import {CategoryRootName} from '../../../common/ss_common/enum'
-import {dealProductForDict} from '../product/product'
+import {dealProductForDict, ProductPage} from '../product/product'
 
 @ObjectType()
 class CategoryPage extends PageResult<Category> {
@@ -88,8 +88,8 @@ export class CategoryResolver {
   }
 
   @Authorized('web_client')
-  @Query(returns => [Product])
-  async productsInCategory(@Arg('categoryItemInput', returns => Category) categoryItemInput: Category, @Arg('productItemInput', returns => Product) productItemInput: Product) {
+  @Query(returns => ProductPage)
+  async productsInCategory(@Arg('categoryItemInput', returns => Category) categoryItemInput: Category, @Arg('productItemInput', returns => Product) productItemInput: Product, @Arg('orderByAndPageInput', returns => OrderByAndPageInput)orderByAndPageInput: OrderByAndPageInput) {
     const _condition = {
       ...commonQueryWhere,
       isEnable: 1,
@@ -128,8 +128,8 @@ export class CategoryResolver {
     if (categories.length === 0) {
       return []
     }
-    const products = await getRepository(Product)
-        .find({
+    const productsRes = await getRepository(Product)
+        .findAndCount({
           relations: {
             img: true,
           },
@@ -141,7 +141,7 @@ export class CategoryResolver {
             },
           },
         })
-    return dealProductForDict(products)
+    return dealPageResult([await dealProductForDict(productsRes[0]), productsRes[1]])
   }
 
   @Authorized()
