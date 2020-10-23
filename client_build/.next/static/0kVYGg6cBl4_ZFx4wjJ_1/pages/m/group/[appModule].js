@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[33],{HTdl:function(n,o,u){"use strict";u.r(o);var i=u("LIvt");o.default=Object(i.a)(i.b.group)},yOni:function(n,o,u){(window.__NEXT_P=window.__NEXT_P||[]).push(["/m/group/[appModule]",function(){return u("HTdl")}])}},[["yOni",1,0,5,2,3,4,6,7,8,9,10,11,12]]]);

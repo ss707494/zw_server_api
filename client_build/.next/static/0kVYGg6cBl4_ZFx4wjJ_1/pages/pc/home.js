@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[58],{"2+dk":function(n,o,w){(window.__NEXT_P=window.__NEXT_P||[]).push(["/pc/home",function(){return w("W/gG")}])},"W/gG":function(n,o,w){"use strict";w.r(o);var i=w("JHhN");o.default=i.b}},[["2+dk",1,0,5,2,3,4,6,7,8,9,10,11,12,13,14,15]]]);
