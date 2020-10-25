@@ -5,7 +5,7 @@ import { camelCase, map, mapKeys, omit } from "lodash"
 export const signToken = (body) => {
   const data = omit(body, ['iat', 'exp'])
   return ({
-    token: `Bearer ${jwt.sign(data, secret, { expiresIn: '12h' })}`,
+    token: `Bearer ${jwt.sign(data, secret, { expiresIn: '30 days' })}`,
     refreshtoken: `${jwt.sign(data, secret, { expiresIn: '30 days' })}`,
   })
 }
