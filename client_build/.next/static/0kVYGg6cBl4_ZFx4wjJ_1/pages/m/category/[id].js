@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[30],{"J7O+":function(n,o,w){(window.__NEXT_P=window.__NEXT_P||[]).push(["/m/category/[id]",function(){return w("zNz+")}])},"zNz+":function(n,o,w){"use strict";w.r(o);var i=w("SvrD");o.default=i.a}},[["J7O+",1,0,5,2,3,4,6,7,8,9,10,11,12,14]]]);
