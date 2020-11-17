@@ -1,1 +1,0 @@
-{"ast":null,"code":"var __jsx = React.createElement;\nimport React from 'react';\nimport { UpdateShopCart } from '../../../../components/ProductItem/UpdateShopCart';\nexport var MainBox = function MainBox(_ref) {\n  var children = _ref.children;\n  return __jsx(\"div\", null, children, __jsx(UpdateShopCart, null));\n};","map":null,"metadata":{},"sourceType":"module"}

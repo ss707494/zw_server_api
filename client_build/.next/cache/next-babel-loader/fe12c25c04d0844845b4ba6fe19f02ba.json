@@ -1,1 +1,0 @@
-{"ast":null,"code":"import { ProductList } from '../../../utils/view/m/productList/[id]';\nexport default ProductList;","map":null,"metadata":{},"sourceType":"module"}

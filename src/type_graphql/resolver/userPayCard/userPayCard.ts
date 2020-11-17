@@ -13,6 +13,10 @@ export class UserPayCardResolve {
       where: {
         userId: user.id,
       },
+      order: {
+        isDefault: 'desc',
+        updateTime: 'desc',
+      },
     })
   }
 
