@@ -1,0 +1,1 @@
+{"ast":null,"code":"var __jsx = React.createElement;\nimport React, { useEffect } from 'react';\nimport { useRouter } from 'next/router';\nexport const HomeRe = () => {\n  const router = useRouter();\n  useEffect(() => {\n    router.replace('/m/login');\n  });\n  return __jsx(\"div\", null);\n};\nexport default HomeRe;","map":null,"metadata":{},"sourceType":"module"}

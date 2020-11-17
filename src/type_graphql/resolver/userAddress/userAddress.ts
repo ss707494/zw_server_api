@@ -23,6 +23,10 @@ export class UserAddressResolve {
       where: {
         id: userAddress.id,
       },
+      order: {
+        isDefault: 'desc',
+        updateTime: 'desc',
+      },
     })
   }
 
