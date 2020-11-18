@@ -38,7 +38,8 @@ export class UserPayCardResolve {
       userId: user.id,
       user: {
         id: user.id,
-      }
+      },
+      updateTime: new Date(),
     })
   }
 
@@ -52,6 +53,7 @@ export class UserPayCardResolve {
     return rep.save({
       id: userPayCard.id,
       isDefault: 1,
+      updateTime: new Date(),
     })
   }
 

@@ -38,7 +38,8 @@ export class UserAddressResolve {
       userId: user.id,
       user: {
         id: user.id,
-      }
+      },
+      updateTime: new Date(),
     })
   }
 
@@ -52,6 +53,7 @@ export class UserAddressResolve {
     return rep.save({
       id: userAddress.id,
       isDefault: 1,
+      updateTime: new Date(),
     })
   }
 
