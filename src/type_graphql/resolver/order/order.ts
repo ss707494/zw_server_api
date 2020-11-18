@@ -10,6 +10,7 @@ import {getOrderNumber} from '../../../resolver/order'
 import {ShopCart} from '../../../entity/ShopCart'
 import {GroupOrder} from '../../../entity/GroupOrder'
 import {ROrderProduct} from '../../../entity/ROrderProduct'
+import {dealProductForDict} from '../product/product'
 
 @ObjectType()
 export class OrderPage extends PageResult<OrderInfo> {
@@ -149,7 +150,7 @@ export class OrderResolve {
   @Authorized()
   @Query(returns => OrderInfo)
   async orderDetail(@Arg('id')id: string) {
-    return await getRepository(OrderInfo)
+    const orderInfo = await getRepository(OrderInfo)
         .findOne({
           where: {
             id: Equal(id),
@@ -167,6 +168,14 @@ export class OrderResolve {
             userAddress: true,
           },
         })
+    const helpProducts = await dealProductForDict(orderInfo?.rOrderProduct?.map(value => value.product))
+    return {
+      ...orderInfo,
+      rOrderProduct: orderInfo?.rOrderProduct?.map(value => ({
+        ...value,
+        product: helpProducts.find(value1 => value1.id === value.product?.id)
+      }))
+    }
   }
 
   @Authorized()

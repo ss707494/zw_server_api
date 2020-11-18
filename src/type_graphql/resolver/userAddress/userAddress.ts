@@ -13,6 +13,10 @@ export class UserAddressResolve {
       where: {
         userId: user.id,
       },
+      order: {
+        isDefault: 'desc',
+        updateTime: 'desc',
+      },
     })
   }
 
@@ -22,10 +26,6 @@ export class UserAddressResolve {
     return await getRepository(UserAddress).findOne({
       where: {
         id: userAddress.id,
-      },
-      order: {
-        isDefault: 'desc',
-        updateTime: 'desc',
       },
     })
   }

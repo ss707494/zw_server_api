@@ -1,8 +1,7 @@
 import {Arg, Authorized, Ctx, Query, Resolver} from 'type-graphql'
 import {PromoCode} from '../../../entity/PromoCode'
-import {getRepository, Like} from 'typeorm'
+import {getRepository, LessThanOrEqual, Like, Raw} from 'typeorm'
 import {ContextType} from '../../apploServer'
-import {MoreThanOrEqual, Raw} from 'typeorm'
 import {Dict} from '../../../entity/Dict'
 import {DictTypeEnum, PromoCodeTypeEnum} from '../../../common/ss_common/enum'
 import {User} from '../../../entity/User'
@@ -47,6 +46,8 @@ export class PromoCodeResolver {
             },
           })
 
+      console.log('sssssssssss')
+      console.log(promoCodeItemInput)
       return [
         ...await getRepository(PromoCode).find({
           where: {
@@ -67,7 +68,7 @@ export class PromoCodeResolver {
         ...await getRepository(PromoCode).find({
           where: {
             userLevel: {
-              sort: MoreThanOrEqual(userLevelDict.sort),
+              sort: LessThanOrEqual(userLevelDict.sort),
             },
             ...(promoCodeItemInput?.title && {
               title: Like(`%${promoCodeItemInput?.title}%`),
@@ -75,6 +76,7 @@ export class PromoCodeResolver {
             promoCodeType: PromoCodeTypeEnum.DarenCard,
             code: promoCodeItemInput?.code,
             isDelete: 0,
+            ...([0, 1].includes(promoCodeItemInput?.isDisable) ? {isDisable: promoCodeItemInput?.isDisable} : {}),
             effectiveDateStart: Raw(alias => `${alias} < NOW()`),
             effectiveDateEnd: Raw(alias => `${alias} > NOW()`),
           },
