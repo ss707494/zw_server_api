@@ -1040,6 +1040,11 @@ const mpStyle = {
         background-color: #9f9f9f;
         -webkit-border-radius: 4PX;
     }
+  `,
+  ellipsis: `
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
   `
 };
 const RedBox = styled_components__WEBPACK_IMPORTED_MODULE_1___default.a.div.withConfig({
@@ -1190,6 +1195,10 @@ const isPc = () => {
   return /\/pc\//.test(location.href);
 };
 const dealLastNumber = (num, length = 4) => {
+  if (!num) {
+    return '';
+  }
+
   return `**** **** **** ${num ? num === null || num === void 0 ? void 0 : num.slice((num === null || num === void 0 ? void 0 : num.length) - length) : ''}`;
 };
 
