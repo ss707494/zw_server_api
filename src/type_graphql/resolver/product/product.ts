@@ -107,10 +107,10 @@ export class ProductResolver {
     const res = await query.getManyAndCount()
 
     return dealPageResult([
-      res[0].map(v => ({
+      await dealProductForDict(res[0].map(v => ({
         ...v,
         sumOrder: rawList?.find(value => value.product_id === v.id)?.sumOrder,
-      })),
+      }))),
       res[1],
     ])
   }
