@@ -37,6 +37,7 @@
   "/pc/home": "pages/pc/home.html",
   "/pc": "pages/pc.html",
   "/pc/me/myAddress": "pages/pc/me/myAddress.html",
+  "/pc/me/myCreditCard": "pages/pc/me/myCreditCard.html",
   "/pc/me/myInfo": "pages/pc/me/myInfo.html",
   "/pc/me/orderDetail/[id]": "pages/pc/me/orderDetail/[id].html",
   "/pc/me/orderHistory": "pages/pc/me/orderHistory.html",

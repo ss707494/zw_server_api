@@ -936,9 +936,9 @@ const useStoreModel = (model, key) => {
     actions: originStore[_key].actions,
     store: originStore,
     getLoad: query => {
-      var _query$loc3, _query$loc3$source;
+      var _query$doc, _query$doc$loc, _query$doc$loc$source;
 
-      return originStore[_key].state.fetchLoad[query === null || query === void 0 ? void 0 : (_query$loc3 = query.loc) === null || _query$loc3 === void 0 ? void 0 : (_query$loc3$source = _query$loc3.source) === null || _query$loc3$source === void 0 ? void 0 : _query$loc3$source.body] ? 1 : 0;
+      return originStore[_key].state.fetchLoad[query === null || query === void 0 ? void 0 : (_query$doc = query.doc) === null || _query$doc === void 0 ? void 0 : (_query$doc$loc = _query$doc.loc) === null || _query$doc$loc === void 0 ? void 0 : (_query$doc$loc$source = _query$doc$loc.source) === null || _query$doc$loc$source === void 0 ? void 0 : _query$doc$loc$source.body] ? 1 : 0;
     }
   };
 };
@@ -973,8 +973,9 @@ module.exports = require("apollo-boost");
 
 const mpStyle = {
   red: '#F84033',
-  grey: _material_ui_core_colors_grey__WEBPACK_IMPORTED_MODULE_0___default.a['400'],
+  grey: '#B9B9B9',
   greyLite: _material_ui_core_colors_grey__WEBPACK_IMPORTED_MODULE_0___default.a['200'],
+  black: '#0D0D21',
   shadow: {
     1: '0 1px 1px 0 rgba(0,0,0,0.14), 0 2px 1px -1px rgba(0,0,0,0.12), 0 1px 3px 0 rgba(0,0,0,0.20)'
   },
@@ -998,18 +999,24 @@ const mpStyle = {
   },
   fontType: {
     xxl: `
+      font-size: 28px; 
+      font-weight: 600;
+    `,
+    xl: `
       font-size: 24px; 
-      font-weight: bold;
+      font-weight: 600;
     `,
     l: `
-      font-size: 22px; 
-      font-weight: bold;
+      font-size: 18px; 
+      font-weight: 600;
     `,
     n: `
-      font-size: 20px; 
+      font-size: 16px; 
+      font-weight: 400;
     `,
     s: `
-      font-size: 18px; 
+      font-size: 14px; 
+      font-weight: 400;
     `
   },
   scrollbar: `
@@ -1083,6 +1090,7 @@ const RedBox = styled_components__WEBPACK_IMPORTED_MODULE_1___default.a.div.with
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return dealUrlQuery; });
 /* unused harmony export isPc */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return dealLastNumber; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return padStart; });
 /* harmony import */ var date_fns_format__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("Skji");
 /* harmony import */ var date_fns_format__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(date_fns_format__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var lodash_set__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("tLFe");
@@ -1185,14 +1193,11 @@ const formatMoney = (amount, decimalCount = 2, decimal = ".", thousands = ",") =
 const dealMoney = (amount, pre = '') => `${pre}$${formatMoney(amount)}`;
 const dealMaybeNumber = num => num !== null && num !== void 0 ? num : 0;
 const getLastNumber = (str, num = 4) => str === null || str === void 0 ? void 0 : str.slice((str === null || str === void 0 ? void 0 : str.length) - num);
-/* unused harmony default export */ var _unused_webpack_default_export = ({
-  getObjectURL
-});
 const dealUrlQuery = queryObj => {
   return `?${Object.keys(queryObj).map(value => `${value}=${queryObj[value]}`).join('&')}`;
 };
 const isPc = () => {
-  return /\/pc\//.test(location.href);
+  return /\/pc\//.test(window.location.href);
 };
 const dealLastNumber = (num, length = 4) => {
   if (!num) {
@@ -1200,6 +1205,9 @@ const dealLastNumber = (num, length = 4) => {
   }
 
   return `**** **** **** ${num ? num === null || num === void 0 ? void 0 : num.slice((num === null || num === void 0 ? void 0 : num.length) - length) : ''}`;
+};
+const padStart = num => {
+  return num > 9 ? `${num}` : `0${num}`;
 };
 
 /***/ }),
