@@ -41,6 +41,7 @@
   "/pc/me/myInfo": "pages/pc/me/myInfo.html",
   "/pc/me/orderDetail/[id]": "pages/pc/me/orderDetail/[id].html",
   "/pc/me/orderHistory": "pages/pc/me/orderHistory.html",
+  "/pc/me/pickupAddress": "pages/pc/me/pickupAddress.html",
   "/test/[name]": "pages/test/[name].html",
   "/_error": "pages/_error.js",
   "/404": "pages/404.html"

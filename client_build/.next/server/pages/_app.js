@@ -237,8 +237,8 @@ module.exports = require("@material-ui/core/colors");
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ls; });
-const ls = key => key !== null && key !== void 0 ? key : '';
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ll; });
+const ll = key => key !== null && key !== void 0 ? key : '';
 
 /***/ }),
 
@@ -541,7 +541,7 @@ const Message = () => {
   return __jsx(CusSnackbar, {
     open: mState.open,
     autoHideDuration: mState.autoHideDuration,
-    message: Object(_tools_dealKey__WEBPACK_IMPORTED_MODULE_7__[/* ls */ "a"])(mState.message),
+    message: Object(_tools_dealKey__WEBPACK_IMPORTED_MODULE_7__[/* ll */ "a"])(mState.message),
     msg_type: mState.msg_type,
     onClose: () => actions.onClose()
   });
@@ -997,6 +997,28 @@ const mpStyle = {
     xs: '16px',
     xxs: '8px'
   },
+  fontTypeObj: {
+    xxl: {
+      fontSize: '28px',
+      fontWeight: 600
+    },
+    xl: {
+      fontSize: '24px',
+      fontWeight: 600
+    },
+    l: {
+      fontSize: '18px',
+      fontWeight: 600
+    },
+    n: {
+      fontSize: '16px',
+      fontWeight: 400
+    },
+    s: {
+      fontSize: '14px',
+      fontWeight: 400
+    }
+  },
   fontType: {
     xxl: `
       font-size: 28px; 
@@ -1299,7 +1321,7 @@ function MyApp({
 }) {
   return [DateWrapperApollo].reduce((previousValue, currentValue) => currentValue(previousValue), _app_jsx(external_react_default.a.Fragment, null, _app_jsx(core_["ThemeProvider"], {
     theme: theme
-  }, _app_jsx(head_default.a, null, _app_jsx("title", null, "Market Payless")), _app_jsx(Component, pageProps), _app_jsx(Message["a" /* Message */], null))));
+  }, _app_jsx(head_default.a, null, _app_jsx("title", null, "Market Payless")), _app_jsx(Component, pageProps), _app_jsx(Message["a" /* Message */], null), _app_jsx(core_["CssBaseline"], null))));
 }
 
 /***/ }),

@@ -1,1 +1,0 @@
-{"ast":null,"code":"export const ls = key => key !== null && key !== void 0 ? key : '';","map":null,"metadata":{},"sourceType":"module"}

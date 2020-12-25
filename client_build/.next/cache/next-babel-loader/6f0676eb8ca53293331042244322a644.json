@@ -1,1 +1,0 @@
-{"ast":null,"code":"var __jsx = React.createElement;\nimport React from 'react';\nimport { MeLayoutBox } from '../components/meLayoutBox';\nexport var MyAddress = function MyAddress() {\n  return __jsx(MeLayoutBox, null, \"eee\");\n};","map":null,"metadata":{},"sourceType":"module"}
