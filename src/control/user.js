@@ -28,9 +28,9 @@ export const login = async (req, res) => {
   }
   // language=MySQL
   const sql = `
-select * from dw_server.user where name = ?
+select * from dw_server.user where name = ? and type = ?
 `
-  const [res0] = await asyncQuery(sql, [name])
+  const [res0] = await asyncQuery(sql, [name, req.body?.type || 9])
   if (!res0.length) {
     res.json({
       code: 200,
