@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { PcGroupProduct } from '../../../utils/view/pc/groupProduct/[id]';\nexport default PcGroupProduct;","map":null,"metadata":{},"sourceType":"module"}

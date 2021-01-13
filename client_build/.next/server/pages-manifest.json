@@ -34,6 +34,7 @@
   "/pc/cart/orderPage": "pages/pc/cart/orderPage.html",
   "/pc/cart/result": "pages/pc/cart/result.html",
   "/pc/category/[id]": "pages/pc/category/[id].html",
+  "/pc/groupProduct/[id]": "pages/pc/groupProduct/[id].html",
   "/pc/group": "pages/pc/group.html",
   "/pc/home": "pages/pc/home.html",
   "/pc": "pages/pc.html",
