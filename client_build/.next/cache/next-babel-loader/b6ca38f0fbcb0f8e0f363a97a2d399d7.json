@@ -1,1 +1,0 @@
-{"ast":null,"code":"import { MyAddress } from '../../../../utils/view/m/me/myAddress/list';\nexport default MyAddress;","map":null,"metadata":{},"sourceType":"module"}

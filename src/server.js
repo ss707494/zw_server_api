@@ -21,10 +21,9 @@ import { tokenHandle } from './common/tokenHandle'
 import { connectMysql } from "./mysql"
 import { dealUpload } from "./common/upload"
 
-
 const app = express()
 
-app.use(express.static(resolveApp('build')))
+app.use(express.static(resolveApp('back_build')))
 app.use(`/${uploadFilePath}`, express.static(resolveApp(uploadFilePath)))
 app.use(bodyParser.json())
 
@@ -48,7 +47,7 @@ const init = async () => {
     server.applyMiddleware({ app, path: '/api' })
 
     app.use('*', function(req, res) {
-      res.sendFile(resolveApp('build/index.html'))
+      res.sendFile(resolveApp('back_build/index.html'))
     })
 
     app.use(errorHandle)

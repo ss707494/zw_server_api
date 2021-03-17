@@ -1,1 +1,0 @@
-{"ast":null,"code":"import { PcCategory } from '../../../utils/view/pc/category/category';\nexport default PcCategory;","map":null,"metadata":{},"sourceType":"module"}

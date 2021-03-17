@@ -1,1 +1,0 @@
-{"ast":null,"code":"import { PcHomeGroup } from '../../../utils/view/pc/group/pcGroup';\nexport default PcHomeGroup;","map":null,"metadata":{},"sourceType":"module"}

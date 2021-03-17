@@ -1,1 +1,0 @@
-{"ast":null,"code":"import { fpSetPre } from './utils';\nexport const setForm = ([path, value], option) => {\n  option.setData(fpSetPre(`form.${path}`, value));\n};","map":null,"metadata":{},"sourceType":"module"}

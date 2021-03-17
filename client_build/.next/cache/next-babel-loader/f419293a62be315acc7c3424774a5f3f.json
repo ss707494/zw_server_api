@@ -1,1 +1,0 @@
-{"ast":null,"code":"import { useRouter } from 'next/router';\nexport const usePcOrMobile = () => {\n  const router = useRouter();\n\n  if (/\\/pc\\//.test(router.pathname)) {\n    return {\n      isPc: true\n    };\n  }\n\n  return {\n    isPc: false\n  };\n};","map":null,"metadata":{},"sourceType":"module"}

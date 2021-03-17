@@ -1,1 +1,0 @@
-{"ast":null,"code":"var __jsx = React.createElement;\nimport { ll } from \"../../tools/dealKey\";\nimport React from 'react';\nexport const NoData = () => {\n  return __jsx(\"div\", {\n    style: {\n      textAlign: 'center'\n    }\n  }, ll('暂无数据'));\n};","map":null,"metadata":{},"sourceType":"module"}

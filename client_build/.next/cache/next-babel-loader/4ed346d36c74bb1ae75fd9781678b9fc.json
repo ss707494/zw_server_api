@@ -1,1 +1,0 @@
-{"ast":null,"code":"import { CardType } from '../../../utils/view/m/card/[type]';\nexport default CardType;","map":null,"metadata":{},"sourceType":"module"}

@@ -9,13 +9,13 @@
   "synchronize": false,
   "logging": true,
   "entities": [
-    "dist/entity/*.js"
+    "apiDist/entity/*.js"
   ],
   "subscribers": [
-    "dist/subscriber/*.js"
+    "apiDist/subscriber/*.js"
   ],
   "migrations": [
-    "dist/migration/*.js"
+    "apiDist/migration/*.js"
   ],
   "cli": {
     "entitiesDir": "src/entity",
